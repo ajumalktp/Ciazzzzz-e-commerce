@@ -1,0 +1,16 @@
+{
+  "name": "e-commerce-web-site",
+  "version": "1.0.0",
+  "description": "My E-commerce Web Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Muhammed Ajumal T",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "modules": "^0.4.0",
+    "node": "^20.5.0"
+  }
+}

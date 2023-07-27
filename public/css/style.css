@@ -1,0 +1,47 @@
+#intro {
+    background-image: url(https://images.unsplash.com/photo-1649520937981-763d6a14de7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vdGJhbGwlMjBqZXJzZXklMjBjb2xsZWN0aW9uc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60);
+    height: 110vh;
+  }
+
+  /* Height for devices larger than 576px */
+  @media (min-width: 992px) {
+    #intro {
+      margin-top: -58.59px;
+    }
+  }
+
+  .navbar .nav-link {
+    color: #fff !important;
+  }
+
+.rounded{
+    border-radius: 1.25rem !important;
+}
+#loginText{
+    font-family: monospace;
+}
+.form-control{
+    height: 7vh;
+}
+.btn{
+    height: 45px;
+    font-size: 10px;
+}
+.btn-block{
+    width: 40%;
+}
+form p{
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+#forget{
+    color: red;
+}
+@media (max-width: 580px) {
+    form p{
+        font-size: 10px;
+    }
+    .btn{
+        height: 30px;
+    }
+}

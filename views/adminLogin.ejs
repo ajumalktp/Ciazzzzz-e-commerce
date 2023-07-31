@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Ciazzzzz</title>
+
+   <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css"
+rel="stylesheet"
+/> 
+
+    <!-- Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" /> -->
+    <!-- Google Fonts Roboto -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" /> -->
+    <!-- MDB -->
+    <!-- <link rel="stylesheet" type="text/stylesheet" href="css/mdb.min.css" /> -->
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet"  href="css/style.css" />
+    <!-- JS -->
+    <!-- <link rel="stylesheet" href="/public/js/main.js"> -->
+    <!-- jQuery Validation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+</head>
+
+<body>
+    <header>
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(255, 255, 255, 0.7);">
+        <div class="container">
+          <div class="row  justify-content-center">
+            <div class="col-xl-5 col-md-8">
+              <form class="bg-white rounded shadow-5-strong p-5"  id="formValidation" method="post">
+                <h1 id="loginText" class="text-center mt-0 mb-4">Login</h1>
+                <div class="form-outline mb-4">
+                  <input type="email" id="form1Example1" class="form-control" name="email"/>
+                  <label id="form1Example1-error" class="error" style="position: absolute;" for="form1Example1"></label>
+                  <label class="form-label" for="form1Example1">Email address</label>
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="password" id="form1Example2" class="form-control" name="password" />
+                  <label id="form1Example2-error" class="error" style="position: absolute;" for="form1Example2"></label>
+                  <label class="form-label" for="form1Example2">Password</label>
+                </div>
+                <div class="container">
+                  <div class="row justify-content-center">
+                <button type="submit" class="btn btn-success btn-block ">Login</button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+              <a href=""><p id="forget" >forget password?</p></a>
+              <p>Create Account?<a href="/signUp"><span>SignUp</span></a></p>
+              </div>
+              </form>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Background image -->
+</header>
+<script>
+ $(document).ready(function () {
+    $("#formValidation").validate({
+      rules: {
+        email:
+          { required: true, 
+            email: true }, 
+        password: 
+          { required: true,
+            minlength: 4
+           }
+      }, 
+        messages: {
+        email: {
+          required: "Please enter your email",
+          email: "Please enter a validemail address",
+          remote: "User not found" 
+          },
+          password: { 
+            required: "Please enter your password",
+            minlength: "password must contain 4 letters",
+            remote: "Incorrect password"
+            }
+          }, 
+        }); 
+      });
+</script>
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
+></script>
+
+
+
+<!-- <script type="text/javascript" src="js/mdb.min.js"></script> -->
+<!-- Custom scripts -->
+<!-- <script type="text/javascript" src="js/script.js"></script> -->
+</body>
+</html>

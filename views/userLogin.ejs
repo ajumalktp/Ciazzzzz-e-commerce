@@ -1,44 +1,61 @@
 
-<%- include('./partials/header.ejs') %>
+<%- include('./partials/head.ejs') %>
 
 <body>
-    <header>
-    <!-- Background image -->
-    <div id="intro" class="bg-image shadow-2-strong">
-      <div class="mask d-flex align-items-center h-100" style="background-color: rgba(255, 255, 255, 0.7);">
-        <div class="container">
-          <div class="row  justify-content-center">
-            <div class="col-xl-5 col-md-8">
-              <form class="bg-white rounded shadow-5-strong p-5">
-                <h1 id="loginText" class="text-center mt-0 mb-4">Login</h1>
-                <div class="form-outline mb-4">
-                  <input type="email" id="form1Example1" class="form-control" />
-                  <label class="form-label" for="form1Example1">Email address</label>
+  <div class="section">
+    <div class="container">
+      <div class="row full-height justify-content-center">
+        <div class="col-12 text-center align-self-center py-5">
+          <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+            <label for="reg-log"></label>
+            <div class="card-3d-wrap mx-auto">
+              <div class="card-3d-wrapper">
+                <div class="card-front">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-4 pb-3">Log In</h4>
+                      <div class="form-group">
+                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                        <i class="input-icon uil uil-at"></i>
+                      </div>
+                      <div class="form-group mt-2">
+                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                        <i class="input-icon uil uil-lock-alt"></i>
+                      </div>
+                      <a href="#" class="btn mt-4">submit</a>
+                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-outline mb-4">
-                  <input type="password" id="form1Example2" class="form-control" />
-                  <label class="form-label" for="form1Example2">Password</label>
-                </div>
-                <div class="container">
-                  <div class="row justify-content-center">
-                <button type="submit" class="btn btn-success btn-block ">Login</button>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between">
-              <a href=""><p id="forget" >forget password?</p></a>
-              <p>Create Account?<a href=""><span>SignUP</span></a></p>
-              </div>
-              </form>
-            </div>    
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Background image -->
-</header>
-
-<script type="text/javascript" src="js/mdb.min.js"></script>
-<!-- Custom scripts -->
-<script type="text/javascript" src="js/script.js"></script>
+<script>
+ $(document).ready(function () {
+    $("#formValidation").validate({
+      rules: {
+        email:
+          { required: true, 
+            email: true }, 
+        password: 
+          { required: true,
+            minlength: 4
+           }
+      }, 
+        messages: {
+        email: {
+          required: "Please enter your email",
+          email: "Please enter a validemail address",
+          remote: "User not found" 
+          },
+          password: { 
+            required: "Please enter your password",
+            minlength: "password must contain 4 letters",
+            remote: "Incorrect password"
+            }
+          }, 
+        }); 
+      });
+</script>
+<%- include('./partials/script.ejs') %>
 </body>
 </html>

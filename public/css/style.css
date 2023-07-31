@@ -37,11 +37,21 @@ form p{
 #forget{
     color: red;
 }
+.error{
+    color: red;
+    font-size: 12px;
+}
 @media (max-width: 580px) {
     form p{
         font-size: 10px;
     }
     .btn{
         height: 30px;
+    }
+    .error{
+        font-size: 9px;
+    }
+    .form-label{
+        font-size: 12px;
     }
 }

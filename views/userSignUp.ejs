@@ -9,22 +9,26 @@
         <div class="container">
           <div class="row  justify-content-center">
             <div class="col-xl-5 col-md-8">
-              <form class="bg-white rounded shadow-5-strong p-5">
+              <form class="bg-white rounded shadow-5-strong p-5" method="post" id="formValidation">
                 <h1 id="loginText" class="text-center mt-0 mb-4">SignUp</h1>
                 <div class="form-outline mb-4">
-                    <input type="text" id="form1Example1" class="form-control" />
+                    <input type="text" id="form1Example1" class="form-control" name="name" />
+                    <label id="form1Example1-error" class="error" style="position: absolute;" for="form1Example1"></label>
                     <label class="form-label" for="form1Example1">User Name</label>
                   </div>
                 <div class="form-outline mb-4">
-                  <input type="email" id="form1Example1" class="form-control" />
+                  <input type="email" id="form1Example2" class="form-control" name="email" />
+                  <label id="form1Example2-error" class="error" style="position: absolute;" for="form1Example2"></label>
                   <label class="form-label" for="form1Example1">Email address</label>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="number" id="form1Example1" class="form-control" />
+                    <input type="number" id="form1Example3" class="form-control" name="phone" />
+                    <label id="form1Example3-error" class="error" style="position: absolute;" for="form1Example3"></label>
                     <label class="form-label" for="form1Example1">Mobile No:</label>
                   </div>
                 <div class="form-outline mb-4">
-                  <input type="password" id="form1Example2" class="form-control" />
+                  <input type="password" id="form1Example4" class="form-control" name="password" />
+                  <label id="form1Example4-error" class="error" style="position: absolute;" for="form1Example4"></label>
                   <label class="form-label" for="form1Example2">Password</label>
                 </div>
                 
@@ -34,7 +38,7 @@
                 </div>
               </div>
               <div class="d-flex justify-content-end">
-              <p>You have any account?<a href=""><span>Login</span></a></p>
+              <p>You have any account?<a href="/login"><span>Login</span></a></p>
               </div>
               </form>
             </div>    
@@ -46,7 +50,58 @@
   </header>
   <!--Main Navigation-->
 
+  <script>
+       $(document).ready(function () {
+      $.validator.addMethod("noSpace", function (value, element) {
+        return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
+      }, "Name must contain characters or numbers without spaces.");
 
+      $("#formValidation").validate({
+        rules: {
+          name: {
+            required: true,
+            minlength: 2,
+            noSpace: true
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          phone: {
+            required: true,
+            minlength: 10,
+            maxlength: 10
+          },
+          password: {
+            required: true,
+            minlength: 4
+          }
+        },
+        messages: {
+          name: {
+            required: "Please enter your name",
+            minlength: "Name atleast 2 charcters",
+            noSpace: "Name contain number or characters"
+          },
+          email: {
+            required: "Please enter your email",
+            email: "Please enter a valid email address",
+
+          },
+          phone: {
+            required: "Please enter your Mobile NO:",
+            minlength: "Mobile NO: must contain 10 numbers",
+            maxlength: "Mobile NO: maximum contain 10 numbers"
+          },
+          password: {
+            required: "Please enter your password",
+            minlength: "password must contain 4 letters",
+            remote: "Incorrect password"
+          }
+        },
+      });
+    });
+  </script>
     <!-- MDB -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
     <!-- Custom scripts -->

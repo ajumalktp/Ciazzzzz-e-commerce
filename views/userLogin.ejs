@@ -2,33 +2,48 @@
 <%- include('./partials/head.ejs') %>
 
 <body>
+  <div class="bg-image">
   <div class="section">
-    <div class="container">
-      <div class="row full-height justify-content-center">
-        <div class="col-12 text-center align-self-center py-5">
-          <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
-            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
-            <label for="reg-log"></label>
-            <div class="card-3d-wrap mx-auto">
-              <div class="card-3d-wrapper">
-                <div class="card-front">
-                  <div class="center-wrap">
-                    <div class="section text-center">
-                      <h4 class="mb-4 pb-3">Log In</h4>
-                      <div class="form-group">
-                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
-                        <i class="input-icon uil uil-at"></i>
-                      </div>
-                      <div class="form-group mt-2">
-                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-                        <i class="input-icon uil uil-lock-alt"></i>
-                      </div>
-                      <a href="#" class="btn mt-4">submit</a>
-                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
-                    </div>
-                  </div>
+    <div class="container d-flex flex-colum justify-content-center">
+      <div class="card " style="width: 30rem; border-radius: 1.25rem;">
+        <div class="card-body" style="    padding: 1rem 3rem">
+          <div class="card-title-div text-center">
+          <h2 class="card-title mt-4 mb-4">Login</h2>
+          </div>
+          <form action="/login" method="post" id="formValidation">
+            <form>
+              <div class="form-inputs mb-0">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your Email" >
+                <label id="exampleInputEmail1-error" class="error text-danger" for="exampleInputEmail1"></label>
+              </div>
+              <div class="form-inputs mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Enter your Password">
+                <label id="exampleInputPassword1-error" class="error text-danger" for="exampleInputPassword1"></label>
+              </div>
+              <div class="form-button text-center mb-4">
+              <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+              <div class="d-flex justify-content-between">
+                <a href=""><p class="text-danger" >forget password?</p></a>
+                <p>Create Account?<a href="/signUp"><span>SignUp</span></a></p>
                 </div>
+            </form>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <style>
+    p{
+      font-size: 13px;
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
 <script>
  $(document).ready(function () {
     $("#formValidation").validate({

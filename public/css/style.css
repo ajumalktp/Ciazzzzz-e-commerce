@@ -1,57 +1,27 @@
-#intro {
+
+.bg-image{
     background-image: url(https://images.unsplash.com/photo-1649520937981-763d6a14de7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vdGJhbGwlMjBqZXJzZXklMjBjb2xsZWN0aW9uc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60);
-    height: 110vh;
-  }
-
-  /* Height for devices larger than 576px */
-  @media (min-width: 992px) {
-    #intro {
-      margin-top: -58.59px;
-    }
-  }
-
-  .navbar .nav-link {
-    color: #fff !important;
-  }
-
-.rounded{
-    border-radius: 1.25rem !important;
+    background-size: cover;
 }
-#loginText{
-    font-family: monospace;
+.section{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
 }
-.form-control{
-    height: 7vh;
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.btn{
-    height: 45px;
-    font-size: 10px;
-}
-.btn-block{
-    width: 40%;
-}
-form p{
-    margin-top: 30px;
-    margin-bottom: 0;
-}
-#forget{
-    color: red;
+.image{
+    width: 100%;
+    height: 100%;
 }
 .error{
-    color: red;
     font-size: 12px;
 }
-@media (max-width: 580px) {
-    form p{
+@media (max-width: 500px) {
+    p{
         font-size: 10px;
-    }
-    .btn{
-        height: 30px;
-    }
-    .error{
-        font-size: 9px;
-    }
-    .form-label{
-        font-size: 12px;
     }
 }

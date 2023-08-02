@@ -2,11 +2,11 @@ const asyncHandler = require('express-async-handler')
 
 
 const adminController = {
-    adminDashboard:asyncHandler((req,res)=>{
+    getadminDashboard:asyncHandler((req,res)=>{
         res.render('adminDashboard')
     }),
 
-    adminLogin:asyncHandler((req,res)=>{
+    getadminLogin:asyncHandler((req,res)=>{
         res.render('adminLogin')
     })
 }

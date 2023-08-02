@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {adminLogin, adminDashboard} = require('../controllers/adminController')
+const {getadminLogin, getadminDashboard} = require('../controllers/adminController')
 
 
-router.get('/',adminDashboard)
-router.get('/adminLogin',adminLogin)
+router.get('/',getadminDashboard)
+router.get('/adminLogin',getadminLogin)
 
 
 module.exports = router

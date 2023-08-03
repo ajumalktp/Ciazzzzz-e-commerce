@@ -3,5 +3,11 @@
     background-color: antiquewhite;
 }
 .navbar{
-    height: 20vh;
+    height: 10vh;
+    width:80% ;
+}
+.side-bar{
+    height: 90vh;
+    background-color: white;
+    width: 20%;
 }

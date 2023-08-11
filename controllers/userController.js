@@ -1,28 +1,27 @@
-const asyncHandler = require('express-async-handler')
-const userModel = require('../models/userModel')
+const asyncHandler = require("express-async-handler");
+const userModel = require("../models/userModel");
 
 const userController = {
+  getHome: asyncHandler((req, res) => {
+    res.render("userHome");
+  }),
 
-getHome:asyncHandler((req,res)=>{
-    res.render('userHome')
-}),
+  getLogin: asyncHandler((req, res) => {
+    res.render("userLogin");
+  }),
 
-getLogin:asyncHandler((req,res)=>{
-    res.render('userLogin')
-}),
-
-getSignUp:asyncHandler((req,res)=>{
-    res.render('userSignUp')
-}),
-signUp:asyncHandler((req,res)=>{
-    const {name,email,phone,password} = req.body
+  getSignUp: asyncHandler((req, res) => {
+    res.render("userSignUp");
+  }),
+  signUp: asyncHandler((req, res) => {
+    const { name, email, phone, password } = req.body;
     console.log(name);
     const user = new userModel({
-        name:name,
-        email:email,
-        phone:phone,
-        password:password
-    })
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    });
     user
       .save()
       .then((result) => {
@@ -34,6 +33,6 @@ signUp:asyncHandler((req,res)=>{
       .catch((error) => {
         console.log(error);
       });
-}),
-}
-module.exports = userController
+  }),
+};
+module.exports = userController;

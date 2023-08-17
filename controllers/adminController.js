@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 
 const adminController = {
-    
+
     getadminDashboard: asyncHandler((req, res) => {
         if(req.session.admin){
             res.render('adminDashboard')
@@ -22,7 +22,6 @@ const adminController = {
         let Uemail = 'admin@gmail.com'
         let Upassword = '1234'
         const {email , password} = req.body
-        console.log(req.body);
         if(Uemail == email && Upassword == password){
             req.session.admin = true
             res.redirect('/admin')

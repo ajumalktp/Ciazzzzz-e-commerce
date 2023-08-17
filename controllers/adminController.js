@@ -29,6 +29,9 @@ const adminController = {
             res.render('adminLogin')
         }
     }),
+    getUsers: asyncHandler((req,res)=>{
+        res.render('adminUsers')
+    })
 };
 
 module.exports = adminController;

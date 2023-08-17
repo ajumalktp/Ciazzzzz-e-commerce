@@ -4,12 +4,15 @@
 }
 .navbar{
     height: 10vh;
-    width:81% ;
+    width:100% ;
+}
+.content-section{
+    width: 82%;
 }
 .side-bar{
     height: 100vh;
     background-color: white;
-    width: 19%;
+    width: 18%;
 }
 .side-bar .container-fluid{
     width: 100%;

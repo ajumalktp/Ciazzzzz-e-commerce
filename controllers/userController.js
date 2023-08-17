@@ -2,8 +2,10 @@ const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 
 const userController = {
-  getHome: asyncHandler((req, res) => {
-    res.render("userHome");
+  getHome: asyncHandler(async(req, res) => {
+    const users = await userModel.find().lean()
+    console.log(users)
+    res.render("userHome",{users});
   }),
 
   getLogin: asyncHandler((req, res) => {
@@ -25,10 +27,8 @@ const userController = {
     user
       .save()
       .then((result) => {
-        if (result) {
           console.log(result);
           res.redirect("/login");
-        }
       })
       .catch((error) => {
         console.log(error);

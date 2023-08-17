@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const app = express();
 const path = require("path");
+const morgan = require('morgan')
 const userRouter = require("./routes/userRouter");
 const adminRouter = require("./routes/adminRouter");
 const dbConnect = require("./dbConnect");
@@ -15,6 +16,7 @@ dbConnect();
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(morgan('dev'))
 app.use(
 session({
     secret: "123",

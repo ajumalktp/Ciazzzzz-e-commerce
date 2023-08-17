@@ -39,6 +39,7 @@
                         Banners</button></a>
                 </div>
         </div>
+        <div class="content-section">
         <nav class="navbar navbar-expand-lg navbar-light bg-white text-center">
             <div class="container  d-block">
                 <div class="row">
@@ -55,7 +56,33 @@
                 </div>
             </div>
         </nav>
+        <div class="container">
+            <table class="table text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">NO:</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone NO:</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <% for(let i = 0 ; i < users.length ; i++){ %>
+                  <tr>
+                    <th scope="row"><%= i+1 %></th>
+                    <td><%= users[i].name %></td>
+                    <td><%= users[i].email %></td>
+                    <td><%= users[i].phone %></td>
+                    <td>hello</td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+        </div>
+        </div>
     </div>
+
 
 
 

@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const userModel = require('../models/userModel')
 
 const adminController = {
 
@@ -29,9 +30,10 @@ const adminController = {
             res.render('adminLogin')
         }
     }),
-    getUsers: asyncHandler((req,res)=>{
-        res.render('adminUsers')
-    })
+    getUsers: async(req,res)=>{
+        const users = await userModel.find().lean()
+        res.render('adminUsers',{users})
+    },
 };
 
 module.exports = adminController;

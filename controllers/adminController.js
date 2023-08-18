@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require('../models/userModel')
+const adminModel = require('../models/adminModel')
 
 const adminController = {
 
@@ -19,21 +20,35 @@ const adminController = {
         }
     }),
 
-    adminLogin: asyncHandler((req, res)=>{
-        let Uemail = 'admin@gmail.com'
-        let Upassword = '1234'
+    adminLogin: async(req, res)=>{
         const {email , password} = req.body
-        if(Uemail == email && Upassword == password){
-            req.session.admin = true
-            res.redirect('/admin')
+        const admin = await adminModel.findOne({email})
+        if(admin){
+            if(password == admin.password){
+                req.session.admin = true
+                console.log('admin Logined successfully');
+                res.redirect('/admin')
+            }else{
+                const error = 'invalid Email or Password'
+                console.log(error);
+                res.render('adminLogin',{error})
+            }
         }else{
-            res.render('adminLogin')
+            error = 'admin NOT FOUND'
+            console.log(error);
+            res.render('adminLogin',{error})
         }
-    }),
+    },
+
     getUsers: async(req,res)=>{
         const users = await userModel.find().lean()
         res.render('adminUsers',{users})
     },
+
+    adminLogOut: (req,res)=>{
+        req.session.admin = null
+        res.redirect('/admin/adminLogin')
+    }
 };
 
 module.exports = adminController;

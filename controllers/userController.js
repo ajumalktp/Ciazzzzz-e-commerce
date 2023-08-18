@@ -3,14 +3,37 @@ const userModel = require("../models/userModel");
 
 const userController = {
   getHome: asyncHandler(async(req, res) => {
-    const users = await userModel.find().lean()
-    console.log(users)
-    res.render("userHome",{users});
+    res.render("userHome");
   }),
 
-  getLogin: asyncHandler((req, res) => {
+  getLogin:(req, res) => {
     res.render("userLogin");
-  }),
+  },
+
+  userLogin: async(req,res)=>{
+    const {email, password} = req.body
+    const user = await userModel.findOne({email})
+
+    if(user){
+      if(password == user.password){
+        req.session.user = true
+        req.session.user = {
+          id: user._id,
+          name: user.name
+        }
+        console.log(user)
+        res.redirect('/')
+      }else{
+        const error = 'invalid email or password'
+        console.log(error)
+        res.render('userLogin',{error})
+      }
+    }else{
+      error = 'user NOT FOUND'
+      console.log(error)
+      res.render('userLogin',{error})
+    }
+  },
 
   getSignUp: asyncHandler((req, res) => {
     res.render("userSignUp");

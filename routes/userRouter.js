@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getHome,getLogin,getSignUp,signUp} = require('../controllers/userController')
+const {getHome,getLogin,getSignUp,signUp,userLogin} = require('../controllers/userController')
 const {getShop} = require('../controllers/productController')
 
 
@@ -9,7 +9,7 @@ router.get('/login',getLogin)
 router.get('/signUp',getSignUp)
 
 router.post('/signUp',signUp)
-
+router.post('/login',userLogin)
 
 router.get('/shop',getShop)
 

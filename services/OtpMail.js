@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-const sendMail = (name , email , otp)=>{
+const sendOtp = (name , email , otp)=>{
     let transporter = nodemailer.createTransport({
         host:"smtp.gmail.com",
         port:465,
@@ -34,4 +34,4 @@ const sendMail = (name , email , otp)=>{
       })
 }
 
-module.exports = sendMail
+module.exports = sendOtp

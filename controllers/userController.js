@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 const otpGen = require('otp-generator')
+const sendOtp = require('../services/OtpMail')
 
 let otp = otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
 
@@ -51,6 +52,7 @@ const userController = {
     }else{
       req.session.userDetails = req.body
     }
+
 
 
 

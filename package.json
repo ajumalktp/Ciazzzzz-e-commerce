@@ -10,6 +10,7 @@
   "author": "Muhammed Ajumal T",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "bootstrap-icons": "^1.10.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",

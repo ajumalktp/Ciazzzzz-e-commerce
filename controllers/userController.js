@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
+const bycrypt = require('bcrypt')
 
 let otp = otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
 
@@ -19,7 +20,7 @@ const userController = {
     const user = await userModel.findOne({email})
 
     if(user){
-      if(password == user.password){
+      if(await bycrypt.compare(password, user.password)){
         req.session.user = true
         req.session.user = {
           id: user._id,
@@ -43,22 +44,52 @@ const userController = {
     res.render("userSignUp");
   },
 
-  userRegister:async(req, res) => {
-    const { name, email, phone, password } = req.body;
-
-    const emailExist = await userModel.find({email})
-    if(emailExist){
-      return res.render('userSignUp',{err:true, message:'This user already Exists'})
-    }else{
-      req.session.userDetails = req.body
-    }
-
-
-
-
-  },
   submitOtp:(req,res)=>{
     res.render('submitOtp')
   },
+
+  userRegister:async(req, res) => {
+    const { name, email,} = req.body;
+
+    const emailExist = await userModel.findOne({email})
+    
+    if(emailExist){
+      const error  = 'Email already exists'
+      return res.render('userSignUp',{error})
+    }else{
+      req.session.userDetails = req.body
+    }
+    sendOtp(name,email,otp)
+    req.session.email = email
+    req.session.otp = otp
+    
+    res.redirect('/submitOtp')
+  },
+
+  verfiyOtp: async(req,res)=>{
+    const {name, email, phone, password} = req.session.userDetails;
+    let otp = req.body.otp.join('')
+    console.log(name);
+    if(req.session.otp == otp){
+
+      const hashPass = await bycrypt.hash(password,10)
+      const user = new userModel({
+        name:name,
+        email:email,
+        phone:phone,
+        password:hashPass,
+      })
+      user.save()
+      res.redirect('/login')
+    }else{
+      const error = 'Incorrect OTP'
+      res.render('submitOtp',{error})
+    }
+  }
+
+
+
+
+
 };
 module.exports = userController;

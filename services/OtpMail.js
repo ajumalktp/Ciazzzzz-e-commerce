@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 
 const sendOtp = (name , email , otp)=>{
-    let transporter = nodemailer.createTransport({
+    let transporter =  nodemailer.createTransport({
         host:"smtp.gmail.com",
         port:465,
         secure:true,
@@ -19,8 +19,8 @@ const sendOtp = (name , email , otp)=>{
         to: email,
         subject: " Email verification",
         html: `
-                <h1>Verify Your Email For ShoeFit store</h1>
-                  <h3>${name}please use this code to verify your email</h3>
+                <h1>Verify Your Email For Ciazzzzz Store</h1>
+                  <h3>${name} please use this code to verify your email</h3>
                   <h2>${otp}</h2>
                 `,
       }

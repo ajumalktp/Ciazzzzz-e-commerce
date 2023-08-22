@@ -1,5 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
+const otpGen = require('otp-generator')
+
+let otp = otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
 
 const userController = {
   getHome: asyncHandler(async(req, res) => {
@@ -35,27 +38,25 @@ const userController = {
     }
   },
 
-  getSignUp: asyncHandler((req, res) => {
+  getUserRegister:(req, res) => {
     res.render("userSignUp");
-  }),
-  signUp: asyncHandler((req, res) => {
+  },
+
+  userRegister:async(req, res) => {
     const { name, email, phone, password } = req.body;
-    console.log(name);
-    const user = new userModel({
-      name: name,
-      email: email,
-      phone: phone,
-      password: password,
-    });
-    user
-      .save()
-      .then((result) => {
-          console.log(result);
-          res.redirect("/login");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }),
+
+    const emailExist = await userModel.find({email})
+    if(emailExist){
+      return res.render('userSignUp',{err:true, message:'This user already Exists'})
+    }else{
+      req.session.userDetails = req.body
+    }
+
+
+
+  },
+  submitOtp:(req,res)=>{
+    res.render('submitOtp')
+  },
 };
 module.exports = userController;

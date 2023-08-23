@@ -27,7 +27,7 @@
                             <div class="mt-4"><button type="submit" class="btn btn-danger px-4 validate">Validate</button> </div>
                             <div class="text-center mt-2">
                                 <span class="d-block mobile-text" id="countdown"></span>
-                                <span class="d-block mobile-text" id="resend"></span>
+                                <a href="/resendOtp"><span class="d-block mobile-text" id="resend"></span></a>
                             </div>
                         </form>
                         </div>
@@ -125,8 +125,7 @@
                     setTimeout(function () {
                         timer(remaining);
                     }, 1000);
-                    document.getElementById("resend").innerHTML = `
-    `;
+                    document.getElementById("resend").innerHTML = ``;
                     return;
                 }
                 if (!timerOn) {

@@ -1,10 +1,12 @@
-const asyncHandler = require("express-async-handler");
 const userModel = require("../models/userModel");
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt')
 
-let otp = otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
+function generateOtp(){
+  return otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
+}
+let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
@@ -61,11 +63,11 @@ const userController = {
     if(emailExist){
       const error  = 'Email already exists'
       return res.render('userSignUp',{error})
-    }else{
-      req.session.userDetails = req.body
     }
+    req.session.userDetails = req.body
     sendOtp(name,email,otp)
     req.session.email = email
+    req.session.name = name
     req.session.otp = otp
     
     res.redirect('/submitOtp')
@@ -73,9 +75,8 @@ const userController = {
 
   verifyOtp: async(req,res)=>{
     const {name, email, phone, password} = req.session.userDetails;
-    let otp = req.body.otp.join('')
-    console.log(name);
-    if(req.session.otp == otp){
+    const otpBody = req.body.otp.join('')
+    if(req.session.otp == otpBody ){
 
       const hashPass = await bycrypt.hash(password,10)
       const user = new userModel({
@@ -90,7 +91,18 @@ const userController = {
       const error = 'Incorrect OTP'
       res.render('submitOtp',{error})
     }
-  }
+  },
+
+  resendOtp:(req,res)=>{
+    req.session.otp = null
+    otp = undefined
+    otp = generateOtp()
+    const email = req.session.email
+    const name = req.session.name
+    sendOtp(name,email,otp)
+    req.session.otp = otp
+    res.redirect('/submitOtp')
+  },
 
 
 

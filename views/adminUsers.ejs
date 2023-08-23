@@ -57,7 +57,7 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
+        <div class="container p-4">
             <table class="table text-center">
                 <thead>
                   <tr>
@@ -78,11 +78,11 @@
                     <td><%= users[i].phone %></td>
                     <% if(users[i].ban){ %>
                     <td class="text-center">
-                    <div class="text-danger" >Banned</div>
+                    <div class="text-danger fw-bold" >Banned</div>
                     </td>
                     <% }else{ %>
                     <td class="text-center">
-                    <div class="text-success">Active</div>
+                    <div class="text-success fw-bold">Active</div>
                     </td>
                     <% } %>
                     <% if(users[i].ban){ %>

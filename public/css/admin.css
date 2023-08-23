@@ -1,6 +1,6 @@
 .section{
     height: 100vh;
-    background-color: antiquewhite;
+    background-color: rgba(238, 234, 234, 1);
 }
 .navbar{
     height: 10vh;
@@ -29,4 +29,7 @@
 #primary-btn{
     background-color: blueviolet;
     color: white;
+}
+table{
+    background-color: white;
 }

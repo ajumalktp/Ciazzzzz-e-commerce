@@ -66,6 +66,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Phone NO:</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -75,7 +76,26 @@
                     <td><%= users[i].name %></td>
                     <td><%= users[i].email %></td>
                     <td><%= users[i].phone %></td>
-                    <td>hello</td>
+                    <% if(users[i].ban){ %>
+                      <div class="text-center">
+                    <td class="text-danger" >Banned</td>
+                      </div>
+                    <% }else{ %>
+                      <div class="text-center">
+                    <td class="text-success">Active</td>
+                      </div>
+                    <% } %>
+                    <% if(users[i].ban){ %>
+                      <form action="/admin/unBan/<%= users[i]._id %>" method="get">
+                      <td><button style="    width: 15vh;
+                        height: 5vh;" class="btn btn-success">UnBlock</button></td>
+                      </form>
+                    <% }else{ %>
+                      <form action="/admin/ban/<%= users[i]._id %>" method="get">
+                        <td><button style="    width: 15vh;
+                          height: 5vh;" class="btn btn-danger">Block</button></td>
+                        </form>
+                    <% } %>
                   </tr>
                   <% } %>
                 </tbody>

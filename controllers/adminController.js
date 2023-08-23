@@ -45,6 +45,20 @@ const adminController = {
         res.render('adminUsers',{users})
     },
 
+    userBan: async(req,res)=>{
+        const _id = req.params._id
+        console.log(_id);
+        await userModel.findByIdAndUpdate(_id,{$set:{ban:true}})
+        req.session.user = null
+        res.redirect('/admin/users')
+    },
+
+    userUnBan: async(req,res)=>{
+        const _id = req.params._id
+        await userModel.findByIdAndUpdate(_id,{$set:{ban:false}})
+        res.redirect('/admin/users')
+    },
+
     adminLogOut: (req,res)=>{
         req.session.admin = null
         res.redirect('/admin/adminLogin')

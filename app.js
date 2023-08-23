@@ -6,7 +6,7 @@ const morgan = require('morgan')
 const userRouter = require("./routes/userRouter");
 const adminRouter = require("./routes/adminRouter");
 const dbConnect = require("./dbConnect");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(morgan('dev'))
 app.use(
 session({
-    secret: "123",
+    secret:process.env.SESSION_KEY,
     saveUninitialized: true,
     resave: false,
     cookie:{

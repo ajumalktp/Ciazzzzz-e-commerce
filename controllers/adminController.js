@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const userModel = require('../models/userModel')
 const adminModel = require('../models/adminModel')
+const bycrypt = require('bcrypt')
 
 const adminController = {
 

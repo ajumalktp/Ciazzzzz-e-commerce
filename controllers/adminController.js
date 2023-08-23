@@ -47,7 +47,6 @@ const adminController = {
 
     userBan: async(req,res)=>{
         const _id = req.params._id
-        console.log(_id);
         await userModel.findByIdAndUpdate(_id,{$set:{ban:true}})
         req.session.user = null
         res.redirect('/admin/users')

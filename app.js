@@ -20,8 +20,11 @@ app.use(morgan('dev'))
 app.use(
 session({
     secret: "123",
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
+    cookie:{
+      maxAge:86400000
+    }
 })
 );
 

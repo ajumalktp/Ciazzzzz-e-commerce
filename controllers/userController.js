@@ -7,9 +7,9 @@ const bycrypt = require('bcrypt')
 let otp = otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
 
 const userController = {
-  getHome: asyncHandler(async(req, res) => {
+  getHome: async(req, res) => {
     res.render("userHome");
-  }),
+  },
 
   getLogin:(req, res) => {
     res.render("userLogin");
@@ -21,6 +21,7 @@ const userController = {
 
     if(user){
       if(await bycrypt.compare(password, user.password)){
+        if(!user.ban){
         req.session.user = true
         req.session.user = {
           id: user._id,
@@ -28,8 +29,12 @@ const userController = {
         }
         console.log(user)
         res.redirect('/')
+        }else{
+          const error = 'You are Banned!'
+          res.render('userLogin',{error})
+        }
       }else{
-        const error = 'invalid email or password'
+        error = 'invalid email or password'
         console.log(error)
         res.render('userLogin',{error})
       }
@@ -66,7 +71,7 @@ const userController = {
     res.redirect('/submitOtp')
   },
 
-  verfiyOtp: async(req,res)=>{
+  verifyOtp: async(req,res)=>{
     const {name, email, phone, password} = req.session.userDetails;
     let otp = req.body.otp.join('')
     console.log(name);

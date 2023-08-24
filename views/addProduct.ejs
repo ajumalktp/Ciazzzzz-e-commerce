@@ -4,7 +4,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <!-- edit form column -->
-<form id="formValidation" class="form-horizontal" role="form" action="/admin/create-users" method="post"
+<form id="formValidation" class="form-horizontal" role="form" action="/admin/addProduct" method="post"
   enctype="multipart/form-data">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -24,46 +24,56 @@
         </div>
       </div>
       <div class="col-md-9 personal-info">
-        <div class="form-group">
+        <div class="form-group mb-1">
           <h2 class="error" style="font-size: 15px;"></h2>
           <label class="col-lg-3 control-label">Product Name</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" placeholder="Enter Username" name="name">
+            <input class="form-control" type="text" placeholder="Enter Product Name" name="productName">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Price</label>
           <div class="col-lg-8">
-            <input class="form-control" type="email" placeholder="Email@gmail.com" name="email">
+            <input class="form-control" type="number" placeholder="Enter Product Price" name="productPrice">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product MRP</label>
           <div class="col-lg-8">
-            <input class="form-control" type="number" placeholder="Enter Mobile No" name="phone">
+            <input class="form-control" type="number" placeholder="Enter Product MRP" name="productMRP">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Category</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" placeholder="Enter Password" name="password">
+            <select class="form-control"  name="productCategory">
+              <option value="" disabled selected>select your option</option>
+              <option value="">heloo</option>
+              <option value="">heloo</option>
+              <option value="">heloo</option>
+            </select>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Discription</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" placeholder="Enter Password" name="password">
+              <textarea class="form-control" type="text" placeholder="Enter About the Product" name="productDiscription" cols="30" rows="10"></textarea>
           </div>
-        </div><div class="form-group">
+        </div><div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Size</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" placeholder="Enter Password" name="password">
+            <select class="form-control"  name="productSize">
+              <option value="" disabled selected>select your option</option>
+              <option value="">heloo</option>
+              <option value="">heloo</option>
+              <option value="">heloo</option>
+            </select>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Quantity</label>
           <div class="col-lg-8">
-            <input class="form-control" type="password" placeholder="Enter Password" name="password">
+            <input class="form-control" type="number" placeholder="Enter the Quantity" name="productQuantity">
           </div>
         </div>
         <div class="form-group" style="margin-top: 20px;">
@@ -81,6 +91,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+textarea{
+  height: 10vh;
+}
 </style>
 <script>
   function previewImage(event) {
@@ -96,56 +109,56 @@ input::-webkit-inner-spin-button {
   }
 
   //form validation
-  $(document).ready(function () {
-    $.validator.addMethod("noSpace", function (value, element) {
-      return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
-    }, "Name must contain characters or numbers without spaces.");
+  // $(document).ready(function () {
+  //   $.validator.addMethod("noSpace", function (value, element) {
+  //     return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
+  //   }, "Name must contain characters or numbers without spaces.");
 
-    $("#formValidation").validate({
-      rules: {
-        name: {
-          required: true,
-          minlength: 2,
-          noSpace: true
-        },
-        email: {
-          required: true,
-          email: true
-        },
-        phone: {
-          required: true,
-          minlength: 10,
-          maxlength: 10
-        },
-        password: {
-          required: true,
-          minlength: 4
-        }
-      },
-      messages: {
-        name: {
-          required: "Please enter your name",
-          minlength: "Name atleast 2 charcters",
-          noSpace: "Name contain number or characters"
-        },
-        email: {
-          required: "Please enter your email",
-          email: "Please enter a valid email address",
-          remote: "User not found"
-        },
-        phone: {
-          required: "Please enter your Phone NO:",
-          minlength: "Phone number must contain 10 numbers",
-          maxlength: "phone number maximum contain 10 numbers"
-        },
-        password: {
-          required: "Please enter your password",
-          minlength: "password must contain 4 letters",
-          remote: "Incorrect password"
-        }
-      },
-    });
-  });
+  //   $("#formValidation").validate({
+  //     rules: {
+  //       name: {
+  //         required: true,
+  //         minlength: 2,
+  //         noSpace: true
+  //       },
+  //       email: {
+  //         required: true,
+  //         email: true
+  //       },
+  //       phone: {
+  //         required: true,
+  //         minlength: 10,
+  //         maxlength: 10
+  //       },
+  //       password: {
+  //         required: true,
+  //         minlength: 4
+  //       }
+  //     },
+  //     messages: {
+  //       name: {
+  //         required: "Please enter your name",
+  //         minlength: "Name atleast 2 charcters",
+  //         noSpace: "Name contain number or characters"
+  //       },
+  //       email: {
+  //         required: "Please enter your email",
+  //         email: "Please enter a valid email address",
+  //         remote: "User not found"
+  //       },
+  //       phone: {
+  //         required: "Please enter your Phone NO:",
+  //         minlength: "Phone number must contain 10 numbers",
+  //         maxlength: "phone number maximum contain 10 numbers"
+  //       },
+  //       password: {
+  //         required: "Please enter your password",
+  //         minlength: "password must contain 4 letters",
+  //         remote: "Incorrect password"
+  //       }
+  //     },
+  //   });
+  // });
 </script>
 <style>
   body {

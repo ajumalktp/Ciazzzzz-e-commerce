@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {getadminLogin, getadminDashboard, adminLogin, getUsers, adminLogOut, userBan, userUnBan} = require('../controllers/adminController')
-const {getAdminProducts,getAddProduct} = require('../controllers/productController')
+const {getAdminProducts,getAddProduct,addProduct} = require('../controllers/productController')
 const {getAllOrders} = require('../controllers/orderController')
 const verifyAdmin = require('../middleware/verifyAdmin')
 
@@ -17,6 +17,8 @@ router.get('/addProduct',getAddProduct)
 
 
 router.post('/adminLogin',adminLogin)
+router.post('/addProduct',addProduct)
+
 
 
 

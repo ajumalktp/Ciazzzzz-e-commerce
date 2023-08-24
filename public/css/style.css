@@ -19,9 +19,19 @@
 }
 .error{
     font-size: 12px;
+    display: block;
+    
 }
 @media (max-width: 500px) {
     p{
         font-size: 10px;
     }
 }
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }

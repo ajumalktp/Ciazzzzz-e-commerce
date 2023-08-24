@@ -52,7 +52,12 @@ const userController = {
   },
 
   submitOtp:(req,res)=>{
-    res.render('submitOtp')
+    if(req.session.userDetails){
+      res.render('submitOtp')
+    }else{
+      res.redirect('/signUp')
+    }
+    
   },
 
   userRegister:async(req, res) => {

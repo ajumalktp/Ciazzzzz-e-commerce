@@ -1,25 +1,23 @@
-const asyncHandler = require("express-async-handler");
 const userModel = require('../models/userModel')
 const adminModel = require('../models/adminModel')
-const bycrypt = require('bcrypt')
 
 const adminController = {
 
-    getadminDashboard: asyncHandler((req, res) => {
+    getadminDashboard:(req, res) => {
         if(req.session.admin){
             res.render('adminDashboard')
         }else{
             res.redirect('/admin/adminLogin')
         }
-    }),
+    },
 
-    getadminLogin: asyncHandler((req, res) => {
+    getadminLogin:(req, res) => {
         if(req.session.admin){
             res.redirect('/admin')
         }else{
             res.render('adminLogin')
         }
-    }),
+    },
 
     adminLogin: async(req, res)=>{
         const {email , password} = req.body

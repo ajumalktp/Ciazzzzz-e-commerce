@@ -3,12 +3,15 @@ const asyncHandler = require('express-async-handler')
 
 const productController = {
 
-    getShop:asyncHandler((req,res)=>{
+    getShop:(req,res)=>{
         res.render('shop')
-    }),
-    getProducts:asyncHandler((req,res)=>{
+    },
+    getAdminProducts:(req,res)=>{
         res.render('adminProducts')
-    })
+    },
+    getAddProduct:(req,res)=>{
+        res.render('addProduct')
+    }
 }
 
 module.exports = productController

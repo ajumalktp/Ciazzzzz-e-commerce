@@ -17,17 +17,17 @@ const productController = {
     },
 
     addProduct: async(req,res)=>{
-        const {image,productName,productCategory,productSize,productPrice,productMRP,productDiscription,productQuantity} = req.body
+        const {image,productName,productPrice,productMRP,productQuantity,productDiscription,productSize,productCategory} = req.body
         const product = new productModel({
             image:image,
-            productName:String,
-            productDiscription:String,
-            productMRP:Number,
-            productPrice:Number,
-            productQuantity:Number,
-            productSize:String,
-            productCategory:String
-        })
+            productName:productName,
+            productDiscription:productDiscription,
+            productMRP:productMRP,
+            productPrice:productPrice,
+            productQuantity:productQuantity,
+            productCategory:productCategory,
+            productSize:productSize
+          });
         product.save()
         res.redirect('/admin/products')
     },

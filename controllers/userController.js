@@ -14,12 +14,22 @@ const userController = {
   },
 
   getLogin:(req, res) => {
-    res.render("userLogin");
+    const {email,password} = req.body
+    const failedAuthData = {
+      email:email || '',
+      password:password || ''
+    }
+    res.render("userLogin",{failedAuth:failedAuthData});
   },
 
   userLogin: async(req,res)=>{
     const {email, password} = req.body
     const user = await userModel.findOne({email})
+
+    const failedAuthData = {
+      email:email || '',
+      password:password || ''
+    }
 
     if(user){
       if(await bycrypt.compare(password, user.password)){
@@ -29,21 +39,18 @@ const userController = {
           id: user._id,
           name: user.name
         }
-        console.log(user)
         res.redirect('/')
         }else{
           const error = 'You are Banned!'
-          res.render('userLogin',{error})
+          res.render('userLogin',{error,failedAuth:failedAuthData})
         }
       }else{
         error = 'invalid email or password'
-        console.log(error)
-        res.render('userLogin',{error})
+        res.render('userLogin',{error,failedAuth:failedAuthData})
       }
     }else{
       error = 'user NOT FOUND'
-      console.log(error)
-      res.render('userLogin',{error})
+      res.render('userLogin',{error,failedAuth:failedAuthData})
     }
   },
 

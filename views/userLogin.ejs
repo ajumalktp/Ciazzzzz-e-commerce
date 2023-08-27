@@ -1,6 +1,7 @@
 
 <%- include('./partials/loginHead.ejs') %>
 
+
 <body>
   <div class="bg-image">
   <div class="section">
@@ -15,14 +16,17 @@
             <form>
               <div class="form-inputs mb-0">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter your Email" >
+                <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="<%= failedAuth.email %>" placeholder="Enter your Email" >
                 <label id="exampleInputEmail1-error" class="error text-danger" for="exampleInputEmail1"></label>
               </div>
               <div class="form-inputs mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Enter your Password">
+                <div class="input-group">
+                  <input type="password" class="form-control" id="exampleInputPassword1" name="password" value="<%= failedAuth.password %>" placeholder="Enter your Password">
+                  <button type="button" class="btn btn-secondary" id="togglePassword">View</button>
+                </div>
                 <label id="exampleInputPassword1-error" class="error text-danger" for="exampleInputPassword1"></label>
-              </div>
+              </div>                          
               <div class="form-button text-center mb-4">
               <button type="submit" class="btn btn-success">Submit</button>
               </div>
@@ -44,6 +48,7 @@
     a{
       text-decoration: none;
     }
+
   </style>
 <script>
  $(document).ready(function () {
@@ -71,6 +76,20 @@
           }, 
         }); 
       });
+
+
+      document.addEventListener("DOMContentLoaded", function() {
+  const togglePassword = document.querySelector("#togglePassword");
+  const passwordInput = document.querySelector("#exampleInputPassword1");
+
+  togglePassword.addEventListener("click", function() {
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+    togglePassword.textContent = type === "password" ? "View" : "Hide";
+  });
+});
+
+
 </script>
 <%- include('./partials/script.ejs') %>
 </body>

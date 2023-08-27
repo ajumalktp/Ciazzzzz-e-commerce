@@ -3,8 +3,9 @@ const productModel = require('../models/productModel')
 
 const productController = {
 
-    getShop:(req,res)=>{
-        res.render('shop')
+    getShop: async(req,res)=>{
+        const products = await productModel.find().lean()
+        res.render('shop',{products})
     },
 
     getAdminProducts: async(req,res)=>{

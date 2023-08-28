@@ -11,8 +11,8 @@ router.get('/products',verifyAdmin,getAdminProducts)
 router.get('/users',verifyAdmin,getUsers)
 router.get('/orders',verifyAdmin,getAllOrders)
 router.get('/logOut',adminLogOut)
-router.get('/ban/:_id',verifyAdmin,userBan)
-router.get('/unBan/:_id',verifyAdmin,userUnBan)
+router.get('/ban/:id',verifyAdmin,userBan)
+router.get('/unBan/:id',verifyAdmin,userUnBan)
 router.get('/addProduct',getAddProduct)
 
 

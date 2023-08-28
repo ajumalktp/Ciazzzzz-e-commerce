@@ -49,7 +49,7 @@
       <section class="banner">
         <div class="slider">
           <% for(let i = 0; i<products.length; i++){ %>
-          <div class="slide active">
+          <div class="slide">
             <img src="<%= products[i].image %>" alt="">
             <div class="left-info">
               <div class="penetrte-blur">
@@ -85,7 +85,7 @@
       const slides = document.querySelectorAll(".slide");
       const numberOfSlides = slides.length;
       let slideNumber = 0;
-
+      slides[slideNumber].classList.add('active')
 
       // slider next button
       nxtBtn.onclick = () => {

@@ -9,6 +9,7 @@ function generateOtp(){
 }
 let otp = generateOtp()
 
+
 const userController = {
   getHome: async(req, res) => {
     const products = await productModel.find().lean()
@@ -61,8 +62,9 @@ const userController = {
   },
 
   submitOtp:(req,res)=>{
+    const {email} = req.session.userDetails
     if(req.session.userDetails){
-      res.render('submitOtp')
+      res.render('submitOtp',{email})
     }else{
       res.redirect('/signUp')
     }

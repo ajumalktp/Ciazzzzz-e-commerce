@@ -165,11 +165,13 @@
   
   .content h3{
       font-size: 20px;
+      text-transform: uppercase;
   }
   
   .content p{
       font-size: 16px;
       margin: 10px 0 1.5rem;
+      width: 80vh;
   }
   
   .content .btn{

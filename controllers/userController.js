@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+const productModel = require('../models/productModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt')
@@ -10,7 +11,8 @@ let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
-    res.render("userHome");
+    const products = await productModel.find().lean()
+    res.render("userHome",{products});
   },
 
   getLogin:(req, res) => {

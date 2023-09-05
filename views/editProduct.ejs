@@ -7,47 +7,52 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <!-- edit form column -->
-<form id="formValidation" class="form-horizontal" action="/admin/addProduct" method="post">
+<form id="formValidation" class="form-horizontal" action="/admin/editProduct" method="post">
   <div class="container bootstrap snippets bootdey">
-    <h1 class="text-primary">ADD PRODUCT</h1>
+    <h1 class="text-primary">EDIT PRODUCT</h1>
     <hr>
     <div class="row">
       <!--  left column  -->
     <div class="col-md-3">
         <div class="text-center">
-          <img id="imagePreview" src="https://www.odoo.com/web/image/res.users/1709393/image_1024?unique=5186ca3"
+            <% if(product.image){ %>
+          <img id="imagePreview" src="<%= product.image %>" alt=""
             class="avatar img-circle img-thumbnail" alt="avatar">
+            <% }else{ %>
+                <img id="imagePreview" src="https://www.odoo.com/web/image/res.users/1709393/image_1024?unique=5186ca3" 
+            class="avatar img-circle img-thumbnail" alt="avatar">
+            <% } %>
           <h6>Upload a different photo...</h6>
-
-          <input type="file"  class="form-control" id="image" name="image" accept="image/*"
+          <input type="file"  class="form-control" id="image" name="image" value="<%= product.image %>" accept="image/*"
             onchange="previewImage(event)" multiple>
         </div>
       </div>
       <div class="col-md-9 personal-info">
+        <input type="text" value="<%= product._id %>" style="height: 0px; visibility:hidden" name="_id">
         <div class="form-group mb-1">
           <h2 class="error" style="font-size: 15px;"></h2>
           <label class="col-lg-3 control-label">Product Name</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" placeholder="Enter Product Name" name="productName">
+            <input class="form-control" type="text" placeholder="Enter Product Name" value="<%= product.productName %>" name="productName">
           </div>
         </div>
         <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Price</label>
           <div class="col-lg-8">
-            <input class="form-control" type="number" placeholder="Enter Product Price" name="productPrice">
+            <input class="form-control" type="number" placeholder="Enter Product Price" value="<%= product.productPrice %>" name="productPrice">
           </div>
         </div>
         <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product MRP</label>
           <div class="col-lg-8">
-            <input class="form-control" type="number" placeholder="Enter Product MRP" name="productMRP">
+            <input class="form-control" type="number" placeholder="Enter Product MRP" value="<%= product.productMRP %>" name="productMRP">
           </div>
         </div>
         <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Category</label>
           <div class="col-lg-8">
             <select class="form-control"  name="productCategory">
-              <option value="" disabled selected>select your option</option>
+              <option value="" disabled selected class="bg-warning"><%= product.productCategory %></option>
               <option>helo</option>
               <option>heloo</option>
               <option>helooo</option>
@@ -57,13 +62,13 @@
         <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Discription</label>
           <div class="col-lg-8">
-              <textarea class="form-control" type="text" placeholder="Enter About the Product" name="productDiscription" cols="30" rows="10"></textarea>
+              <textarea class="form-control" id="textarea" type="text" placeholder="Enter About the Product" name="productDiscription" cols="30" rows="10"><%= product.productDiscription %></textarea>
           </div>
         </div><div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Size</label>
           <div class="col-lg-8">
             <select class="form-control"  name="productSize">
-              <option value="" disabled selected>select your option</option>
+              <option value="" disabled selected class="bg-warning"><%= product.productSize %></option>
               <option>S</option>
               <option>M</option>
               <option>L</option>
@@ -75,7 +80,7 @@
         <div class="form-group mb-1">
           <label class="col-lg-3 control-label">Product Quantity</label>
           <div class="col-lg-8">
-            <input class="form-control" type="number" placeholder="Enter the Quantity" name="productQuantity">
+            <input class="form-control" type="number" placeholder="Enter the Quantity" value="<%= product.productQuantity %>" name="productQuantity">
           </div>
         </div>
         <div class="form-group" style="margin-top: 20px;">

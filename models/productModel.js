@@ -5,6 +5,10 @@ const productSchema = new mongoose.Schema({
     productName: String,
     productMRP: Number,
     productPrice: Number,
+    unlist:{
+      type:Boolean,
+      default:false
+    },
     productQuantity: Number,
     productDiscription:String,
     productSize:String,

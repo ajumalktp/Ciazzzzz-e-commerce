@@ -18,18 +18,39 @@ const productController = {
     },
 
     addProduct: async(req,res)=>{
-        const {image,productName,productPrice,productMRP,productQuantity,productDiscription,productSize,productCategory} = req.body
         const product = new productModel({
-            image:image,
-            productName:productName,
-            productDiscription:productDiscription,
-            productMRP:productMRP,
-            productPrice:productPrice,
-            productQuantity:productQuantity,
-            productCategory:productCategory,
-            productSize:productSize
+            ...req.body
           });
         product.save()
+        res.redirect('/admin/products')
+    },
+
+    getEditProduct: async(req,res)=>{
+        const _id = req.params.id
+        const product = await productModel.findOne({_id}) 
+        res.render('editProduct',{product})
+    },
+
+    editProduct: async(req,res)=>{
+        const _id = req.body._id
+        console.log(_id);
+        await productModel.findByIdAndUpdate(_id,{
+            $set:{
+                ...req.body
+            }
+        })
+        res.redirect("/admin/products")
+    },
+
+    unlist: async(req,res)=>{
+        const _id = req.params.id
+        await productModel.findByIdAndUpdate(_id,{$set:{unlist:true}})
+        res.redirect('/admin/products')
+    },
+
+    list: async(req,res)=>{
+        const _id = req.params.id
+        await productModel.findByIdAndUpdate(_id,{$set:{unlist:false}})
         res.redirect('/admin/products')
     },
 

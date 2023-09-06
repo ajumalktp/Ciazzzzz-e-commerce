@@ -54,6 +54,11 @@ const productController = {
         res.redirect('/admin/products')
     },
 
+    getProductDetails: async(req,res)=>{
+        const _id = req.params.id
+        const product = await productModel.findOne({_id})
+        res.render('productDetails',{product})
+    },
 }
 
 module.exports = productController

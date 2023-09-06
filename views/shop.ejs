@@ -1,7 +1,7 @@
 <%- include('./partials/userHead.ejs') %>
 
   <body>
-    <div class="section">
+    <div class="section" style="height: 120vh;">
       <div class="container ">
         <div class="title  text-center p-2" style="height: 7vh;">
           <h2 style="font-family: 'Fasthand', cursive;">Ciazzzzz</h2>
@@ -43,7 +43,75 @@
           </li>
         </ul>
       </div>
+      <div class="container mt-3">
+        <h1>Shop</h1>
+      </div>
+      <div class="container">
+        <div class="row ">
+          <% for(let i = 0; i<products.length; i++){ %>
+          
+          <div class="card  me-5 mb-5 mt-3" >
+            <a href="/productDetails/<%= products[i]._id %>">
+            <img src="/img/24100ML_I_MARTINEZ_2-transformed.png" class="card-img-top" alt="..." >
+            <div class="card-body">
+              <h5 class="card-title"><%= products[i].productName %></h5>
+              <p class="price">Price: &#8377;<%= products[i].productPrice %></p>
+              <p class="mrp">MRP: &#8377;<%= products[i].productMRP %></p>
+              <p class="card-text"><%= products[i].productDiscription %></p>
+          </div>
+          </a>
+          <div class="card-footer">
+              <button class="btn btn-buy">Buy</button>
+              <button class="btn btn-cart float-end">Add to Cart</button>
+          </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
     </div>
+    <style>
+            .card {
+            border: 1px solid black;
+            border-radius: 8px;
+            width: 20rem;
+            margin-left: 34px;
+
+            
+        }
+        .card a{
+          text-decoration: none;
+          color: black;
+        }
+         img {
+            max-width: 100%;
+            height: 15vh;
+          object-fit: scale-down;
+        }
+        
+         .card-title {
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+         .price {
+            font-size: 12px;
+            font-weight: bold;
+            color: #007bff;
+        }
+         .mrp {
+            text-decoration: line-through;
+            color: #777;
+            margin-right: 10px;
+        }
+         .btn-buy {
+            background-color: #007bff;
+            color: #fff;
+        }
+       .btn-cart {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
     <%- include('./partials/script.ejs') %>
   </body>
 

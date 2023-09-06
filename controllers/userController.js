@@ -17,12 +17,27 @@ const userController = {
   },
 
   getLogin:(req, res) => {
-    const {email,password} = req.body
+    if(!req.session.user){
+      const {email,password} = req.body
     const failedAuthData = {
       email:email || '',
       password:password || ''
     }
     res.render("userLogin",{failedAuth:failedAuthData});
+    }else{
+      res.redirect('/profile')
+    }
+    
+  },
+
+  getProfile: async(req,res)=>{
+    const _id = req.session.user.id
+    const user= await userModel.findOne({_id})
+    if(req.session.user){
+      res.render('userProfile',{user})
+    }else{
+      res.redirect('/login')
+    }
   },
 
   userLogin: async(req,res)=>{

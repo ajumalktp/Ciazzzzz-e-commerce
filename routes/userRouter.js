@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp} = require('../controllers/userController')
-const {getShop} = require('../controllers/productController')
+const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile} = require('../controllers/userController')
+const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 
 
@@ -10,6 +10,8 @@ router.get('/login',getLogin)
 router.get('/signUp',getUserRegister)
 router.get('/submitOtp',submitOtp)
 router.get('/resendOtp',resendOtp)
+router.get('/profile',verifyUser,getProfile)
+router.get('/productDetails/:id',verifyUser,getProductDetails)
 
 
 router.post('/signUp',userRegister)

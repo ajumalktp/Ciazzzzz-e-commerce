@@ -4,7 +4,7 @@ const productModel = require('../models/productModel')
 const productController = {
 
     getShop: async(req,res)=>{
-        const products = await productModel.find().lean()
+        const products = await productModel.find({unlist:false}).lean()
         res.render('shop',{products})
     },
 

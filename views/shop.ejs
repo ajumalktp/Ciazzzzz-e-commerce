@@ -1,56 +1,14 @@
 <%- include('./partials/userHead.ejs') %>
 
   <body>
-    <div class="section" style="height: 120vh;">
-      <div class="container ">
-        <div class="title  text-center p-2" style="height: 7vh;">
-          <h2 style="font-family: 'Fasthand', cursive;">Ciazzzzz</h2>
-        </div>
-        <ul class="nav justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-              </svg></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-primary" href="/shop">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/category">Category</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item d-flex">
-            <a class="nav-link" href="/login">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-person-fill" viewBox="0 0 16 16">
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-              </svg>
-            </a>
-            <a class="nav-link" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill"
-                viewBox="0 0 16 16">
-                <path
-                  d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <%- include('./partials/navbar.ejs') %>
       <div class="container mt-3">
         <h1>Shop</h1>
       </div>
       <div class="container">
         <div class="row ">
           <% for(let i = 0; i<products.length; i++){ %>
-          
-          <div class="card  me-5 mb-5 mt-3" >
+          <div class="card me-5 mb-5 mt-3" >
             <a href="/productDetails/<%= products[i]._id %>">
             <img src="/img/24100ML_I_MARTINEZ_2-transformed.png" class="card-img-top" alt="..." >
             <div class="card-body">
@@ -61,8 +19,8 @@
           </div>
           </a>
           <div class="card-footer">
-              <button class="btn btn-buy">Buy</button>
-              <button class="btn btn-cart float-end">Add to Cart</button>
+              <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
+              <a class="btn btn-cart float-end">Add to Cart</a>
           </div>
           </div>
           <% } %>
@@ -71,16 +29,17 @@
     </div>
     <style>
             .card {
-            border: 1px solid black;
             border-radius: 8px;
             width: 20rem;
             margin-left: 34px;
-
-            
+            box-shadow: 0px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
         .card a{
           text-decoration: none;
           color: black;
+        }
+        .card-footer a{
+          color: white;
         }
          img {
             max-width: 100%;

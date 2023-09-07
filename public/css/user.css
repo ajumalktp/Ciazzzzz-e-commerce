@@ -282,6 +282,11 @@
   .navigation span:nth-child(1):hover i{
       color: #444;
   }
+  .badge{
+    position: absolute;
+    top: 45px;
+    right: 50px;
+  }
   
   
   

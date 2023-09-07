@@ -59,6 +59,10 @@ const productController = {
         const product = await productModel.findOne({_id})
         res.render('productDetails',{product})
     },
+
+    getCart: (req,res)=>{
+        res.render('cart')
+    }
 }
 
 module.exports = productController

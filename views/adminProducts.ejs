@@ -96,7 +96,6 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">MRP</th>
                                 <th scope="col">Stock</th>
-                                <th scope="col">Discription</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -112,9 +111,6 @@
                             <td><%= products[i].productPrice %></td>
                             <td><%= products[i].productMRP %></td>
                             <td><%= products[i].productQuantity %></td>
-                            <td>
-                                <p><%= products[i].productDiscription %></p>
-                            </td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="/admin/editProduct/<%= products[i]._id %>" class="btn btn-info" style="margin-right: 10px;" >
@@ -134,7 +130,7 @@
                             <% } %>
                         </tbody>
                     </table>
-                    <div class="pagination">
+                    <div class="pagination justify-content-end">
                         <button id="prevPage">Previous</button>
                         <span id="currentPage">Page 1</span>
                         <button id="nextPage">Next</button>

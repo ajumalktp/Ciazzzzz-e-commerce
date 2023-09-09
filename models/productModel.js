@@ -12,7 +12,10 @@ const productSchema = new mongoose.Schema({
     productQuantity: Number,
     productDiscription:String,
     productSize:String,
-    productCategory:String
+    productCategory:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'categoryModel',
+    }
   });
   
 const productModel = mongoose.model('Products', productSchema);

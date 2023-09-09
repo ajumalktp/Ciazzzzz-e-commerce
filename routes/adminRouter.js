@@ -3,7 +3,7 @@ const router = express.Router()
 const {getadminLogin, getadminDashboard, adminLogin, getUsers, adminLogOut, userBan, userUnBan} = require('../controllers/adminController')
 const {getAdminProducts,getAddProduct,addProduct,getEditProduct,editProduct,list,unlist} = require('../controllers/productController')
 const {getAllOrders} = require('../controllers/orderController')
-const {getAdminCategory} = require('../controllers/categoryController')
+const {getAdminCategory,getAddCategory, addCategory} = require('../controllers/categoryController')
 const verifyAdmin = require('../middleware/verifyAdmin')
 
 router.get('/',verifyAdmin,getadminDashboard)
@@ -19,12 +19,14 @@ router.get('/editProduct/:id',getEditProduct)
 router.get('/list/:id',list)
 router.get('/unlist/:id',unlist)
 router.get('/category',getAdminCategory)
+router.get('/addCategory',getAddCategory)
 
 
 
 router.post('/adminLogin',adminLogin)
 router.post('/addProduct',addProduct)
 router.post('/editProduct',editProduct)
+router.post('/addCategory',addCategory)
 
 
 

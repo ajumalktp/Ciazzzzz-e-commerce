@@ -52,10 +52,10 @@
           <label class="col-lg-3 control-label">Product Category</label>
           <div class="col-lg-8">
             <select class="form-control"  name="productCategory">
-              <option value="" disabled selected class="bg-warning"><%= product.productCategory %></option>
-              <option>helo</option>
-              <option>heloo</option>
-              <option>helooo</option>
+              <option value="" disabled selected class="bg-warning"><%= categoryOfProduct.catName %></option>
+              <% for(let i = 0; i < categories.length; i++){ %>
+                <option value="<%= categories[i]._id %>"><%= categories[i].catName %></option>
+              <% } %> 
             </select>
           </div>
         </div>

@@ -63,7 +63,10 @@
             </div>
         </nav>
         <div class="container">
-            
+            <a href="/admin/addCategory" class="btn btn-success">add category</a>
+            <% for(let i = 0; i < categories.length; i++){ %>
+                <h1><%= categories[i].catName %></h1>
+            <% } %>
         </div>
     </div>
     </div>

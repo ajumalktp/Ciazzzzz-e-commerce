@@ -48,9 +48,9 @@
           <div class="col-lg-8">
             <select class="form-control"  name="productCategory">
               <option value="" disabled selected>select your option</option>
-              <option>helo</option>
-              <option>heloo</option>
-              <option>helooo</option>
+              <% for(let i = 0; i < categories.length; i++){ %>
+                <option value="<%= categories[i]._id %>"><%= categories[i].catName %></option>
+              <% } %>  
             </select>
           </div>
         </div>

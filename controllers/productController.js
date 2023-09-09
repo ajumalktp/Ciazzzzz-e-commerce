@@ -1,4 +1,5 @@
 const productModel = require('../models/productModel')
+const categoryModel = require('../models/categoryModel')
 
 
 const productController = {
@@ -13,8 +14,9 @@ const productController = {
         res.render('adminProducts',{products})
     },
 
-    getAddProduct:(req,res)=>{
-        res.render('addProduct')
+    getAddProduct: async(req,res)=>{
+        const categories = await categoryModel.find().lean()
+        res.render('addProduct',{categories})
     },
 
     addProduct: async(req,res)=>{
@@ -27,8 +29,10 @@ const productController = {
 
     getEditProduct: async(req,res)=>{
         const _id = req.params.id
-        const product = await productModel.findOne({_id}) 
-        res.render('editProduct',{product})
+        const product = await productModel.findOne({_id})
+        const categoryOfProduct = await categoryModel.findOne(product.productCategory)
+        const categories = await categoryModel.find().lean()
+        res.render('editProduct',{product,categories,categoryOfProduct})
     },
 
     editProduct: async(req,res)=>{

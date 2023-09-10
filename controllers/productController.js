@@ -10,7 +10,8 @@ const productController = {
     },
 
     getAdminProducts: async(req,res)=>{
-        const products = await productModel.find().lean()
+        const products = await productModel.find().populate('productCategory').exec()
+        console.log(products);
         res.render('adminProducts',{products})
     },
 

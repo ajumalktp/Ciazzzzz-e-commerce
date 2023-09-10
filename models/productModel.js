@@ -14,10 +14,10 @@ const productSchema = new mongoose.Schema({
     productSize:String,
     productCategory:{
       type:mongoose.Schema.Types.ObjectId,
-      ref:'categoryModel',
+      ref:'categories',
     }
   });
   
-const productModel = mongoose.model('Products', productSchema);
+const productModel = mongoose.model('products', productSchema);
 
 module.exports = productModel

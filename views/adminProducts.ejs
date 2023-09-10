@@ -96,6 +96,7 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">MRP</th>
                                 <th scope="col">Stock</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -111,6 +112,7 @@
                             <td><%= products[i].productPrice %></td>
                             <td><%= products[i].productMRP %></td>
                             <td><%= products[i].productQuantity %></td>
+                            <td><%= products[i].productCategory.catName %></td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="/admin/editProduct/<%= products[i]._id %>" class="btn btn-info" style="margin-right: 10px;" >

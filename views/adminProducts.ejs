@@ -122,9 +122,9 @@
                                           </svg>
                                     </a>
                                     <% if(products[i].unlist){ %>
-                                        <a href="/admin/list/<%= products[i]._id %>" style="    width: 10vh;height: 6vh;" class="btn btn-success ">list</a>
+                                        <a href="/admin/product/list/<%= products[i]._id %>" style="    width: 10vh;height: 6vh;" class="btn btn-success ">list</a>
                                     <% }else{ %>
-                                        <a href="/admin/unlist/<%= products[i]._id %>" style="    width: 10vh;height: 6vh;" class="btn btn-danger ">unlist</a>
+                                        <a href="/admin/product/unlist/<%= products[i]._id %>" style="    width: 10vh;height: 6vh;" class="btn btn-danger ">unlist</a>
                                     <% } %>
                                 </div>
                             </td>

@@ -5,7 +5,8 @@ const categorySchema = new mongoose.Schema({
     unlist:{
         type:Boolean,
         default:false
-    }
+    },
+    items:Number
 })
 
 const categoryModel = mongoose.model('categories',categorySchema)

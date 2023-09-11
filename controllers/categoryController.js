@@ -60,6 +60,18 @@ const categoryController = {
         })
         res.redirect('/admin/category')
     },
+
+    getCategory: async(req,res)=>{
+        const categories = await categoryModel.find({unlist:false}).lean()
+        res.render('userCategory',{categories})
+    },
+
+    getCategoryProducts: async(req,res)=>{
+        const _id = req.params.id
+        const category = await categoryModel.findOne({_id})
+        const products = await productModel.find({productCategory:_id})
+        res.render('categoryProducts',{category,products})
+    },
 }
 
 module.exports = categoryController

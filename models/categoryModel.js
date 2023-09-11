@@ -6,7 +6,11 @@ const categorySchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    items:Number
+    items:Number,
+    logo:{
+        type:String,
+        default:'replace-img.png'
+    }
 })
 
 const categoryModel = mongoose.model('categories',categorySchema)

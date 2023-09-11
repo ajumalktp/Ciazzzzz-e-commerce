@@ -44,7 +44,44 @@
                     </li>
                 </ul>
             </div>
+            <div class="container mt-3 text-center">
+                <h1>Categories</h1>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <% for(let i = 0; i < categories.length; i++){ %>
+                        <a href="/categoryProducts/<%= categories[i]._id %>">
+                            <div class="cards text-center">
+                                <img src="/img/<%= categories[i].logo %>" class="avatar img-circle" width="100" height="100" />
+                                <h5 class="catName mt-3"><%= categories[i].catName %></h5>
+                            </div>
+                        </a>
+                    <% } %>
+                </div> 
+            </div>
         </div>
+
+        <style>
+            .cards{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .catName{
+                text-transform: uppercase;
+            }
+            .row div{
+    width: 30vh;
+    height: 25vh;
+}
+.row a{
+    text-decoration: none;
+    color: black;
+    width: 30vh;
+}
+        </style>
+
         <%- include('./partials/script.ejs') %>
     </body>
 

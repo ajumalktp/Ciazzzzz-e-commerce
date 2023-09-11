@@ -3,6 +3,7 @@ const router = express.Router()
 const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile} = require('../controllers/userController')
 const {getShop,getProductDetails,getCart} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
+const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
 
 
 router.get('/',getHome)
@@ -13,6 +14,8 @@ router.get('/resendOtp',resendOtp)
 router.get('/profile',verifyUser,getProfile)
 router.get('/productDetails/:id',verifyUser,getProductDetails)
 router.get('/cart',verifyUser,getCart)
+router.get('/category',getCategory)
+router.get('/categoryProducts/:id',getCategoryProducts)
 
 
 router.post('/signUp',userRegister)

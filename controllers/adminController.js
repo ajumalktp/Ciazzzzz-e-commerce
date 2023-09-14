@@ -5,7 +5,7 @@ const adminController = {
 
     getadminDashboard:(req, res) => {
         if(req.session.admin){
-            res.render('adminDashboard')
+            res.render('admin/adminDashboard')
         }else{
             res.redirect('/admin/adminLogin')
         }
@@ -15,7 +15,7 @@ const adminController = {
         if(req.session.admin){
             res.redirect('/admin')
         }else{
-            res.render('adminLogin')
+            res.render('admin/adminLogin')
         }
     },
 
@@ -30,18 +30,18 @@ const adminController = {
             }else{
                 const error = 'invalid Email or Password'
                 console.log(error);
-                res.render('adminLogin',{error})
+                res.render('admin/adminLogin',{error})
             }
         }else{
             error = 'admin NOT FOUND'
             console.log(error);
-            res.render('adminLogin',{error})
+            res.render('admin/adminLogin',{error})
         }
     },
 
     getUsers: async(req,res)=>{
         const users = await userModel.find().lean()
-        res.render('adminUsers',{users})
+        res.render('admin/adminUsers',{users})
     },
 
     userBan: async(req,res)=>{

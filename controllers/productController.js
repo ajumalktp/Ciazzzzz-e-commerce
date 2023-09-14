@@ -23,12 +23,12 @@ const productController = {
 
     getAdminProducts: async (req, res) => {
         const products = await productModel.find().populate("productCategory").exec();
-        res.render("adminProducts", { products });
+        res.render("admin/adminProducts", { products });
     },
 
     getAddProduct: async (req, res) => {
         const categories = await categoryModel.find().lean();
-        res.render("addProduct", { categories });
+        res.render("admin/addProduct", { categories });
     },
 
     addProduct: async (req, res, next) => {
@@ -47,7 +47,7 @@ const productController = {
             product.productCategory
         );
         const categories = await categoryModel.find().lean();
-        res.render("editProduct", { product, categories, categoryOfProduct });
+        res.render("admin/editProduct", { product, categories, categoryOfProduct });
     },
 
     editProduct: async (req, res) => {

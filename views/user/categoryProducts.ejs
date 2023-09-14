@@ -1,4 +1,4 @@
-<%- include('./partials/userHead.ejs') %>
+<%- include('../partials/userHead.ejs') %>
 
   <body>
     <div class="section" style="height: 120vh;">
@@ -18,10 +18,10 @@
             <a class="nav-link " href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="/shop">Shop</a>
+            <a class="nav-link " href="/shop">Shop</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/category">Category</a>
+            <a class="nav-link text-primary" href="/category">Category</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -47,7 +47,7 @@
 
 
       <div class="container mt-3">
-        <h1>Shop</h1>
+        <h1><%= category.catName %> Products</h1>
       </div>
       <div class="container">
         <div class="row ">
@@ -128,7 +128,7 @@
             color: #fff;
         }
     </style>
-    <%- include('./partials/script.ejs') %>
+    <%- include('../partials/script.ejs') %>
   </body>
 
   </html>

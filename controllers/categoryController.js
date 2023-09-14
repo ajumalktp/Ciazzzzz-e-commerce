@@ -63,14 +63,14 @@ const categoryController = {
 
     getCategory: async(req,res)=>{
         const categories = await categoryModel.find({unlist:false}).lean()
-        res.render('userCategory',{categories})
+        res.render('user/userCategory',{categories})
     },
 
     getCategoryProducts: async(req,res)=>{
         const _id = req.params.id
         const category = await categoryModel.findOne({_id})
         const products = await productModel.find({productCategory:_id})
-        res.render('categoryProducts',{category,products})
+        res.render('user/categoryProducts',{category,products})
     },
 }
 

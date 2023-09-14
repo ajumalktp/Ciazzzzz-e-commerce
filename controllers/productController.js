@@ -18,7 +18,7 @@ const productController = {
                 },
             },
         ]);
-        res.render("shop", { products });
+        res.render("user/shop", { products });
     },
 
     getAdminProducts: async (req, res) => {
@@ -76,11 +76,11 @@ const productController = {
     getProductDetails: async (req, res) => {
         const _id = req.params.id;
         const product = await productModel.findOne({ _id }).populate("productCategory").exec();
-        res.render("productDetails", { product });
+        res.render("user/productDetails", { product });
     },
 
     getCart: (req, res) => {
-        res.render("cart");
+        res.render("user/cart");
     },
 };
 

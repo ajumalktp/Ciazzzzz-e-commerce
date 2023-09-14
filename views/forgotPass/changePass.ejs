@@ -1,0 +1,72 @@
+<%- include('../partials/loginHead.ejs') %>
+
+<body>
+    <div class="section bg-info">
+      <div class="container d-flex flex-colum justify-content-center">
+        <div class="card " style="width: 30rem; border-radius: 1.25rem;">
+          <div class="card-body" style="    padding: 1rem 3rem">
+            <div class="card-title-div text-center">
+            <h1  class="card-title mt-4 mb-4">Set New Password</h1>
+            </div>
+            <form action="/changePassFP" method="post" id="formValidation">
+              <form>
+                <div class="form-inputs mb-2">
+                  <label for="exampleInputPassword1" class="form-label mb-0">New Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Enter New Password">
+                  <label id="exampleInputPassword1-error" class="error text-danger" for="exampleInputPassword1"></label>
+                </div>
+                <div class="form-inputs mb-3">
+                  <label for="exampleInputCmfPassword1" class="form-label mb-0">Repeat Password</label>
+                  <input type="password" class="form-control" id="exampleInputCmfPassword1" name="cfmpassword" placeholder="ReEnter New Password">
+                  <label id="exampleInputCmfPassword1-error" class="error text-danger" for="exampleInputCmfPassword1"></label>
+                </div>
+                <div class="form-button text-center mb-3">
+                <button type="submit" class="btn btn-success">Change</button>
+                </div>
+              </form>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      p{
+        font-size: 13px;
+      }
+      a{
+        text-decoration: none;
+      }
+    </style>
+<script>
+       $(document).ready(function () {
+
+      $("#formValidation").validate({
+        rules: {
+          password: {
+            required: true,
+            minlength: 4
+          },
+          cfmpassword:{
+            required:true,
+            minlength:4,
+            equalTo: '[name="password"]'
+          }
+        },
+        messages: {
+          password: {
+            required: "Please enter New password",
+            minlength: "password must contain 4 letters",
+            remote: "Incorrect password"
+          },
+          cfmpassword:{
+            required:"Please reEnter New password",
+            minlength:"Password must contain 4 letters",
+            equalTo:"Password Not same"
+          }
+        },
+      });
+    });
+</script>
+<%- include('../partials/script.ejs') %>
+</body>
+</html>

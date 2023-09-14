@@ -120,7 +120,7 @@ const userController = {
       res.redirect('/login')
     }else{
       const error = 'Incorrect OTP'
-      res.render('submitOtp',{error})
+      res.render('submitOtp',{error,email})
     }
   },
 
@@ -135,8 +135,43 @@ const userController = {
     res.redirect('/submitOtp')
   },
 
+  getEmailVerifyFP: async(req,res)=>{
+    res.render('forgotPass/verifyEmail')
+  },
 
+  emailVerifyFP: async(req,res)=>{
+    const {emailFP} = req.body
+    const emailExist = await userModel.findOne({email:emailFP})
+    if(emailExist){
+      sendOtp(emailExist.name,emailFP,otp)
+      req.session.email = emailFP
+      req.session.name = emailExist.name
+      req.session.otp = otp
+      res.render('forgotPass/submitOtpFP',{emailFP})
+    }else{
+      const error = "user NOT FOUND"
+      res.render('forgotPass/verifyEmail',{error})
+    }
+  },
 
+  verifyOtpFP: async(req,res)=>{
+    const emailFP = req.session.email
+    const otpBody = req.body.otp.join('')
+    if(req.session.otp == otpBody ){
+      res.render('forgotPass/changePass')
+    }else{
+      const error = 'Incorrect OTP'
+      res.render('forgotPass/submitOtpFP',{error,emailFP})
+    }
+  },
+
+  changePassFP: async(req,res)=>{
+    const email = req.session.email
+    const password = req.body.password
+    const hashPass = await bycrypt.hash(password,10)
+    await userModel.findOneAndUpdate({email:email},{$set:{password:hashPass}})
+    res.redirect('/login')
+  },
 
 
 };

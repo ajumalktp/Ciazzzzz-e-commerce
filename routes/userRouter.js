@@ -27,6 +27,6 @@ router.post('/forgotPass/verifyOtp',verifyOtpFP)
 router.post('/changePassFP',changePassFP)
 
 
-router.get('/shop',verifyUser,getShop)
+router.get('/shop',getShop)
 
 module.exports = router

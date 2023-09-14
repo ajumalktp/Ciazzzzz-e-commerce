@@ -5,11 +5,11 @@ const categoryController = {
 
     getAdminCategory: async(req,res)=>{
         const categories = await categoryModel.find().lean()
-        res.render('adminCategory',{categories})
+        res.render('admin/adminCategory',{categories})
     },
 
     getAddCategory: (req,res)=>{
-        res.render('addCategory')
+        res.render('admin/addCategory')
     },
 
     addCategory: async(req,res)=>{
@@ -18,7 +18,7 @@ const categoryController = {
         console.log(catExists);
         if(catExists){
             console.log('category already exists')
-           return res.render('addCategory')
+           return res.render('admin/addCategory')
         }else{
             const category = new categoryModel({
                 ...req.body
@@ -43,7 +43,7 @@ const categoryController = {
     getEditCategory: async(req,res)=>{
         const _id = req.params.id
         const category = await categoryModel.findOne({_id})
-        res.render('editCategory',{category})
+        res.render('admin/editCategory',{category})
     },
 
     editCategory: async(req,res)=>{
@@ -63,14 +63,14 @@ const categoryController = {
 
     getCategory: async(req,res)=>{
         const categories = await categoryModel.find({unlist:false}).lean()
-        res.render('userCategory',{categories})
+        res.render('user/userCategory',{categories})
     },
 
     getCategoryProducts: async(req,res)=>{
         const _id = req.params.id
         const category = await categoryModel.findOne({_id})
         const products = await productModel.find({productCategory:_id})
-        res.render('categoryProducts',{category,products})
+        res.render('user/categoryProducts',{category,products})
     },
 }
 

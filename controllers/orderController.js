@@ -2,8 +2,8 @@ const asyncHandler = require('express-async-handler')
 
 
 const orderController ={
-    getAllOrders: asyncHandler((req,res)=>{
-        res.render('adminOrders')
+    getAdminAllOrders: asyncHandler((req,res)=>{
+        res.render('admin/adminOrders')
     })
 }
 

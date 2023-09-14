@@ -1,4 +1,4 @@
-<%- include('./partials/userHead.ejs') %>
+<%- include('../partials/userHead.ejs') %>
 
     <body>
         <div class="section">
@@ -47,6 +47,9 @@
             <div class="container mt-3 text-center">
                 <h1>Categories</h1>
             </div>
+            <div class="container mt-3 mb-3">
+            <h2>Top Club's</h2>
+            </div>
             <div class="container">
                 <div class="row justify-content-center">
                     <% for(let i = 0; i < categories.length; i++){ %>
@@ -59,6 +62,9 @@
                     <% } %>
                 </div> 
             </div>
+            <div class="container mt-3 mb-3">
+                <h2>Other Categories</h2>
+                </div>
         </div>
 
         <style>
@@ -67,6 +73,12 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+            }
+            .cards img{
+                 transition: transform 0.3s ease;
+            }
+            .cards:hover img{
+                transform: scale(1.1);
             }
             .catName{
                 text-transform: uppercase;
@@ -82,7 +94,7 @@
 }
         </style>
 
-        <%- include('./partials/script.ejs') %>
+        <%- include('../partials/script.ejs') %>
     </body>
 
     </html>

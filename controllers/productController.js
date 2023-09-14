@@ -18,17 +18,17 @@ const productController = {
                 },
             },
         ]);
-        res.render("shop", { products });
+        res.render("user/shop", { products });
     },
 
     getAdminProducts: async (req, res) => {
         const products = await productModel.find().populate("productCategory").exec();
-        res.render("adminProducts", { products });
+        res.render("admin/adminProducts", { products });
     },
 
     getAddProduct: async (req, res) => {
         const categories = await categoryModel.find().lean();
-        res.render("addProduct", { categories });
+        res.render("admin/addProduct", { categories });
     },
 
     addProduct: async (req, res, next) => {
@@ -47,7 +47,7 @@ const productController = {
             product.productCategory
         );
         const categories = await categoryModel.find().lean();
-        res.render("editProduct", { product, categories, categoryOfProduct });
+        res.render("admin/editProduct", { product, categories, categoryOfProduct });
     },
 
     editProduct: async (req, res) => {
@@ -76,11 +76,11 @@ const productController = {
     getProductDetails: async (req, res) => {
         const _id = req.params.id;
         const product = await productModel.findOne({ _id }).populate("productCategory").exec();
-        res.render("productDetails", { product });
+        res.render("user/productDetails", { product });
     },
 
     getCart: (req, res) => {
-        res.render("cart");
+        res.render("user/cart");
     },
 };
 

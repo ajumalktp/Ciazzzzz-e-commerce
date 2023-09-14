@@ -1,5 +1,5 @@
 
-<%- include('./partials/loginHead.ejs') %>
+<%- include('../partials/loginHead.ejs') %>
 
 
 <body>
@@ -31,7 +31,7 @@
               <button type="submit" class="btn btn-success">Submit</button>
               </div>
               <div class="d-flex justify-content-between">
-                <a href=""><p class="text-danger" >forgot password?</p></a>
+                <a href="/forgotPass/verifyEmail"><p class="text-danger" >forgot password?</p></a>
                 <p>Create Account?<a href="/signUp"><span>SignUp</span></a></p>
                 </div>
             </form>
@@ -91,6 +91,6 @@
 
 
 </script>
-<%- include('./partials/script.ejs') %>
+<%- include('../partials/script.ejs') %>
 </body>
 </html>

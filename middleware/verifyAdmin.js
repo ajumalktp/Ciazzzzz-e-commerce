@@ -5,7 +5,7 @@ const verifyAdmin = async(req,res,next)=>{
         next()
     }else{
         console.log("admin OUT");
-        res.redirect('/admin/adminLogin')
+        res.redirect('/admin/login')
     }
 }
 

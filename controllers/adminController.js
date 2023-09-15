@@ -3,45 +3,45 @@ const adminModel = require('../models/adminModel')
 
 const adminController = {
 
-    getadminDashboard:(req, res) => {
+    getDashboard:(req, res) => {
         if(req.session.admin){
-            res.render('admin/adminDashboard')
+            res.render('admin/dashboard')
         }else{
-            res.redirect('/admin/adminLogin')
+            res.redirect('/admin/login')
         }
     },
 
-    getadminLogin:(req, res) => {
+    getLogin:(req, res) => {
         if(req.session.admin){
-            res.redirect('/admin')
+            res.redirect('/admin/')
         }else{
-            res.render('admin/adminLogin')
+            res.render('admin/login')
         }
     },
 
-    adminLogin: async(req, res)=>{
+    login: async(req, res)=>{
         const {email , password} = req.body
         const admin = await adminModel.findOne({email})
         if(admin){
             if(password == admin.password){
                 req.session.admin = true
                 console.log('admin Logined successfully');
-                res.redirect('/admin')
+                res.redirect('/admin/')
             }else{
                 const error = 'invalid Email or Password'
                 console.log(error);
-                res.render('admin/adminLogin',{error})
+                res.render('admin/login',{error})
             }
         }else{
             error = 'admin NOT FOUND'
             console.log(error);
-            res.render('admin/adminLogin',{error})
+            res.render('admin/login',{error})
         }
     },
 
     getUsers: async(req,res)=>{
         const users = await userModel.find().lean()
-        res.render('admin/adminUsers',{users})
+        res.render('admin/users',{users})
     },
 
     userBan: async(req,res)=>{
@@ -57,9 +57,9 @@ const adminController = {
         res.redirect('/admin/users')
     },
 
-    adminLogOut: (req,res)=>{
+    logOut: (req,res)=>{
         req.session.admin = null
-        res.redirect('/admin/adminLogin')
+        res.redirect('/admin/login')
     }
 };
 

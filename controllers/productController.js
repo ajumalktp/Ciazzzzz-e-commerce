@@ -23,7 +23,7 @@ const productController = {
 
     getAdminProducts: async (req, res) => {
         const products = await productModel.find().populate("productCategory").exec();
-        res.render("admin/adminProducts", { products });
+        res.render("admin/products", { products });
     },
 
     getAddProduct: async (req, res) => {

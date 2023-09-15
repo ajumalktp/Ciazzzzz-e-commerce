@@ -5,7 +5,7 @@ const categoryController = {
 
     getAdminCategory: async(req,res)=>{
         const categories = await categoryModel.find().lean()
-        res.render('admin/adminCategory',{categories})
+        res.render('admin/category',{categories})
     },
 
     getAddCategory: (req,res)=>{

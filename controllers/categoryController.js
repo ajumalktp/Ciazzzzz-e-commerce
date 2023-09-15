@@ -3,67 +3,88 @@ const categoryModel = require('../models/categoryModel')
 
 const categoryController = {
 
-    getAdminCategory: async(req,res)=>{
-        const categories = await categoryModel.find().lean()
-        res.render('admin/category',{categories})
+    getMainCategory: async(req,res)=>{
+        const categories = await categoryModel.find({catType:'main'}).lean()
+        res.render('admin/mainCategory',{categories})
     },
 
-    getAddCategory: (req,res)=>{
-        res.render('admin/addCategory')
+    getSubCategory: async(req,res)=>{
+        const categories = await categoryModel.find({catType:'sub'}).lean()
+        res.render('admin/subCategory',{categories})
+    },
+
+    getAddCategoryM: (req,res)=>{
+        res.render('admin/addCategoryM')
+    },
+
+    getAddCategoryS: (req,res)=>{
+        res.render('admin/addCategoryS')
     },
 
     addCategory: async(req,res)=>{
-        const categoryName = req.body.catName
-        const catExists = await categoryModel.findOne({catName:categoryName})
+        const route = req.body.route
+        const renderRoute = req.body.renderRoute
+        const {catName,catType} = req.body
+        const catExists = await categoryModel.findOne({catName:catName})
         console.log(catExists);
         if(catExists){
             console.log('category already exists')
-           return res.render('admin/addCategory')
+           return res.render(renderRoute)
         }else{
             const category = new categoryModel({
-                ...req.body
+                catName:catName,
+                catType:catType
             });
             category.save()
-            res.redirect('/admin/category')
+            res.redirect(route)
         }
     },
 
     Cunlist: async(req,res)=>{
+        const route = req.body.route
         const _id = req.params.id 
         await categoryModel.findByIdAndUpdate(_id,{$set:{unlist:true}})
-        res.redirect('/admin/category')
+        res.redirect(route)
     },
 
     Clist: async(req,res)=>{
+        const route = req.body.route
         const _id = req.params.id 
         await categoryModel.findByIdAndUpdate(_id,{$set:{unlist:false}})
-        res.redirect('/admin/category')
+        res.redirect(route)
     },
 
-    getEditCategory: async(req,res)=>{
+    getEditCategoryM: async(req,res)=>{
         const _id = req.params.id
         const category = await categoryModel.findOne({_id})
-        res.render('admin/editCategory',{category})
+        res.render('admin/editCategoryM',{category})
+    },
+
+    getEditCategoryS: async(req,res)=>{
+        const _id = req.params.id
+        const category = await categoryModel.findOne({_id})
+        res.render('admin/editCategoryS',{category})
     },
 
     editCategory: async(req,res)=>{
-        const {_id,catName} = req.body
+        const {_id,catName,route} = req.body
         const catExists = await categoryModel.findOne({catName})
         if(catExists){
             console.log('category already exitsts');
-            return res.redirect('/admin/category')
+            return res.redirect(route)
         }
         await categoryModel.findByIdAndUpdate(_id,{
             $set:{
                 ...req.body
             }
         })
-        res.redirect('/admin/category')
+        res.redirect(route)
     },
 
     getCategory: async(req,res)=>{
-        const categories = await categoryModel.find({unlist:false}).lean()
-        res.render('user/userCategory',{categories})
+        const categoriesM = await categoryModel.find({unlist:false,catType:'main'}).lean()
+        const categoriesS = await categoryModel.find({unlist:false,catType:'sub'}).lean()
+        res.render('user/userCategory',{categoriesM,categoriesS})
     },
 
     getCategoryProducts: async(req,res)=>{

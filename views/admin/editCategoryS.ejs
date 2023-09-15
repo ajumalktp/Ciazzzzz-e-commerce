@@ -7,9 +7,9 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <!-- edit form column -->
-<form id="formValidation" class="form-horizontal" action="/admin/addCategory" method="post">
+<form id="formValidation" class="form-horizontal" action="/admin/editCategory" method="post">
   <div class="container bootstrap snippets bootdey">
-    <h1 class="text-primary">ADD category</h1>
+    <h1 class="text-primary">Edit Category</h1>
     <hr>
     <div class="row">
       <!--  left column  -->
@@ -19,16 +19,18 @@
             class="avatar img-circle img-thumbnail" alt="avatar">
           <h6>Upload a different photo...</h6>
 
-          <input type="file"  class="form-control" id="image" name="logo" accept="image/*"
+          <input type="file"  class="form-control" id="image" name="image" accept="image/*"
             onchange="previewImage(event)" multiple>
         </div>
       </div>
       <div class="col-md-9 personal-info">
+        <input type="text" value="<%= category._id %>" style="height: 0px; visibility:hidden" name="_id">
+        <input type="text" value="/admin/subCategory" style="display: none; height: 0px; visibility:hidden" name="route">
         <div class="form-group mb-1">
           <h2 class="error" style="font-size: 15px;"></h2>
           <label class="col-lg-3 control-label">Category Name</label>
           <div class="col-lg-8">
-            <input class="form-control" type="text" placeholder="Enter Category Name" name="catName">
+            <input class="form-control" type="text" value="<%= category.catName %>" name="catName">
           </div>
         </div>
         <div class="form-group" style="margin-top: 20px;">

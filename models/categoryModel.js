@@ -6,6 +6,7 @@ const categorySchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    catType:String,
     items:Number,
     logo:{
         type:String,

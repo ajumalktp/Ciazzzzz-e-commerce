@@ -2,6 +2,8 @@
 <%- include('../partials/loginHead.ejs') %>
 
 
+
+
 <body>
   <div class="bg-image">
   <div class="section">
@@ -23,7 +25,9 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <div class="input-group">
                   <input type="password" class="form-control" id="exampleInputPassword1" name="password" value="<%= failedAuth.password %>" placeholder="Enter your Password">
-                  <button type="button" class="btn btn-secondary" id="togglePassword">View</button>
+                  <button type="button" class="btn btn-secondary" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                  </button>
                 </div>
                 <label id="exampleInputPassword1-error" class="error text-danger" for="exampleInputPassword1"></label>
               </div>                          
@@ -85,7 +89,11 @@
   togglePassword.addEventListener("click", function() {
     const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
     passwordInput.setAttribute("type", type);
-    togglePassword.textContent = type === "password" ? "View" : "Hide";
+    if (type === "text") {
+      togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+      togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
+    }
   });
 });
 

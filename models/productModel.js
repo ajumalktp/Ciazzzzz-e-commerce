@@ -12,7 +12,11 @@ const productSchema = new mongoose.Schema({
     productQuantity: Number,
     productDiscription:String,
     productSize:String,
-    productCategory:{
+    productMainCategory:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'categories',
+    },
+    productSubCategory:{
       type:mongoose.Schema.Types.ObjectId,
       ref:'categories',
     }

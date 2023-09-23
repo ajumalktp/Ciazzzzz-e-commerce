@@ -5,30 +5,42 @@ const productController = {
     getShop: async (req, res) => {
         const products = await productModel.aggregate([
             {
-                $lookup: {
-                    from: "categories",
-                    localField: "productCategory",
-                    foreignField: "_id",
-                    as: "category",
-                },
+              $lookup: {
+                from: "categories",
+                localField: "productSubCategory",
+                foreignField: "_id",
+                as: "subcategory",
+              },
             },
             {
-                $match: {
-                    $and: [{ unlist: false }, { "category.unlist": false }],
-                },
+              $lookup: {
+                from: "categories",
+                localField: "productMainCategory",
+                foreignField: "_id",
+                as: "maincategory",
+              },
             },
-        ]);
+            {
+              $match: {
+                unlist: false,
+                "subcategory.unlist": false,
+                "maincategory.unlist": false,
+              },
+            },
+          ]);
+          
         res.render("user/shop", { products });
     },
 
     getAdminProducts: async (req, res) => {
-        const products = await productModel.find().populate("productCategory").exec();
+        const products = await productModel.find().populate("productSubCategory").exec();
         res.render("admin/products", { products });
     },
 
     getAddProduct: async (req, res) => {
-        const categories = await categoryModel.find().lean();
-        res.render("admin/addProduct", { categories });
+        const Mcategories = await categoryModel.find({catType:"main"}).lean();
+        const Scategories = await categoryModel.find({catType:"sub"}).lean();
+        res.render("admin/addProduct", { Mcategories,Scategories});
     },
 
     addProduct: async (req, res, next) => {
@@ -43,11 +55,11 @@ const productController = {
     getEditProduct: async (req, res) => {
         const _id = req.params.id;
         const product = await productModel.findOne({ _id });
-        const categoryOfProduct = await categoryModel.findOne(
-            product.productCategory
-        );
-        const categories = await categoryModel.find().lean();
-        res.render("admin/editProduct", { product, categories, categoryOfProduct });
+        const McategoryOfProduct = await categoryModel.findOne( product.productMainCategory );
+        const ScategoryOfProduct = await categoryModel.findOne( product.productSubCategory );
+        const Mcategories = await categoryModel.find({catType:"main"}).lean();
+        const Scategories = await categoryModel.find({catType:"sub"}).lean();
+        res.render("admin/editProduct",{product,McategoryOfProduct,ScategoryOfProduct,Mcategories,Scategories});
     },
 
     editProduct: async (req, res) => {
@@ -75,7 +87,7 @@ const productController = {
 
     getProductDetails: async (req, res) => {
         const _id = req.params.id;
-        const product = await productModel.findOne({ _id }).populate("productCategory").exec();
+        const product = await productModel.findOne({ _id }).populate("productSubCategory").exec();
         res.render("user/productDetails", { product });
     },
 

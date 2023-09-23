@@ -79,7 +79,7 @@ const userController = {
   submitOtp:(req,res)=>{
     const {email} = req.session.userDetails
     if(req.session.userDetails){
-      res.render('submitOtp',{email})
+      res.render('user/submitOtp',{email})
     }else{
       res.redirect('/signUp')
     }

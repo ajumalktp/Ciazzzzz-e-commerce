@@ -3,7 +3,7 @@ const categoryModel = require('../models/categoryModel')
 
 const categoryProductCount = async(req,res,next)=>{
     const categories = await categoryModel.find().lean()
-        const categoryCounts = await productModel.aggregate([{$match:{unlist:false}},{$group:{_id:'$productCategory',count:{$sum:1}}}])
+        const categoryCounts = await productModel.aggregate([{$match:{unlist:false}},{$group:{_id:'$productSubCategory',count:{$sum:1}}}])
         const categoryCountMap = new Map()
         categoryCounts.forEach((categoryCount)=>{
             const categoryID = categoryCount._id

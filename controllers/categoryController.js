@@ -1,5 +1,6 @@
 const productModel = require('../models/productModel')
 const categoryModel = require('../models/categoryModel')
+const mongoose = require('mongoose')
 
 const categoryController = {
 
@@ -24,7 +25,7 @@ const categoryController = {
     addCategory: async(req,res)=>{
         const route = req.body.route
         const renderRoute = req.body.renderRoute
-        const {catName,catType} = req.body
+        const {catName} = req.body
         const catExists = await categoryModel.findOne({catName:catName})
         console.log(catExists);
         if(catExists){
@@ -32,8 +33,7 @@ const categoryController = {
            return res.render(renderRoute)
         }else{
             const category = new categoryModel({
-                catName:catName,
-                catType:catType
+                ...req.body
             });
             category.save()
             res.redirect(route)
@@ -88,9 +88,38 @@ const categoryController = {
     },
 
     getCategoryProducts: async(req,res)=>{
-        const _id = req.params.id
+        const _id = new mongoose.Types.ObjectId(req.params.id) 
         const category = await categoryModel.findOne({_id})
-        const products = await productModel.find({productCategory:_id})
+        const products = await productModel.aggregate([
+            {
+                $lookup: {
+                  from: "categories",
+                  localField: "productSubCategory",
+                  foreignField: "_id",
+                  as: "subcategory",
+                },
+              },
+              {
+                $lookup: {
+                  from: "categories",
+                  localField: "productMainCategory",
+                  foreignField: "_id",
+                  as: "maincategory",
+                },
+              },
+              {
+                $match: {
+                    $or: [
+                        { productMainCategory: _id },
+                        { productSubCategory: _id },
+                      ],
+                    unlist: false,
+                    "subcategory.unlist": false,
+                    "maincategory.unlist": false,
+                },
+              },
+          ]);
+        console.log(products);
         res.render('user/categoryProducts',{category,products})
     },
 }

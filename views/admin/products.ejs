@@ -105,14 +105,14 @@
                                 <tr>
                             <td>
                                 <div class="image-fit justify-content-center">
-                                <img src="<%= products[i].image %>" class="avatar img-circle" width="50" height="50" />
+                                <img src="/img/<%= products[i].image %>" class="avatar img-circle" width="50" height="50" />
                                 </div>
                             </td>
                             <td><%= products[i].productName %></td>
                             <td><%= products[i].productPrice %></td>
                             <td><%= products[i].productMRP %></td>
                             <td><%= products[i].productQuantity %></td>
-                            <td><%= products[i].productCategory.catName %></td>
+                            <td><%= products[i].productSubCategory.catName %></td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="/admin/editProduct/<%= products[i]._id %>" class="btn btn-info" style="margin-right: 10px;" >

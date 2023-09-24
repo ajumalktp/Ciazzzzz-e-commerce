@@ -119,7 +119,6 @@ const categoryController = {
                 },
               },
           ]);
-        console.log(products);
         res.render('user/categoryProducts',{category,products})
     },
 }

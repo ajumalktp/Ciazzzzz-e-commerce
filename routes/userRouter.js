@@ -4,6 +4,7 @@ const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyO
 const {getShop,getProductDetails,getCart} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
+const { addToCart } = require('../controllers/cartController')
 
 
 router.get('/',getHome)
@@ -28,5 +29,8 @@ router.post('/changePassFP',changePassFP)
 
 
 router.get('/shop',getShop)
+
+
+router.get('/add-to-cart/:id',verifyUser,addToCart)
 
 module.exports = router

@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const productModel = require('../models/productModel')
+const cartModel = require('../models/cartModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt')
@@ -13,7 +14,14 @@ let otp = generateOtp()
 const userController = {
   getHome: async(req, res) => {
     const products = await productModel.find().lean()
-    res.render("user/userHome",{products});
+    let count = null
+    if(req.session.user){
+      const user = await cartModel.findOne({user:req.session.user.id})
+      count = user.products.length
+    }else{
+      count = 0
+    }
+    res.render("user/userHome",{products,count});
   },
 
   getLogin:(req, res) => {

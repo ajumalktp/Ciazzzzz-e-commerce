@@ -1,0 +1,237 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<style>
+  .wallet-box {
+    width: 100%;
+    height: 50px;
+    background-color: #ffffffd4;
+    color: black;
+  }
+
+  .wallet-box {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .wallet-box input,
+  .wallet-box button {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: none;
+    padding-left: 10px;
+  }
+
+  .wallet-box button {
+    background-color: #dfda5a;
+    width: 100px;
+    font-weight: 600;
+  }
+
+  .radio-btn-label {
+    width: 100%;
+    height: 40px;
+    background-color: #ffffffda;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .radio-btn-label label {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-weight: 600;
+    color: black;
+    height: 100%;
+    width: 100%;
+  }
+
+  .radio-btn-label input {
+    margin: 5px;
+  }
+
+  .radio-btn-label input[type="radio"]:checked+label {
+    background-color: #000000;
+    color: white;
+  }
+</style>
+<div class="container">
+<form id="checkout-form" style="background-color: #eee;"></form>
+<div class="container py-5">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col">
+      <div class="card">
+        <div class="card-body p-4">
+
+          <div class="row">
+
+            <div class="col-lg-7">
+              <div class="d-flex justify-content-between">
+
+                <h5 class="mb-3"><i class="fas fa-long-arrow-alt-left me-2"></i>Choose an address</h5>
+                <a href="/address" class="btn btn-dark">Add Address</a>
+              </div>
+              <hr>
+
+
+              <label for="id" class="card mb-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+
+                      <div class="ms-3">
+                        <h6></h6>
+                        <p class="mb-0"></p>
+                        <p class="mb-0"></p>
+                        <p class="mb-0" >{{this.address}},{{this.locality}},{{this.state}}</p>
+                        <p class="mb-2">{{this.city}},{{this.pincode}}</p>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <div style="width: 50px;">
+                        {{!-- <h5 class="fw-normal mb-0">2</h5> --}}
+                      </div>
+                      <div style="width: 80px;">
+                        {{!-- <h5 class="mb-0">$900</h5> --}}
+                      </div>
+                      <span style="color: #cecece;">
+                        <input type="radio" form="checkout-form" name="addressId" value="{{this.id}}" id="id" required>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+
+
+            </div>
+            <div class="col-lg-5">
+
+              <div class="card bg-dark text-white rounded-3">
+                <div class="card-body">
+
+
+                  <h5 class=" mb-2">Payment Details</h5>
+                  <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                  <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-visa fa-2x me-2"></i></a>
+                  <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-amex fa-2x me-2"></i></a>
+                  <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a>
+
+                  <div class="mt-4">
+
+
+
+
+
+                    <form id="wallet" action="/applyWallet" method="post" class="form-outline form-white mb-4"></form>
+                    <h6 class="form-label" for="typeName">Wallet</h6>
+
+                    {{#if err}}
+                    <p class="text-center text-warning fw-bold" style="color: rgb(190, 0, 0)">{{message}}</p>
+                    {{/if}}
+                    <div class="wallet-box">
+                      {{#if cart.walletAmount}}
+                      <input readonly type="number" min="0" name="wallet" placeholder="Available balance {{wallet}}">
+                      <button style="background-color: #00ce64;" aria-readonly="true">Applied</button>
+                      {{else}}
+
+                      <input form="wallet" type="number" min="0" name="wallet"
+                        placeholder="Available balance {{wallet}}" required>
+                      <button form="wallet" type="submit">Apply</button>
+                      {{/if}}
+                    </div>
+
+
+
+
+                    <h6 class="mt-3">Payment Method</h6>
+
+                    <div class="form-outline form-white mb-4">
+                      <div class="form-outline form-white">
+                        <div class="radio-btn-label">
+                          <input type="radio" form="checkout-form" name="paymentMethod" id="cod" value="COD" required>
+                          <label for="cod">
+                            Cash on Delivery
+                          </label>
+                        </div>
+                      </div>
+                      <div class="form-outline form-white mb-4">
+                        <div class="form-outline form-white">
+                          <div class="radio-btn-label">
+                            <input type="radio" form="checkout-form" name="paymentMethod" id="online" value="ONLINE"
+                              required />
+                            <label for="online">
+                              Online Payment
+                            </label>
+                          </div>
+                        </div>
+
+
+                      </div>
+
+                      <hr class="my-4">
+
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2">Subtotal</p>
+                        <p class="mb-2">{{cart.cartTotal}}</p>
+                      </div>
+
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2">Shipping</p>
+                        <p class="mb-2">Free</p>
+                      </div>
+                      {{#if cart.walletAmount}}
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 text-success ">Wallet</p>
+                        <p class="mb-2 text-success">-{{cart.walletAmount}}</p>
+                      </div>
+                      {{/if}}
+                      {{#if discount}}
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2 text-success">Coupon applied</p>
+                        <p class="mb-2 text-success">-{{discount}}%</p>
+                      </div>
+                      {{/if}}
+                      {{#if cart.totalAfterDiscount}}
+                      <div class="d-flex justify-content-between mb-4">
+                        <p class="mb-2">Total(Incl. taxes)</p>
+                        <p class="mb-2">{{cart.totalAfterDiscount}}</p>
+                      </div>
+                      {{else}}
+                      <div class="d-flex justify-content-between mb-4">
+                        <p class="mb-2">Total(Incl. taxes)</p>
+                        <p class="mb-2">{{cart.cartTotal}}</p>
+                      </div>
+                      {{/if}}
+
+
+
+                      <button type="submit" form="checkout-form" class="btn  btn-block btn-lg w-100"
+                        style="background-color:  #dbd893;">
+                        <span style="font-weight: 600;">Place Order</span>
+                    </div>
+                    </button>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>

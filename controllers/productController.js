@@ -1,8 +1,16 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
+const cartModel = require('../models/cartModel')
 
 const productController = {
     getShop: async (req, res) => {
+        let count = null
+        if(req.session.user){
+        const user = await cartModel.findOne({user:req.session.user.id})
+        count = user.products.length
+        }else{
+        count = 0
+        }
         const products = await productModel.aggregate([
             {
               $lookup: {
@@ -29,7 +37,7 @@ const productController = {
             },
           ]);
           
-        res.render("user/shop", { products });
+        res.render("user/shop", { products ,count });
     },
 
     getAdminProducts: async (req, res) => {
@@ -86,14 +94,19 @@ const productController = {
     },
 
     getProductDetails: async (req, res) => {
+        let count = null
+        if(req.session.user){
+        const user = await cartModel.findOne({user:req.session.user.id})
+        count = user.products.length
+        }else{
+        count = 0
+        }
         const _id = req.params.id;
         const product = await productModel.findOne({ _id }).populate("productSubCategory").exec();
-        res.render("user/productDetails", { product });
+        res.render("user/productDetails", { product ,count });
     },
 
-    getCart: (req, res) => {
-        res.render("user/cart");
-    },
+
 };
 
 module.exports = productController;

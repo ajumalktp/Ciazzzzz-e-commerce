@@ -1,10 +1,15 @@
-const asyncHandler = require('express-async-handler')
 
 
-const orderController ={
-    getAdminAllOrders: asyncHandler((req,res)=>{
+const orderController = {
+
+    getAdminAllOrders: (req,res)=>{
         res.render('admin/orders')
-    })
+    },
+
+    getCheckOut: (req,res)=>{
+        res.render('user/checkout')
+    },
+
 }
 
 module.exports = orderController

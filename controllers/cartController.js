@@ -2,9 +2,16 @@ const cartModel = require('../models/cartModel')
 
 const cartController = {
 
+    getCart: async(req,res)=>{
+        const userID = req.session.user.id
+        const user = await cartModel.findOne({user:userID}).populate("products")
+        res.render('user/cart',{user})
+    },
+
     addToCart:  async(req,res)=>{
         const prodID = req.params.id
         const userID = req.session.user.id
+        const route = req.body.route
 
         const user = await cartModel.findOne({user:userID})
         console.log(user);
@@ -12,15 +19,14 @@ const cartController = {
             await cartModel.updateOne({user:userID},{
                 $push:{products:prodID}
             })
-            console.log("hello");
+            res.redirect(route)
         }else{
             const cart = new cartModel({
                 user:userID,
                 products:prodID
             })
-            console.log(cart);
             cart.save()
-            console.log("product added to cart");
+            res.redirect(route)
         }
     },
 }

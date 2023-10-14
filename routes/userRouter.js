@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile,getEmailVerifyFP,emailVerifyFP,verifyOtpFP,changePassFP} = require('../controllers/userController')
-const {getShop,getProductDetails,getCart} = require('../controllers/productController')
+const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
-const { addToCart } = require('../controllers/cartController')
+const { addToCart,getCart } = require('../controllers/cartController')
+const { getCheckOut } = require('../controllers/orderController')
 
 
 router.get('/',getHome)
@@ -14,7 +15,6 @@ router.get('/submitOtp',submitOtp)
 router.get('/resendOtp',resendOtp)
 router.get('/profile',verifyUser,getProfile)
 router.get('/productDetails/:id',verifyUser,getProductDetails)
-router.get('/cart',verifyUser,getCart)
 router.get('/category',getCategory)
 router.get('/categoryProducts/:id',getCategoryProducts)
 router.get('/forgotPass/verifyEmail',getEmailVerifyFP)
@@ -31,6 +31,10 @@ router.post('/changePassFP',changePassFP)
 router.get('/shop',getShop)
 
 
-router.get('/add-to-cart/:id',verifyUser,addToCart)
+router.get('/cart',verifyUser,getCart)
+
+router.post('/add-to-cart/:id',verifyUser,addToCart)
+
+router.get('/checkout',getCheckOut)
 
 module.exports = router

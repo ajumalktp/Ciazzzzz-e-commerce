@@ -1,5 +1,6 @@
 const productModel = require('../models/productModel')
 const categoryModel = require('../models/categoryModel')
+const cartModel = require('../models/cartModel')
 const mongoose = require('mongoose')
 
 const categoryController = {
@@ -82,12 +83,26 @@ const categoryController = {
     },
 
     getCategory: async(req,res)=>{
+        let count = null
+        if(req.session.user){
+        const user = await cartModel.findOne({user:req.session.user.id})
+        count = user.products.length
+        }else{
+        count = 0
+        }
         const categoriesM = await categoryModel.find({unlist:false,catType:'main'}).lean()
         const categoriesS = await categoryModel.find({unlist:false,catType:'sub'}).lean()
-        res.render('user/userCategory',{categoriesM,categoriesS})
+        res.render('user/userCategory',{categoriesM,categoriesS,count})
     },
 
     getCategoryProducts: async(req,res)=>{
+        let count = null
+        if(req.session.user){
+        const user = await cartModel.findOne({user:req.session.user.id})
+        count = user.products.length
+        }else{
+        count = 0
+        }
         const _id = new mongoose.Types.ObjectId(req.params.id) 
         const category = await categoryModel.findOne({_id})
         const products = await productModel.aggregate([
@@ -119,7 +134,7 @@ const categoryController = {
                 },
               },
           ]);
-        res.render('user/categoryProducts',{category,products})
+        res.render('user/categoryProducts',{category,products,count})
     },
 }
 

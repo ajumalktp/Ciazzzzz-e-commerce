@@ -4,10 +4,12 @@ const cartModel = require('../models/cartModel')
 
 const productController = {
     getShop: async (req, res) => {
-        let count = null
+        let count = 0
         if(req.session.user){
         const user = await cartModel.findOne({user:req.session.user.id})
-        count = user.products.length
+        if(user){
+            count = user.products.length
+        }
         }else{
         count = 0
         }
@@ -94,10 +96,12 @@ const productController = {
     },
 
     getProductDetails: async (req, res) => {
-        let count = null
+        let count = 0
         if(req.session.user){
         const user = await cartModel.findOne({user:req.session.user.id})
-        count = user.products.length
+        if(user){
+            count = user.products.length
+        }
         }else{
         count = 0
         }

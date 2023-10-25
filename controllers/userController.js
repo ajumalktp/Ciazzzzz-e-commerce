@@ -14,10 +14,12 @@ let otp = generateOtp()
 const userController = {
   getHome: async(req, res) => {
     const products = await productModel.find().lean()
-    let count = null
+    let count = 0
     if(req.session.user){
       const user = await cartModel.findOne({user:req.session.user.id})
-      count = user.products.length
+      if(user){
+          count = user.products.length
+      }
     }else{
       count = 0
     }

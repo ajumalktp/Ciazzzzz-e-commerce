@@ -75,12 +75,9 @@
               </div>
           </div>
           </a>
-          <div class="card-footer">
+          <div class="card-footer d-flex justify-content-between">
               <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
-              <form class=" float-end" action="/add-to-cart/<%= products[i]._id %>" method="post">
-                <input type="text" value="/categoryProducts/<%= category._id %>" style="display: none; height: 0px; visibility:hidden" name="route">
-                <button type="submit" class="btn btn-cart">Add to Cart</button>
-                </form> 
+                <button onclick="addToCart('<%= products[i]._id %>')" class="btn btn-cart">Add to Cart</button>
           </div>
           </div>
           <% } %>
@@ -137,6 +134,21 @@
         }
     </style>
     <%- include('../partials/script.ejs') %>
+    <script>
+  //     function addToCart(prodID){
+  //   $.ajax({
+  //     url:'/add-to-cart/'+prodID,
+  //     method:'post',
+  //     success:(response)=>{
+  //       if(response.status){
+  //           let count = $('.badge').html()
+  //           count= parseInt(count)+1
+  //           $('.badge').html(count)
+  //       }
+  //     }
+  //   })
+  // }
+    </script>
   </body>
 
   </html>

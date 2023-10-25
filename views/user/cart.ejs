@@ -45,7 +45,8 @@
             </div>
 
 
-            <section class="">
+            <% if(user.products[0]){ %>
+            <section id="itemsSection">
                 <div class="container py-5">
                   <div class="row d-flex justify-content-center align-items-center ">
                     <div class="col-12">
@@ -56,46 +57,50 @@
                               <div class="p-5">
                                 <div class="d-flex justify-content-between align-items-center mb-5">
                                   <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                                  <h6 class="mb-0 text-muted"><%= user.products.length %> items</h6>
+                                  <h6 class="items mb-0 text-muted"><%= user.products.length %>  items</h6>
                                 </div>
-                                <hr class="my-4">
                                 <% for(let i =0; i< user.products.length; i++ ){ %>
-                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                <div class="row mb-4 d-flex justify-content-between align-items-center" id="<%= user.products[i]._id %>">
+                                  <hr class="my-4">
                                   <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="/img/<%= user.products[i].image %>"
+                                    <img src="/img/<%= user.products[i].product.image %>"
                                       class="img-fluid rounded-3" alt="Cotton T-shirt">
                                   </div>
                                   <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <h6 class="text-black mb-0"><%= user.products[i].productName %></h6>
+                                    <h6 class="text-black mb-0" style="font-size: 15px;text-transform: uppercase;"><%= user.products[i].product.productName %></h6>
+                                    <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= user.products[i].product.productQuantity %> items</span>
+                                    <span class="text-success ms-2">In stock</span>
                                   </div>
                                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2"
-                                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <button class="btn" onclick="changeQuantity('<%= user._id %>','<%= user.products[i]._id %>','<%= user.products[i].product._id %>',-1,'<%= user.products[i].product.productPrice %>')">
                                       <i class="fas fa-minus"></i>
                                     </button>
               
-                                    <input id="form1" min="1" name="quantity" value="1" type="number"
-                                      class="form-control form-control-sm" />
-              
-                                    <button class="btn btn-link px-2"
-                                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <input  min="1" name="quantity" type="number" class="form-control form-control-sm text-center" 
+                                    value="<%= user.products[i].quantity %>" style="font-size: 15px;" id="<%= user.products[i].product._id %>">
+
+                                    <button class="btn" onclick="changeQuantity('<%= user._id %>','<%= user.products[i]._id %>','<%= user.products[i].product._id %>',1,'<%= user.products[i].product.productPrice %>')">
                                       <i class="fas fa-plus"></i>
                                     </button>
                                   </div>
-                                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h6 class="mb-0">&#8377;<%= user.products[i].productPrice %></h6>
+                                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 d-flex">
+                                    <span class="me-2">&#8377;</span><h6 id="<%= user.products[i].product._id %>price" style="font-size: 12px;" class="mb-0"><%= user.products[i].price %></h6>
                                   </div>
                                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                                    <button onclick="removeItem('<%= user.products[i]._id %>')" style="font-size: 15px;    border: none;background: white" class="text-muted"><i class="fas fa-times"></i></button>
                                   </div>
                                 </div>
-              
-                                <hr class="my-4">
-                                <% } %>
+                    
 
+                                <% } %>
+                                <hr class="my-4">
                                 <div class="pt-5">
-                                  <h6 class="mb-0"><a href="/shop" class="text-body"><i
-                                        class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                                  <h6 class="mb-0">
+                                    <a href="/shop" class="text-body">
+                                      <i class="fas fa-long-arrow-alt-left me-2"></i>
+                                      Back to shop
+                                    </a>
+                                  </h6>
                                 </div>
                               </div>
                             </div>
@@ -105,7 +110,7 @@
                                 <hr class="my-4">
               
                                 <div class="d-flex justify-content-between mb-4">
-                                  <h5 class="text-uppercase">items <%= user.products.length %></h5>
+                                  <h5 class="items text-uppercase"><%= user.products.length %> items</h5>
                                   <h5>€ 132.00</h5>
                                 </div>
               
@@ -148,6 +153,19 @@
                   </div>
                 </div>
               </section>
+              <% }else{ %>
+                <section style="height: 90vh; display: flex; align-items: center; justify-content: center;">
+                  <div class="empty-badge">
+                    <span style="    font-size: 60px;
+                    font-family: system-ui;
+                    font-weight: 800;
+                    opacity: 0.3;
+                " >Empty Cart</span>
+                  </div>
+                </section>
+              <% } %>
+              <div id="emptyCartContainer">
+              </div>
               <%- include('../partials/footer.ejs') %>
               <style>
                 @media (min-width: 1025px) {
@@ -189,6 +207,7 @@ border-bottom-right-radius: 16px;
 
 
     </body>
+
 
 
 

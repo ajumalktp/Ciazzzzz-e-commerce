@@ -16,7 +16,7 @@ const cartSchema = new mongoose.Schema({
         price:{
             type:Number,
         }
-    }]
+    }],
 })
 
 const cartModel = mongoose.model('carts',cartSchema)

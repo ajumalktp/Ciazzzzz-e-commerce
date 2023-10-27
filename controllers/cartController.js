@@ -30,7 +30,7 @@ const cartController = {
                             quantity:1,
                             price:product.productPrice
                         }
-                    }
+                    },
                 })
                 res.json({status:true})
             }
@@ -41,7 +41,7 @@ const cartController = {
                     product:prodID,
                     quantity:1,
                     price:product.productPrice
-            }]
+                }],
             })
             cart.save()
             res.json({status:true})

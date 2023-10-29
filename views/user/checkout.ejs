@@ -88,16 +88,14 @@
                         <h6></h6>
                         <p class="mb-0"></p>
                         <p class="mb-0"></p>
-                        <p class="mb-0" >{{this.address}},{{this.locality}},{{this.state}}</p>
-                        <p class="mb-2">{{this.city}},{{this.pincode}}</p>
+                        <p class="mb-0"></p>
+                        <p class="mb-2"></p>
                       </div>
                     </div>
                     <div class="d-flex flex-row align-items-center">
                       <div style="width: 50px;">
-                        {{!-- <h5 class="fw-normal mb-0">2</h5> --}}
                       </div>
                       <div style="width: 80px;">
-                        {{!-- <h5 class="mb-0">$900</h5> --}}
                       </div>
                       <span style="color: #cecece;">
                         <input type="radio" form="checkout-form" name="addressId" value="{{this.id}}" id="id" required>
@@ -131,19 +129,14 @@
                     <form id="wallet" action="/applyWallet" method="post" class="form-outline form-white mb-4"></form>
                     <h6 class="form-label" for="typeName">Wallet</h6>
 
-                    {{#if err}}
-                    <p class="text-center text-warning fw-bold" style="color: rgb(190, 0, 0)">{{message}}</p>
-                    {{/if}}
+                    <p class="text-center text-warning fw-bold" style="color: rgb(190, 0, 0)">message</p>
                     <div class="wallet-box">
-                      {{#if cart.walletAmount}}
                       <input readonly type="number" min="0" name="wallet" placeholder="Available balance {{wallet}}">
                       <button style="background-color: #00ce64;" aria-readonly="true">Applied</button>
-                      {{else}}
 
                       <input form="wallet" type="number" min="0" name="wallet"
                         placeholder="Available balance {{wallet}}" required>
                       <button form="wallet" type="submit">Apply</button>
-                      {{/if}}
                     </div>
 
 
@@ -178,36 +171,29 @@
 
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Subtotal</p>
-                        <p class="mb-2">{{cart.cartTotal}}</p>
+                        <p class="mb-2">cartTotal</p>
                       </div>
 
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Shipping</p>
                         <p class="mb-2">Free</p>
                       </div>
-                      {{#if cart.walletAmount}}
                       <div class="d-flex justify-content-between">
                         <p class="mb-2 text-success ">Wallet</p>
-                        <p class="mb-2 text-success">-{{cart.walletAmount}}</p>
+                        <p class="mb-2 text-success">walletAmount</p>
                       </div>
-                      {{/if}}
-                      {{#if discount}}
                       <div class="d-flex justify-content-between">
                         <p class="mb-2 text-success">Coupon applied</p>
-                        <p class="mb-2 text-success">-{{discount}}%</p>
+                        <p class="mb-2 text-success">discount</p>
                       </div>
-                      {{/if}}
-                      {{#if cart.totalAfterDiscount}}
                       <div class="d-flex justify-content-between mb-4">
                         <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="mb-2">{{cart.totalAfterDiscount}}</p>
+                        <p class="mb-2">totalAfterDiscount</p>
                       </div>
-                      {{else}}
                       <div class="d-flex justify-content-between mb-4">
                         <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="mb-2">{{cart.cartTotal}}</p>
+                        <p class="mb-2">cartTotal</p>
                       </div>
-                      {{/if}}
 
 
 

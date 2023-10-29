@@ -5,10 +5,13 @@ function addToCart(prodID){
       url:'/add-to-cart/'+prodID,
       method:'get',
       success:(response)=>{
-        if(response.status){
-            let count = $('.badge').html()
-            count= parseInt(count)+1
-            $('.badge').html(count)
+        if(response.change){
+          totalPrice()
+            if(response.status){
+              let count = $('.badge').html()
+              count= parseInt(count)+1
+              $('.badge').html(count)
+            }
         }
       }
     })
@@ -28,6 +31,7 @@ function addToCart(prodID){
         if(response.status){
           $(`#${prodID}`).val(response.quantity)
           changePrice(cartID,prod_id,prodID,response.quantity,price)
+          totalPrice()
           if(response.quantity<=0){
             removeItem(prod_id)
           }
@@ -50,6 +54,7 @@ function addToCart(prodID){
       success:(response)=>{
         if(response.status){
           $(`#${prodID}price`).text(response.updatedPrice)
+          totalPrice
         }
       }
     })
@@ -66,6 +71,7 @@ function addToCart(prodID){
         if(response.status)
         $(`#${prod_id}`).remove()
         $('.items').text(response.items+' items')
+        totalPrice()
         if (response.items === 0) {
           loadEmptyCartContent();
         }
@@ -82,4 +88,16 @@ function addToCart(prodID){
         $('#emptyCartContainer').html(content);
       },
     });
+  }
+
+  function totalPrice(){
+    $.ajax({
+      url:'/get-totalPrice',
+      method:'post',
+      success:(response)=>{
+        if(response.status){
+          $('.totalPrice').text(response.totalPrice)
+        }
+      }
+    })
   }

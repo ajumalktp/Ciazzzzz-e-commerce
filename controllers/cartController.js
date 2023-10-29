@@ -15,13 +15,14 @@ const cartController = {
         
         const product = await productModel.findById(prodID)
         const user = await cartModel.findOne({user:userID})
-        const prodExist = await cartModel.findOne({user:userID,'products.product':prodID})
+        const prodExist = await cartModel.findOne({user:userID,'products.product':prodID},{ "products.$": 1 })
         console.log(prodExist+'hello');
         if(user){
             if(prodExist){
                 await cartModel.updateOne({ user: userID, 'products.product': prodID }, {
                     $inc: { 'products.$.quantity': 1,'products.$.price': product.productPrice }
                 });
+                res.json({change:true})
             }else{
                 await cartModel.updateOne({user:userID},{
                     $push:{
@@ -32,7 +33,7 @@ const cartController = {
                         }
                     },
                 })
-                res.json({status:true})
+                res.json({status:true,change:true})
             }
         }else{
             const cart = new cartModel({
@@ -44,7 +45,7 @@ const cartController = {
                 }],
             })
             cart.save()
-            res.json({status:true})
+            res.json({status:true,change:true})
         }
     },
 
@@ -101,6 +102,19 @@ const cartController = {
         </div>
         </section>`;
         res.send(emptyCartContent);
+      },
+
+      totalPrice: async(req,res)=>{
+        let sum = 0
+        const userID = req.session.user.id
+        const user = await cartModel.findOne({user:userID}).populate("products")
+        for(i = 0; i < user.products.length; i++){
+            sum = sum + user.products[i].price
+        }
+        await cartModel.updateOne({user:userID},{
+            $set:{totalPrice:sum}
+        })
+        res.json({status:true,totalPrice:sum})
       },
 }
 

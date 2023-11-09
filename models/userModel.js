@@ -3,6 +3,10 @@ const userSchema = new mongoose.Schema({
     name:String,
     email:String,
     phone:Number,
+    address:{
+        type:Array,
+        default:[],
+    },
     ban:{
         type:Boolean,
         default:false

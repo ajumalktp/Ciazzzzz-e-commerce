@@ -3,7 +3,8 @@ const productModel = require('../models/productModel')
 const cartModel = require('../models/cartModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
-const bycrypt = require('bcrypt')
+const bycrypt = require('bcrypt');
+const  mongoose = require("mongoose");
 
 function generateOtp(){
   return otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
@@ -42,6 +43,7 @@ const userController = {
 
   getProfile: async(req,res)=>{
     const _id = req.session.user.id
+    req.session.backURL = '/profile'
     const user= await userModel.findOne({_id})
     if(req.session.user){
       res.render('user/userProfile',{user})
@@ -183,6 +185,30 @@ const userController = {
     res.redirect('/login')
   },
 
+  getAddAddress: async(req,res)=>{
+    const user = await userModel.findById(req.session.user.id)
+    res.render('user/addAddress',{user})
+  },
+
+  submitAddress: async(req,res)=>{
+    const {country,city,houseName,pinCode,contactNumber,state,name} = req.body
+    const newId = new mongoose.mongo.ObjectId()
+    await userModel.updateOne({_id:req.session.user.id},{
+      $push:{
+        address:{
+          name,
+          houseName,
+          country,
+          state,
+          city,
+          pinCode,
+          contactNumber,
+          _id:newId
+        }
+      }
+    })
+    res.redirect(req.session.backURL)
+  },
 
 };
 module.exports = userController;

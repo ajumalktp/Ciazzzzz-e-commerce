@@ -5,7 +5,7 @@ const cartController = {
 
     getCart: async(req,res)=>{
         const userID = req.session.user.id
-        const user = await cartModel.findOne({user:userID}).populate("products").populate("products.product")
+        const user = await cartModel.findOne({user:userID}).populate("products.product")
         res.render('user/cart',{user})
     },
 

@@ -101,3 +101,38 @@ function addToCart(prodID){
       }
     })
   }
+
+  function dummyButton(){
+    let pop = document.getElementById('pop')
+      pop.style.display = 'block'
+    }
+
+
+  function placeOrder(){
+      const form = document.getElementById('checkout-form')
+      const formData = new FormData(form);
+        const formObject = {};
+        
+        formData.forEach(function(value, key){
+            formObject[key] = value;
+        });
+        if(formObject.paymentMethod==='COD'){
+          $.ajax({
+        url:'/COD_order',
+        method:'post',
+        data:$('#checkout-form').serialize(),
+        success:(response)=>{
+          alert(response)
+        }
+        })
+        }else{
+          $.ajax({
+            url:'/ONLINE_order',
+            method:'post',
+            data:$('#checkout-form').serialize(),
+            success:(response)=>{
+              alert(response)
+            }
+            })
+        }
+    }

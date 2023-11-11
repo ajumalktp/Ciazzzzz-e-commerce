@@ -1,8 +1,12 @@
+<%- include('../partials/userHead.ejs') %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
 <style>
+  :root{
+    font-size: medium;
+  }
   .wallet-box {
     width: 100%;
     height: 50px;
@@ -62,7 +66,7 @@
   }
 </style>
 <div class="container">
-  <form method="post" action="/buy" id="checkout-form" style="background-color: #eee;"></form>
+  <form id="checkout-form" style="background-color: #eee;"></form>
   <div class="container py-2">
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col">
@@ -79,41 +83,54 @@
                 </div>
                 <hr>
 
-                <% for(i = 0; i< user.address.length;i++){ %>
-                <label for="id" class="card mb-3">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div class="d-flex flex-row align-items-center">
+                <% for(i=0; i< user.address.length;i++){ %>
+                  <label for="id" class="card mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
 
-                        <div class="ms-3">
-                          <h6></h6>
-                          <span class="mb-0"><%= user.address[i].name %></span>,
-                          <span class="mb-0"><%= user.address[i].houseName %></span>,
-                          <span class="mb-0"><%= user.address[i].city %></span>,
-                          <span class="mb-0"><%= user.address[i].state %></span>,
-                          <span class="mb-0"><%= user.address[i].country %></span>,
-                          <span class="mb-0"><%= user.address[i].pinCode %></span>
-                          <p class="mb-2">Contact NO: <%= user.address[i].contactNumber %></p>
+                          <div class="ms-3">
+                            <h6></h6>
+                            <span class="mb-0">
+                              <%= user.address[i].name %>
+                            </span>,
+                            <span class="mb-0">
+                              <%= user.address[i].houseName %>
+                            </span>,
+                            <span class="mb-0">
+                              <%= user.address[i].city %>
+                            </span>,
+                            <span class="mb-0">
+                              <%= user.address[i].state %>
+                            </span>,
+                            <span class="mb-0">
+                              <%= user.address[i].country %>
+                            </span>,
+                            <span class="mb-0">
+                              <%= user.address[i].pinCode %>
+                            </span>
+                            <p class="mb-2">Contact NO: <%= user.address[i].contactNumber %>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div class="d-flex flex-row align-items-center">
-                        <div style="width: 50px;">
+                        <div class="d-flex flex-row align-items-center">
+                          <div style="width: 50px;">
+                          </div>
+                          <div style="width: 80px;">
+                          </div>
+                          <span style="color: #cecece;">
+                            <input type="radio" form="checkout-form" name="addressId" value="<%= user.address[i]._id %>"
+                              id="id" required>
+                          </span>
                         </div>
-                        <div style="width: 80px;">
-                        </div>
-                        <span style="color: #cecece;">
-                          <input type="radio" form="checkout-form" name="addressId" value="<%= user.address[i]._id %>" id="id"
-                            required>
-                        </span>
                       </div>
                     </div>
-                  </div>
-                </label>
-                <% } %>
-                <% if(user.address.length === 0){ %>
-                  <h4>No address left</h4>
-                  <a href="/add-address">Add address</a>
-                <% } %>
+                  </label>
+                  <% } %>
+                    <% if(user.address.length===0){ %>
+                      <h4>No address left</h4>
+                      <a href="/add-address">Add address</a>
+                      <% } %>
 
 
               </div>
@@ -160,21 +177,30 @@
                         <div class="p-2" style="border-width:1px;
                         border-style:solid;
                         border-color:white;">
-                        <% for(i=0;i<cart.products.length;i++){ %>
-                        <div class="d-flex justify-content-between">
-                          <p class="mb-2"><%= cart.products[i].product.productName %></p>
-                          <p class="mb-2">x<%= cart.products[i].quantity %></p>
-                          <div class="d-flex">
-                          <span class="me-1">&#8377;</span><p class="mb-2"><%= cart.products[i].price %></p>
-                          </div>
-                        </div>
-                        <% } %>
+                          <% for(i=0;i<cart.products.length;i++){ %>
+                            <div class="d-flex justify-content-between">
+                              <p class="mb-2">
+                                <%= cart.products[i].product.productName %>
+                              </p>
+                              <p class="mb-2">x<%= cart.products[i].quantity %>
+                              </p>
+                              <div class="d-flex">
+                                <span class="me-1">&#8377;</span>
+                                <p class="mb-2">
+                                  <%= cart.products[i].price %>
+                                </p>
+                              </div>
+                            </div>
+                            <% } %>
                         </div>
 
                         <div class="d-flex justify-content-between">
                           <p class="mb-2">Subtotal</p>
                           <div class="d-flex">
-                          <span class="me-1">&#8377;</span><p class="mb-2"><%= cart.totalPrice %></p>
+                            <span class="me-1">&#8377;</span>
+                            <p class="mb-2">
+                              <%= cart.totalPrice %>
+                            </p>
                           </div>
                         </div>
 
@@ -197,33 +223,34 @@
                         <div class="d-flex justify-content-between mb-4">
                           <p class="mb-2">Total(Incl. taxes)</p>
                           <div class="d-flex">
-                            <span class="me-1">&#8377;</span><p class="mb-2"><%= cart.totalPrice %></p>
+                            <span class="me-1">&#8377;</span>
+                            <p class="mb-2">
+                              <%= cart.totalPrice %>
+                            </p>
                           </div>
                         </div>
 
 
-                        <% if(user.address.length > 0){ %>
-                        <button type="submit" form="checkout-form" class="btn  btn-block btn-lg w-100"
-                          style="background-color:  #dbd893;">
-                          <span style="font-weight: 600;">Place Order</span>
-                      </div>
-                      </button>
-                      <% }else{ %>
-                        <p class="text-danger text-center" id="pop" style="display: none;" >Add a address</p>
-                        <button id="dummyButton" class="btn  btn-block btn-lg w-100"
-                          style="background-color: gray">
-                          <span style="font-weight: 600;">Place Order</span>
-                      </div>
-                      </button>
-                      <% } %>
+                        <% if(user.address.length> 0){ %>
+                          <button onclick="placeOrder()" type="submit" form="checkout-form" class="btn  btn-block btn-lg w-100"
+                            style="background-color:  #dbd893;">
+                            <span style="font-weight: 600;">Place Order</span>
+                          </button>
+                          <% }else{ %>
+                            <p class="text-danger text-center" id="pop" style="display: none;">Add a address</p>
+                            <button onclick="dummyButton()" class="btn  btn-block btn-lg w-100" style="background-color: gray">
+                              <span style="font-weight: 600;">Place Order</span>
+                            </button>
+                            <% } %>
 
+                      </div>
                     </div>
+
                   </div>
 
                 </div>
 
               </div>
-
             </div>
           </div>
         </div>
@@ -231,14 +258,7 @@
     </div>
   </div>
 </div>
-
-<script>
-  let dummyButton = document.getElementById('dummyButton')
-  let pop = document.getElementById('pop')
-  dummyButton.addEventListener('click',()=>{
-    pop.style.display = 'block'
-  })
-</script>
+<%- include('../partials/script.ejs') %>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

@@ -14,9 +14,15 @@ const orderController = {
         res.render('user/checkout',{user,cart})
     },
 
-    buy: (req,res)=>{
+    COD_order: (req,res)=>{
         console.log(req.body);
-    }
+        res.json({status:true})
+    },
+
+    ONLINE_order: (req,res)=>{
+        console.log(req.body);
+        res.json({status:true})
+    },
 
 }
 

@@ -1,6 +1,7 @@
 <%- include('../partials/userHead.ejs') %>
 
     <div class="container rounded bg-white mt-5 mb-5">
+        <a style="color: black;" href="/"><i style="font-size: 20px;" class="fas fa-long-arrow-alt-left "></i>Back</a>
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -11,84 +12,109 @@
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
+                    <div class="d-flex align-items-center">
+                        <h3 class="text-right me-2">personal-info</h3>
+                        <a style="text-decoration: none; font-size: 12px;" href="/edit-info">Edit</a>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Name</label>
-                            <input type="text" class="form-control" placeholder="first name" value="<%= user.name %>">
+                            <h4><%= user.name %></h4>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Mobile Number</label>
-                            <input type="number" class="form-control" placeholder="enter phone number" value="<%= user.phone %>">
+                            <h4><%= user.phone %></h4>
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Email ID</label>
-                            <input type="email" class="form-control" placeholder="enter email id" value="<%= user.email %>">
+                            <h4><%= user.email %></h4>
                         </div>
-                        <div class="col-md-12">
-                            <label class="labels">Address 1</label>
-                            <input type="text" class="form-control" placeholder="enter address line 1" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Address 2</label>
-                            <input type="text" class="form-control" placeholder="enter address line 2" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Address 3</label>
-                            <input type="text" class="form-control" placeholder="enter address line 2" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Postcode</label>
-                            <input type="text" class="form-control" placeholder="enter address line 2" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">State</label>
-                            <input type="text" class="form-control" placeholder="enter address line 2" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Area</label>
-                            <input type="text" class="form-control" placeholder="enter address line 2" value="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="labels">Education</label>
-                            <input type="text" class="form-control" placeholder="education" value="">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label class="labels">Country</label>
-                            <input type="text" class="form-control" placeholder="country" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="labels">State/Region</label>
-                            <input type="text" class="form-control" value="" placeholder="state">
-                        </div>
-                    </div>
-                    <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                        <hr>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                            Experience</span><span class="border px-3 p-1 add-experience"><i
-                                class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text"
-                            class="form-control" placeholder="experience" value=""></div> <br>
-                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text"
-                            class="form-control" placeholder="additional details" value=""></div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="text-right">Address's</h3>
+                        <% if(user.address.length < 4){ %>
+                            <a href="/add-address" class="btn btn-dark">Add Address</a>
+                        <% } %>
+                    </div>
+                    <% for(i = 0; i <user.address.length;i++){ %>
+                    <div class="col-md-12">
+                        <label class="labels">Address <%= i+1 %></label>
+                            <label for="id" class="card" style="margin-bottom: 1.8rem;">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex flex-row align-items-center">
+          
+                                    <div class="ms-3">
+                                      <h6></h6>
+                                      <span class="mb-0">
+                                        <%= user.address[i].name %>
+                                      </span>,
+                                      <span class="mb-0">
+                                        <%= user.address[i].houseName %>
+                                      </span>,
+                                      <span class="mb-0">
+                                        <%= user.address[i].city %>
+                                      </span>,
+                                      <span class="mb-0">
+                                        <%= user.address[i].state %>
+                                      </span>,
+                                      <span class="mb-0">
+                                        <%= user.address[i].country %>
+                                      </span>,
+                                      <span class="mb-0">
+                                        <%= user.address[i].pinCode %>
+                                      </span>
+                                      <p class="mb-2">Contact NO: <%= user.address[i].contactNumber %>
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="d-flex flex-row align-items-center">
+                                    <div style="width: 50px;">
+                                    </div>
+                                    <div style="width: 80px;">
+                                    </div>
+                                    <span style="color: #cecece;">
+                                        <div class="d-flex">
+                                        <a class="me-3 text-info" href="/edit-address/<%= user.address[i]._id %>" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                              </svg>
+                                        </a>
+                                        <form id="myForm" action="/delete-address/<%= user.address[i]._id %>" method="post">
+                                            <a id="delete-address-button" class="text-danger">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                                  </svg>
+                                            </a>
+                                        </form>
+                                    </div>
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </label>
+                    </div>
+                    <% } %>
                 </div>
             </div>
         </div>
-        <a href="/add-address">add address</a>
     </div>
     </div>
     </div>
+    <script>
+            document.getElementById('delete-address-button').addEventListener('click', function() {
+            document.getElementById('myForm').submit();
+    });
+    </script>
     <style>
         body {
             background: rgb(99, 39, 120)

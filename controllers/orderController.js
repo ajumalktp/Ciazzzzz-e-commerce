@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel')
 const cartModel = require('../models/cartModel')
+const orderModel = require('../models/orderModel')
 
 const orderController = {
 
@@ -14,8 +15,22 @@ const orderController = {
         res.render('user/checkout',{user,cart})
     },
 
-    COD_order: (req,res)=>{
-        console.log(req.body);
+    COD_order: async(req,res)=>{
+        const address = await userModel.findOne({_id:req.session.user.id,'address._id':req.body.addressId},{'address.$':1})
+        const cart = await cartModel.findOne({user:req.session.user.id})
+        const order = new orderModel({
+            user:req.session.user.id,
+            products:cart.products,
+            totalAmount:cart.totalPrice,
+            paymentMethod:req.body.paymentMethod,
+            deliveryAddress:address.address,
+            status:'processing',
+            date:Date.now(),
+        })
+        order.save()
+        .then(async()=>{
+            await cartModel.deleteOne({user:req.session.user.id})
+        })
         res.json({status:true})
     },
 

@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile,getEmailVerifyFP,emailVerifyFP,verifyOtpFP,changePassFP,getAddAddress,submitAddress} = require('../controllers/userController')
+const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile,getEmailVerifyFP,emailVerifyFP,verifyOtpFP,changePassFP,getAddAddress,submitAddress, getEditAddress, editAddress, deleteAddress, getEditInfo, editInfo} = require('../controllers/userController')
 const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
 const { addToCart,getCart,changeQuantity,changePrice,removeItem,emptyCart,totalPrice } = require('../controllers/cartController')
-const { getCheckOut, COD_order ,ONLINE_order } = require('../controllers/orderController')
+const { getCheckOut, COD_order ,ONLINE_order} = require('../controllers/orderController')
 
 
 router.get('/',getHome)
@@ -21,6 +21,12 @@ router.get('/forgotPass/verifyEmail',getEmailVerifyFP)
 
 router.get('/add-address',verifyUser,getAddAddress)
 router.post('/add-address',submitAddress)
+router.get('/edit-address/:id',getEditAddress)
+router.post('/edit-address/:id',editAddress)
+router.post('/delete-address/:id',deleteAddress)
+
+router.get('/edit-info',getEditInfo)
+router.post('/edit-info',editInfo)
 
 router.post('/COD_order',COD_order)
 router.post('/ONLINE_order',ONLINE_order)

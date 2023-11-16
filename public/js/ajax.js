@@ -122,7 +122,8 @@ function addToCart(prodID){
         method:'post',
         data:$('#checkout-form').serialize(),
         success:(response)=>{
-          alert(response)
+          alert("Order placed successfully")
+          location.href = '/'
         }
         })
         }else{

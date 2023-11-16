@@ -79,12 +79,14 @@
                 <div class="d-flex justify-content-between">
 
                   <h5 class="mb-3"><i class="fas fa-long-arrow-alt-left me-2"></i>Choose an address</h5>
+                  <% if(user.address.length < 4){ %>
                   <a href="/add-address" class="btn btn-dark">Add Address</a>
+                  <% } %>
                 </div>
                 <hr>
 
                 <% for(i=0; i< user.address.length;i++){ %>
-                  <label for="id" class="card mb-3">
+                  <label for="id" class="card" style="margin-bottom: 1.8rem;">
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center">

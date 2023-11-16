@@ -3,10 +3,15 @@ const userSchema = new mongoose.Schema({
     name:String,
     email:String,
     phone:Number,
-    address:{
-        type:Array,
-        default:[],
-    },
+    address:[{
+        name:String,
+        houseName:String,
+        country:String,
+        state:String,
+        city:String,
+        pinCode:Number||String,
+        contactNumber:Number
+    }],
     ban:{
         type:Boolean,
         default:false

@@ -191,22 +191,54 @@ const userController = {
   },
 
   submitAddress: async(req,res)=>{
-    const {country,city,houseName,pinCode,contactNumber,state,name} = req.body
-    const newId = new mongoose.mongo.ObjectId()
     await userModel.updateOne({_id:req.session.user.id},{
       $push:{
-        address:{
-          name,
-          houseName,
-          country,
-          state,
-          city,
-          pinCode,
-          contactNumber,
-          _id:newId
-        }
+        address:req.body
       }
     })
+    res.redirect(req.session.backURL)
+  },
+
+  getEditAddress: async(req,res)=>{
+    const addressId = req.params.id
+    const address = await userModel.findOne({_id:req.session.user.id,'address._id':addressId},{'address.$':1})
+    res.render('user/editAddress',{address})
+  },
+
+  editAddress: async(req,res)=>{
+    const addressId = req.params.id
+    await userModel.updateOne({_id:req.session.user.id,'address._id':addressId},{
+      $set:{
+        'address.$':req.body
+      }
+    })
+    res.redirect(req.session.backURL)
+  },
+
+  deleteAddress: async(req,res)=>{
+    const addressId = req.params.id
+    await userModel.updateOne({_id:req.session.user.id},{
+      $pull:{
+        address:{_id:addressId}
+      }
+    })
+    res.redirect(req.session.backURL)
+  },
+
+  getEditInfo: async(req,res)=>{
+    const user = await userModel.findOne({_id:req.session.user.id})
+    res.render('user/edit-info',{user})
+  },
+
+  editInfo: async(req,res)=>{
+    const {name,phone,email} = req.body
+    await userModel.updateOne({_id:req.session.user.id},{
+      $set:{
+        name:name,
+        phone:phone,
+      }
+    })
+    console.log(req.body);
     res.redirect(req.session.backURL)
   },
 

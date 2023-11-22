@@ -32,6 +32,17 @@
                             <h4><%= user.email %></h4>
                         </div>
                         <hr>
+                        <div class="col-md-12">
+                            <div class="side-bar">
+                            <div class="p-1 pb-0">
+                                <a href="/myOrders/allOrders"><button class="btn mb-3">
+                                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                                    </svg>
+                                    Orders</button></a>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,7 +51,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3 class="text-right">Address's</h3>
                         <% if(user.address.length < 4){ %>
-                            <a href="/add-address" class="btn btn-dark">Add Address</a>
+                            <a href="/add-address" class="add-address btn ">Add Address</a>
                         <% } %>
                     </div>
                     <% for(i = 0; i <user.address.length;i++){ %>
@@ -88,14 +99,16 @@
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                               </svg>
                                         </a>
+                                        <a id="delete-address-button" class="text-danger">
                                         <form id="myForm" action="/delete-address/<%= user.address[i]._id %>" method="post">
-                                            <a id="delete-address-button" class="text-danger">
+                                            
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
                                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
                                                   </svg>
-                                            </a>
+                                            
                                         </form>
+                                    </a>
                                     </div>
                                     </span>
                                   </div>
@@ -119,6 +132,25 @@
         body {
             background: rgb(99, 39, 120)
         }
+        .add-address{
+            background: rgb(99, 39, 120);
+            color: white;
+        }
+
+        .side-bar{
+    width: 40%;
+}
+.side-bar .btn{
+    width: 80%;
+    height: 7vh;
+    border-radius: 1.25rem;
+    background: rgb(99, 39, 120);
+    color: white;
+}
+.side-bar .btn:hover{
+    background-color: rgb(187, 127, 243);
+    color: white;
+}
 
         .form-control:focus {
             box-shadow: none;

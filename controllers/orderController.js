@@ -4,6 +4,32 @@ const orderModel = require('../models/orderModel')
 
 const orderController = {
 
+    allOrders: async(req,res)=>{
+        res.render('user/myOrders/allOrders')
+    },
+
+    delivered: async(req,res)=>{
+        res.render('user/myOrders/delivered')
+    },
+
+    cancelled: async(req,res)=>{
+        res.render('user/myOrders/cancelled')
+    },
+
+    returned: async(req,res)=>{
+        res.render('user/myOrders/returned')
+    },
+
+    COD: async(req,res)=>{
+        res.render('user/myOrders/COD')
+    },
+
+    ONLINE: async(req,res)=>{
+        res.render('user/myOrders/ONLINE')
+    },
+
+
+
     getAdminAllOrders: (req,res)=>{
         res.render('admin/orders')
     },

@@ -70,15 +70,21 @@
                     4.5
                   </span>
                 </div>
-                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= products[i].productQuantity %> items</span>
-                <span class="text-success ms-2">In stock</span>
-              </div>
-          </div>
-          </a>
-          <div class="card-footer d-flex justify-content-between">
-              <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
+                <% if(products[i].productQuantity > 0){ %>
+                  <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= products[i].productQuantity %> items</span>
+                  <span class="text-success ms-2">In stock</span>
+                  <% } %>
+                </div>
+            </div>
+            </a>
+            <% if(products[i].productQuantity > 0){ %>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
                 <button onclick="addToCart('<%= products[i]._id %>')" class="btn btn-cart">Add to Cart</button>
-          </div>
+            </div>
+            <% }else{ %>
+              <span style="font-weight: bold;" class="text-danger ms-2 text-center">Out of stock</span>
+            <% } %>
           </div>
           <% } %>
         </div>

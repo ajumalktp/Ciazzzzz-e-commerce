@@ -5,7 +5,15 @@ const orderModel = require('../models/orderModel')
 const orderController = {
 
     allOrders: async(req,res)=>{
-        res.render('user/myOrders/allOrders')
+        const orders = await orderModel.find({user:req.session.user.id}).populate('products.product')
+        // let items = null
+        // for(let i = 0; i< orders.length;i++){
+        //     for(let j = 0; j < orders[i].products.length;j ++){
+        //         items = orders[i].products[j].product
+        //     }
+        // }
+        // console.log(items);
+        res.render('user/myOrders/allOrders',{orders})
     },
 
     delivered: async(req,res)=>{

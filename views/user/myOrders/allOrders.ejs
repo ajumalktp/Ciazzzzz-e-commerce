@@ -4,7 +4,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-<section class="gradient-custom">
+<section>
     <div class="container py-5">
         <div class="sticky-header">
         <div class="d-flex justify-content-between align-items-center mb-4 bg-white">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-      <div class="row d-flex justify-content-center align-items-center">
+      <div class="row d-flex justify-content-center ">
         <div class="col-lg-10 col-xl-8">
           <div class="card" style="border-radius: 10px;">
             <div class="card-body p-4">
@@ -45,10 +45,10 @@
                       <p class="text-muted mb-0"><%= orders[i].products[j].product.productName %></p>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small"><%= orders[i].products[j].product.productPrice %></p>
+                      <p class="text-muted mb-0 small">Method: <%= orders[i].paymentMethod %></p>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Capacity: 64GB</p>
+                      <p class="text-muted mb-0 small">Size: <%= orders[i].products[j].product.productSize %></p>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                       <p class="text-muted mb-0 small">Qty: <span><%= orders[i].products[j].quantity %></span></p>
@@ -63,14 +63,14 @@
                       <p class="text-muted mb-0 small">Track Order</p>
                     </div>
                     <div class="col-md-10">
-                      <div class="progress" style="height: 6px; border-radius: 16px;">
+                      <!-- <div class="progress" style="height: 6px; border-radius: 16px;">
                         <div class="progress-bar" role="progressbar"
                           style="width: 65%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
                           aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <div class="d-flex justify-content-around mb-1">
+                      </div> -->
+                      <div class="d-flex mb-1">
                         <p class="text-muted mt-1 mb-0 small ms-xl-5">Out for delivary</p>
-                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                        <!-- <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p> -->
                       </div>
                     </div>
                   </div>
@@ -86,7 +86,7 @@
   </section>
 
   <style>
-    .gradient-custom {
+    body {
 /* fallback for old browsers */
 background: #cd9cf2;
 

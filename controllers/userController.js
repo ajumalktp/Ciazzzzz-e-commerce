@@ -4,7 +4,6 @@ const cartModel = require('../models/cartModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt');
-const  mongoose = require("mongoose");
 
 function generateOtp(){
   return otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });

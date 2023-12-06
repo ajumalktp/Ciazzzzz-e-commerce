@@ -108,32 +108,65 @@ function addToCart(prodID){
     }
 
 
-  function placeOrder(){
-      const form = document.getElementById('checkout-form')
-      const formData = new FormData(form);
-        const formObject = {};
-        
-        formData.forEach(function(value, key){
-            formObject[key] = value;
-        });
-        if(formObject.paymentMethod==='COD'){
-          $.ajax({
-        url:'/COD_order',
+    $('#checkout-form').submit((e)=>{
+      e.preventDefault()
+      $.ajax({
+        url:'/place_order',
         method:'post',
         data:$('#checkout-form').serialize(),
         success:(response)=>{
-          alert("Order placed successfully")
-          location.href = '/'
+          if(response.status){
+            location.href = '/order-success'
+          }else{
+            RazorpayPayment(response.order)
+          }
         }
         })
-        }else{
-          $.ajax({
-            url:'/ONLINE_order',
-            method:'post',
-            data:$('#checkout-form').serialize(),
-            success:(response)=>{
-              alert(response)
-            }
-            })
+    })
+
+    function RazorpayPayment(order){
+      var options = {
+        "key": "rzp_test_8x3pXYP4r0mdbq", // Enter the Key ID generated from the Dashboard
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Ciazzzzz",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response) {
+
+          verifyPayment(response, order)
+        },
+        "prefill": {
+          "name": "Muhammed Ajumal T",
+          "email": "ajumalktp555@gmail.com",
+          "contact": "9605714367"
+        },
+        "notes": {
+          "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+          "color": "#3399cc"
         }
+      };
+      var rzp1 = new Razorpay(options);
+      rzp1.open();
+    }
+
+    function verifyPayment(payment,order){
+      $.ajax({
+        url:'/verifyPayment',
+        method:'post',
+        data:{
+          payment,
+          order
+        },
+        success:(response)=>{
+          if(response.status){
+            location.href = '/order-success'
+          }else{
+            alert('payment failed')
+          }
+        }
+      })
     }

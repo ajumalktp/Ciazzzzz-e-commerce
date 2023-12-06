@@ -67,56 +67,29 @@ textarea{
   }
 
   //form validation
-  // $(document).ready(function () {
-  //   $.validator.addMethod("noSpace", function (value, element) {
-  //     return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
-  //   }, "Name must contain characters or numbers without spaces.");
+  $(document).ready(function () {
+    $.validator.addMethod("noSpace", function (value, element) {
+    return this.optional(element) || /[a-zA-Z0-9]/.test(value);
+}, "Please enter at least one letter or number");
 
-  //   $("#formValidation").validate({
-  //     rules: {
-  //       name: {
-  //         required: true,
-  //         minlength: 2,
-  //         noSpace: true
-  //       },
-  //       email: {
-  //         required: true,
-  //         email: true
-  //       },
-  //       phone: {
-  //         required: true,
-  //         minlength: 10,
-  //         maxlength: 10
-  //       },
-  //       password: {
-  //         required: true,
-  //         minlength: 4
-  //       }
-  //     },
-  //     messages: {
-  //       name: {
-  //         required: "Please enter your name",
-  //         minlength: "Name atleast 2 charcters",
-  //         noSpace: "Name contain number or characters"
-  //       },
-  //       email: {
-  //         required: "Please enter your email",
-  //         email: "Please enter a valid email address",
-  //         remote: "User not found"
-  //       },
-  //       phone: {
-  //         required: "Please enter your Phone NO:",
-  //         minlength: "Phone number must contain 10 numbers",
-  //         maxlength: "phone number maximum contain 10 numbers"
-  //       },
-  //       password: {
-  //         required: "Please enter your password",
-  //         minlength: "password must contain 4 letters",
-  //         remote: "Incorrect password"
-  //       }
-  //     },
-  //   });
-  // });
+    $("#formValidation").validate({
+      rules: {
+        catName: {
+          required: true,
+          minlength: 2,
+          noSpace: true
+        },
+      },
+      messages: {
+        catName: {
+          required: "Please enter Category Name",
+          minlength: "Name atleast 2 charcters",
+          noSpace: "Name contain number or characters"
+        },
+
+      },
+    });
+  });
 </script>
 <style>
   body {

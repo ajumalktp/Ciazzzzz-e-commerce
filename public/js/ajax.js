@@ -152,3 +152,21 @@ function addToCart(prodID){
       var rzp1 = new Razorpay(options);
       rzp1.open();
     }
+
+    function verifyPayment(payment,order){
+      $.ajax({
+        url:'/verifyPayment',
+        method:'post',
+        data:{
+          payment,
+          order
+        },
+        success:(response)=>{
+          if(response.status){
+            location.href = '/order-success'
+          }else{
+            alert('payment failed')
+          }
+        }
+      })
+    }

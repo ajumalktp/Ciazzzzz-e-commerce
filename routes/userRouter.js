@@ -5,7 +5,7 @@ const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
 const { addToCart,getCart,changeQuantity,changePrice,removeItem,emptyCart,totalPrice } = require('../controllers/cartController')
-const { getCheckOut, place_order , allOrders, delivered, cancelled, ONLINE, returned, COD, order_success} = require('../controllers/orderController')
+const { getCheckOut, place_order , allOrders, delivered, cancelled, ONLINE, returned, COD, order_success,verifyPayment} = require('../controllers/orderController')
 
 
 router.get('/',getHome)
@@ -30,6 +30,7 @@ router.post('/edit-info',editInfo)
 
 router.post('/place_order',place_order)
 router.get('/order-success',order_success)
+router.post('/verifyPayment',verifyPayment)
 
 router.post('/signUp',userRegister)
 router.post('/login',userLogin)

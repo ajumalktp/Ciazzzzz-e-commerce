@@ -2,6 +2,7 @@ const userModel = require("../models/userModel");
 const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const Razorpay = require("razorpay");
+const crypto = require('crypto')
 
 var instance = new Razorpay({
   key_id: "rzp_test_8x3pXYP4r0mdbq",
@@ -109,6 +110,21 @@ const orderController = {
 
   order_success: (req,res)=>{
     res.render('user/order-success')
+  },
+
+  verifyPayment: async(req,res)=>{
+  let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
+      hmac.update(req.body.payment.razorpay_order_id + '|' + req.body.payment.razorpay_payment_id)
+      hmac = hmac.digest('hex')
+      if (hmac == req.body.payment.razorpay_signature){
+        await orderModel.findByIdAndUpdate(req.body.order.receipt,{
+          $set:{
+            status:'Processing'
+          }
+        })
+      }
+      await cartModel.deleteOne({ user: req.session.user.id });
+      res.json({status:true})
   },
 };
 

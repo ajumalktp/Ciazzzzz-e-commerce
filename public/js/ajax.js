@@ -115,11 +115,10 @@ function addToCart(prodID){
         method:'post',
         data:$('#checkout-form').serialize(),
         success:(response)=>{
-          if(!response){
-            alert("Order placed successfully")
-            location.href = '/'
+          if(response.status){
+            location.href = '/order-success'
           }else{
-            RazorpayPayment(response)
+            RazorpayPayment(response.order)
           }
         }
         })

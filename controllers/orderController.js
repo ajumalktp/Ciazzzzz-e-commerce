@@ -52,6 +52,9 @@ const orderController = {
     const cart = await cartModel
       .findOne({ user: req.session.user.id })
       .populate("products.product");
+      if(!cart){
+        res.redirect('/cart')
+      }
     req.session.backURL = "/checkout";
     res.render("user/checkout", { user, cart });
   },
@@ -75,9 +78,8 @@ const orderController = {
         status: status,
         date: Date.now(),
       });
-      order.save().then(async () => {
-        await cartModel.deleteOne({ user: req.session.user.id });
-      });
+      order.save()
+      await cartModel.deleteOne({ user: req.session.user.id });
       res.json({ status: true });
     } else {
       const order = new orderModel({
@@ -99,10 +101,14 @@ const orderController = {
           if (err) {
             console.log(err);
           }
-          res.json(order);
+          res.json({status:false,order:order});
         });
       });
     }
+  },
+
+  order_success: (req,res)=>{
+    res.render('user/order-success')
   },
 };
 

@@ -11,9 +11,7 @@ var instance = new Razorpay({
 
 const orderController = {
   allOrders: async (req, res) => {
-    const orders = await orderModel
-      .find({ user: req.session.user.id })
-      .populate("products.product");
+    const orders = await orderModel.find({ user: req.session.user.id }).populate("products.product").sort('-createdAt').lean().exec()
     // let items = null
     // for(let i = 0; i< orders.length;i++){
     //     for(let j = 0; j < orders[i].products.length;j ++){
@@ -25,23 +23,28 @@ const orderController = {
   },
 
   delivered: async (req, res) => {
-    res.render("user/myOrders/delivered");
+    const orders = await orderModel.find({ user: req.session.user.id , status:'Delivered'}).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/delivered",{orders});
   },
 
   cancelled: async (req, res) => {
-    res.render("user/myOrders/cancelled");
+    const orders = await orderModel.find({ user: req.session.user.id , status:'Cancelled' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/cancelled",{orders});
   },
 
   returned: async (req, res) => {
-    res.render("user/myOrders/returned");
+    const orders = await orderModel.find({ user: req.session.user.id , status:{ $in: ['Returning', 'Returned'] }   }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/returned",{orders});
   },
 
   COD: async (req, res) => {
-    res.render("user/myOrders/COD");
+    const orders = await orderModel.find({ user: req.session.user.id , paymentMethod:'COD' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/COD",{orders});
   },
 
   ONLINE: async (req, res) => {
-    res.render("user/myOrders/ONLINE");
+    const orders = await orderModel.find({ user: req.session.user.id , paymentMethod:'ONLINE' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/ONLINE",{orders});
   },
 
   getAdminAllOrders: (req, res) => {

@@ -11,9 +11,7 @@ var instance = new Razorpay({
 
 const orderController = {
   allOrders: async (req, res) => {
-    const orders = await orderModel
-      .find({ user: req.session.user.id })
-      .populate("products.product");
+    const orders = await orderModel.find({ user: req.session.user.id }).populate("products.product").sort('-createdAt').lean().exec()
     // let items = null
     // for(let i = 0; i< orders.length;i++){
     //     for(let j = 0; j < orders[i].products.length;j ++){
@@ -25,23 +23,28 @@ const orderController = {
   },
 
   delivered: async (req, res) => {
-    res.render("user/myOrders/delivered");
+    const orders = await orderModel.find({ user: req.session.user.id , status:'Delivered'}).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/delivered",{orders});
   },
 
   cancelled: async (req, res) => {
-    res.render("user/myOrders/cancelled");
+    const orders = await orderModel.find({ user: req.session.user.id , status:'Cancelled' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/cancelled",{orders});
   },
 
   returned: async (req, res) => {
-    res.render("user/myOrders/returned");
+    const orders = await orderModel.find({ user: req.session.user.id , status:{ $in: ['Returning', 'Returned'] }   }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/returned",{orders});
   },
 
   COD: async (req, res) => {
-    res.render("user/myOrders/COD");
+    const orders = await orderModel.find({ user: req.session.user.id , paymentMethod:'COD' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/COD",{orders});
   },
 
   ONLINE: async (req, res) => {
-    res.render("user/myOrders/ONLINE");
+    const orders = await orderModel.find({ user: req.session.user.id , paymentMethod:'ONLINE' }).populate("products.product").sort('-createdAt').lean().exec()
+    res.render("user/myOrders/ONLINE",{orders});
   },
 
   getAdminAllOrders: (req, res) => {
@@ -61,11 +64,18 @@ const orderController = {
   },
 
   place_order: async (req, res) => {
+    const timestamp = Date.now();
+const date = new Date(timestamp);
+const formattedDate = date.toLocaleDateString();
+const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const address = await userModel.findOne(
       { _id: req.session.user.id, "address._id": req.body.addressId },
       { "address.$": 1 }
     );
     const cart = await cartModel.findOne({ user: req.session.user.id });
+
+    console.log(cart.products);
 
     let status = req.body.paymentMethod === "COD" ? "Processing" : "Pending";
 
@@ -77,7 +87,7 @@ const orderController = {
         paymentMethod: req.body.paymentMethod,
         deliveryAddress: address.address,
         status: status,
-        date: Date.now(),
+        date: formattedDateTime,
       });
       order.save()
       await cartModel.deleteOne({ user: req.session.user.id });
@@ -90,7 +100,7 @@ const orderController = {
         paymentMethod: req.body.paymentMethod,
         deliveryAddress: address.address,
         status: status,
-        date: Date.now(),
+        date: formattedDateTime,
       });
       order.save().then((order) => {
         var options = {
@@ -102,7 +112,7 @@ const orderController = {
           if (err) {
             console.log(err);
           }
-          res.json({status:false,order:order});
+          res.json({status:false, order:order});
         });
       });
     }
@@ -126,6 +136,28 @@ const orderController = {
       await cartModel.deleteOne({ user: req.session.user.id });
       res.json({status:true})
   },
+
+  returning_order: async(req,res)=>{
+    const orderID = req.params.id
+    const route = req.body.route
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Returning'
+      }
+    })
+    res.redirect(route)
+  },
+
+  cancel_order: async(req,res)=>{
+    const orderID = req.params.id
+    const route = req.body.route
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+    res.redirect(route)
+  }
 };
 
 module.exports = orderController;

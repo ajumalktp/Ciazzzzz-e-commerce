@@ -35,9 +35,10 @@ const orderSchema = new mongoose.Schema(
         "Delivered",
         "Cancelled",
         "Returned",
+        "Returning"
       ],
     },
-    date: Date,
+    date: String,
   },
   {
     timestamps: true,

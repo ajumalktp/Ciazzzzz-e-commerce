@@ -211,6 +211,11 @@
                         <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
                         <p style="font-weight: 600;" class="mb-0 small text-danger">Cancelled</p>
                       </div>
+                    <% }else if(orders[i].status === 'Returned'){ %>
+                      <div class="status-bar d-flex justify-content-between">
+                        <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
+                        <p style="font-weight: 600;" class="mb-0 small text-info">Returned</p>
+                      </div>
                     <% } %>
                   </div>
                 </div>

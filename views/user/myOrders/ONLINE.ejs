@@ -33,10 +33,16 @@
         <div class="col-lg-10 col-xl-8">
           <div class="card" style="border-radius: 10px;">
             <div class="card-body p-4">
+              <% if(orders.length === 0){ %>
+                <p class="text-center mb-0">No orders left</p>
+              <% } %>
               <% for(let i = 0; i< orders.length; i++){ %>
                 <% for(let j = 0; j< orders[i].products.length; j++){ %>
               <div class="card shadow-0 border mb-4">
                 <div class="card-body">
+                  <div class="d-flex justify-content-end">
+                    <span class="text-muted small ">Order ID :<%= orders[i]._id %></span>
+                    </div>
                   <div class="row">
                     <div class="col-md-2">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"

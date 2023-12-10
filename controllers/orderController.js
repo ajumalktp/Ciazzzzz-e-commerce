@@ -58,9 +58,10 @@ const orderController = {
       .populate("products.product");
       if(!cart){
         res.redirect('/cart')
+      }else{
+        req.session.backURL = "/checkout";
+        res.render("user/checkout", { user, cart });
       }
-    req.session.backURL = "/checkout";
-    res.render("user/checkout", { user, cart });
   },
 
   place_order: async (req, res) => {

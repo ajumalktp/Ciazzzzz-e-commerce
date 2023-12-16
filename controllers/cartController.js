@@ -15,14 +15,15 @@ const cartController = {
         
         const product = await productModel.findById(prodID)
         const user = await cartModel.findOne({user:userID})
-        const prodExist = await cartModel.findOne({user:userID,'products.product':prodID},{ "products.$": 1 })
-        console.log(prodExist+'hello');
+        const prodExist = await cartModel.findOne({user:userID,'products.product':prodID},{ "products.$": 1 }).populate('products.product')
         if(user){
             if(prodExist){
+                if(prodExist.products[0].quantity < prodExist.products[0].product.productQuantity){
                 await cartModel.updateOne({ user: userID, 'products.product': prodID }, {
                     $inc: { 'products.$.quantity': 1,'products.$.price': product.productPrice }
                 });
                 res.json({change:true})
+                }
             }else{
                 await cartModel.updateOne({user:userID},{
                     $push:{

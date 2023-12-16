@@ -51,19 +51,48 @@ const cartController = {
 
     changeQuantity: async(req,res,next)=>{
         const data = req.body
-        await cartModel.updateOne({_id:data.cartID, 'products.product': data.prodID }, {
-            $inc: { 'products.$.quantity': data.count }
-        });
-        const product = await cartModel.findOne({ _id: data.cartID, "products._id": data.prod_id },
-        { "products.$": 1 },)
-        if (product && product.products && product.products.length > 0) {
-            const updatedQuantity = product.products[0].quantity;
-    
-            res.json({ status: true, quantity: updatedQuantity });
-            next()
-        } else {
-            res.json({ status: false, message: 'Product not found in the cart.' });
+        const cart = await cartModel.findOne({_id:data.cartID,'products._id':data.prod_id}).populate("products.product")
+
+        function counting(cart,prodID){
+        for(let i = 0; i < cart.products.length; i++){
+            if(cart.products[i].product._id == prodID){
+                return i
+            }
         }
+        }
+        let item = counting(cart,data.prodID)
+
+            if(data.count == 1){
+                if(cart.products[item].quantity < cart.products[item].product.productQuantity){
+                    await cartModel.updateOne({_id:data.cartID, 'products.product': data.prodID }, {
+                        $inc: { 'products.$.quantity': data.count }
+                    });
+                    const product = await cartModel.findOne({ _id: data.cartID, "products._id": data.prod_id },
+                    { "products.$": 1 },)
+                    if (product && product.products && product.products.length > 0) {
+                        const updatedQuantity = product.products[0].quantity;
+                
+                        res.json({ status: true, quantity: updatedQuantity });
+                        next()
+                    } else {
+                        res.json({ status: false, message: 'Product not found in the cart.' });
+                    }
+                }
+            }else{
+                await cartModel.updateOne({_id:data.cartID, 'products.product': data.prodID }, {
+                    $inc: { 'products.$.quantity': data.count }
+                });
+                const product = await cartModel.findOne({ _id: data.cartID, "products._id": data.prod_id },
+                { "products.$": 1 },)
+                if (product && product.products && product.products.length > 0) {
+                    const updatedQuantity = product.products[0].quantity;
+            
+                    res.json({ status: true, quantity: updatedQuantity });
+                    next()
+                } else {
+                    res.json({ status: false, message: 'Product not found in the cart.' });
+                }
+            }
     },
 
     changePrice: async(req,res)=>{

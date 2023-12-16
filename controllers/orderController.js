@@ -2,7 +2,8 @@ const userModel = require("../models/userModel");
 const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
 const Razorpay = require("razorpay");
-const crypto = require('crypto')
+const crypto = require('crypto');
+const productModel = require("../models/productModel");
 
 var instance = new Razorpay({
   key_id: "rzp_test_8x3pXYP4r0mdbq",
@@ -91,6 +92,17 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         date: formattedDateTime,
       });
       order.save()
+      const bulkOps = cart.products.map(product => {
+        return {
+          updateOne: {
+            // Set the filter to match the product ID
+            filter: { _id: product.product._id },
+            // Use the $inc operator to decrement the quantity and increment the sold fields
+            update: { $inc: { productQuantity: -1 * product.quantity, sold: 1 * product.quantity } }
+          }
+        };
+      });
+      await productModel.bulkWrite(bulkOps)
       await cartModel.deleteOne({ user: req.session.user.id });
       res.json({ status: true });
     } else {
@@ -124,6 +136,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   },
 
   verifyPayment: async(req,res)=>{
+    const cart = cartModel.find({user:req.session.user.id})
   let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
       hmac.update(req.body.payment.razorpay_order_id + '|' + req.body.payment.razorpay_payment_id)
       hmac = hmac.digest('hex')
@@ -134,6 +147,17 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
           }
         })
       }
+      const bulkOps = cart.products.map(product => {
+        return {
+          updateOne: {
+            // Set the filter to match the product ID
+            filter: { _id: product.product._id },
+            // Use the $inc operator to decrement the quantity and increment the sold fields
+            update: { $inc: { productQuantity: -1 * product.quantity, sold: 1 * product.quantity } }
+          }
+        };
+      });
+      await productModel.bulkWrite(bulkOps)
       await cartModel.deleteOne({ user: req.session.user.id });
       res.json({status:true})
   },

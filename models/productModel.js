@@ -19,6 +19,10 @@ const productSchema = new mongoose.Schema({
     productSubCategory:{
       type:mongoose.Schema.Types.ObjectId,
       ref:'categories',
+    },
+    sold:{
+      type:Number,
+      default:0
     }
   });
   

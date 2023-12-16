@@ -131,12 +131,30 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     }
   },
 
+  repayment: async(req,res)=>{
+    const orderID = req.body.orderID
+    await orderModel.findOne({_id:orderID})
+    .then((order)=>{
+      var options = {
+        amount: order.totalAmount * 100, // amount in the smallest currency unit
+        currency: "INR",
+        receipt: ""+order._id,
+      };
+      instance.orders.create(options, function (err, order) {
+        if (err) {
+          console.log(err);
+        }
+        res.json({status:true, order:order});
+      });
+    })
+  },
+
   order_success: (req,res)=>{
     res.render('user/order-success')
   },
 
   verifyPayment: async(req,res)=>{
-    const cart = cartModel.find({user:req.session.user.id})
+    const cart = await cartModel.findOne({user:req.session.user.id})
   let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
       hmac.update(req.body.payment.razorpay_order_id + '|' + req.body.payment.razorpay_payment_id)
       hmac = hmac.digest('hex')

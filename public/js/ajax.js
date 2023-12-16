@@ -170,3 +170,19 @@ function addToCart(prodID){
         }
       })
     }
+
+    function repayment(orderID){
+      $.ajax({
+        url:'/repayment',
+        method:'post',
+        data:{
+          orderID
+        },
+        success:(response)=>{
+          if(response.status){
+            RazorpayPayment(response.order)
+          }
+        }
+
+      })
+    }

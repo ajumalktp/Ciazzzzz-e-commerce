@@ -78,6 +78,13 @@ const cartController = {
                     } else {
                         res.json({ status: false, message: 'Product not found in the cart.' });
                     }
+                }else{
+                    const product = await cartModel.findOne({ _id: data.cartID, "products._id": data.prod_id },
+                    { "products.$": 1 },)
+                    if (product && product.products && product.products.length > 0) {
+                        const updatedQuantity = product.products[0].quantity;
+                        res.json({status:false,quantity: updatedQuantity})
+                    }
                 }
             }else{
                 await cartModel.updateOne({_id:data.cartID, 'products.product': data.prodID }, {

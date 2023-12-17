@@ -35,6 +35,8 @@ function addToCart(prodID){
           if(response.quantity<=0){
             removeItem(prod_id)
           }
+        }else{
+          $(`#${prodID}`).val(response.quantity)
         }
       }
     })

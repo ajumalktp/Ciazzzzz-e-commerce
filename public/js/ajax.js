@@ -1,6 +1,12 @@
 
 
-function addToCart(prodID){
+function addToCart(prodID,user){
+
+  if(!user){
+    window.location.href = '/login'
+    return;
+  }
+
     $.ajax({
       url:'/add-to-cart/'+prodID,
       method:'get',
@@ -13,7 +19,7 @@ function addToCart(prodID){
               $('.badge').html(count)
             }
         }
-      }
+      },
     })
   }
 

@@ -2,6 +2,7 @@ const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require('../models/cartModel')
 
+
 const productController = {
     getShop: async (req, res) => {
         let count = 0
@@ -39,7 +40,7 @@ const productController = {
             },
           ]);
           
-        res.render("user/shop", { products ,count });
+        res.render("user/shop", { products ,count ,user:req.session.user});
     },
 
     getAdminProducts: async (req, res) => {
@@ -107,7 +108,7 @@ const productController = {
         }
         const _id = req.params.id;
         const product = await productModel.findOne({ _id }).populate("productSubCategory").exec();
-        res.render("user/productDetails", { product ,count });
+        res.render("user/productDetails", { product ,count ,user:req.session.user});
     },
 
 

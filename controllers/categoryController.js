@@ -138,7 +138,7 @@ const categoryController = {
                 },
               },
           ]);
-        res.render('user/categoryProducts',{category,products,count})
+        res.render('user/categoryProducts',{category,products,count,user:req.session.user})
     },
 }
 

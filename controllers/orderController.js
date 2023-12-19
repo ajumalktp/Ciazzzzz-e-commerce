@@ -48,10 +48,6 @@ const orderController = {
     res.render("user/myOrders/ONLINE",{orders});
   },
 
-  getAdminAllOrders: (req, res) => {
-    res.render("admin/orders");
-  },
-
   getCheckOut: async (req, res) => {
     const user = await userModel.findById(req.session.user.id);
     const cart = await cartModel
@@ -200,7 +196,13 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       }
     })
     res.redirect(route)
-  }
+  },
+
+  getAdminAllOrders: async(req, res) => {
+    const orders = await orderModel.find().populate("products.product").populate('user').sort('-createdAt').lean().exec()
+    res.render("admin/orders",{orders});
+  },
+
 };
 
 module.exports = orderController;

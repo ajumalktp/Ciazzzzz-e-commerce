@@ -23,7 +23,7 @@ const userController = {
     }else{
       count = 0
     }
-    res.render("user/userHome",{products,count});
+    res.render("user/userHome",{products,count,user:req.session.user});
   },
 
   getLogin:(req, res) => {

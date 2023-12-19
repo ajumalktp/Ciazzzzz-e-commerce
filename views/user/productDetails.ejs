@@ -1,6 +1,6 @@
 <%- include('../partials/userHead.ejs') %>
 
-<div class="section" style="height: 120vh;">
+<div class="section-all">
     <div class="container ">
       <div class="title  text-center p-2" style="height: 7vh;">
         <h2 style="font-family: 'Fasthand', cursive;">Ciazzzzz</h2>
@@ -81,14 +81,13 @@
             </h4>
   
             <div class="mb-3">
-              <span class="h5">Price: &#8377;<%= product.productPrice %></span>
+              <span class="h5 text-success">Price: &#8377;<%= product.productPrice %></span>
               <span class="h5 mrp">MRP: &#8377;<%= product.productMRP %></span>
             </div>
             <span class="h5">Category:<%= product.productSubCategory.catName %></span>
             <p>
               <%= product.productDiscription %>
             </p>
-
             <div class="d-flex flex-row my-3">
                 <div class="text-warning mb-1 me-2">
                   <i class="fa fa-star"></i>
@@ -100,8 +99,10 @@
                     4.5
                   </span>
                 </div>
+                <% if(product.productQuantity > 0){ %>
                 <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= product.productQuantity %> items</span>
                 <span class="text-success ms-2">In stock</span>
+                <% } %>
               </div>
             <hr />
   
@@ -128,8 +129,19 @@
                 </div>
               </div>
             </div>
+            <% if(product.productQuantity > 0){ %>
+            <div class="links-button d-flex">
             <a href="#" class="btn btn-warning shadow-0"> Buy now </a>
-            <button onclick="addToCart('<%= product._id %>')" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </button>
+            <div class="buttons ms-4"> 
+              <button class="add-cart-button<%= product._id %> cart-button" onclick="addToCart('<%= product._id %>','<%= user %>')"> 
+                  <span class="add-to-cart">Add to cart</span> 
+                  <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
+              </button> 
+          </div>
+            <% }else{ %>
+              <span style="font-weight: bold;" class="text-danger ms-2 text-center">Out of stock</span>
+            <% } %>
+          </div>
           </div>
         </main>
       </div>
@@ -287,6 +299,7 @@
       </div>
     </div>
   </section>
+
   <%- include('../partials/footer.ejs') %>
   <style>
     .icon-hover:hover {

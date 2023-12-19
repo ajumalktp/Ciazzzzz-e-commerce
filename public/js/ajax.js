@@ -1,20 +1,34 @@
 
 
-function addToCart(prodID){
+function addToCart(prodID,user){
+
+  if(!user){
+    window.location.href = '/login'
+    return;
+  }
+
     $.ajax({
       url:'/add-to-cart/'+prodID,
       method:'get',
       success:(response)=>{
         if(response.change){
           totalPrice()
+          addToCartAnimation(prodID)
             if(response.status){
               let count = $('.badge').html()
               count= parseInt(count)+1
               $('.badge').html(count)
             }
         }
-      }
+      },
     })
+  }
+
+  function addToCartAnimation(prodID){
+    $(`.add-cart-button${prodID}`).addClass('clicked')
+    setTimeout(()=>{
+      $(`.add-cart-button${prodID}`).removeClass('clicked')
+    },3000)
   }
 
   function changeQuantity(cartID,prod_id,prodID,count,price){
@@ -35,6 +49,8 @@ function addToCart(prodID){
           if(response.quantity<=0){
             removeItem(prod_id)
           }
+        }else{
+          $(`#${prodID}`).val(response.quantity)
         }
       }
     })

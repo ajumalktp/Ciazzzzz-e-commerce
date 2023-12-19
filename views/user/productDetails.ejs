@@ -130,9 +130,14 @@
               </div>
             </div>
             <% if(product.productQuantity > 0){ %>
-            <div class="links-button">
+            <div class="links-button d-flex">
             <a href="#" class="btn btn-warning shadow-0"> Buy now </a>
-            <button onclick="addToCart('<%= product._id %>','<%= user %>')" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </button>
+            <div class="buttons ms-4"> 
+              <button class="add-cart-button<%= product._id %> cart-button" onclick="addToCart('<%= product._id %>','<%= user %>')"> 
+                  <span class="add-to-cart">Add to cart</span> 
+                  <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
+              </button> 
+          </div>
             <% }else{ %>
               <span style="font-weight: bold;" class="text-danger ms-2 text-center">Out of stock</span>
             <% } %>

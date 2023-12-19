@@ -133,7 +133,12 @@
           </a>
           <div class="card-footer d-flex justify-content-between">
             <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
-            <button onclick="addToCart('<%= products[i]._id %>','<%= user %>')" class="btn btn-cart">Add to Cart</button>
+            <div class="buttons"> 
+              <button class="add-cart-button<%= products[i]._id %> cart-button" onclick="addToCart('<%= products[i]._id %>','<%= user %>')"> 
+                  <span class="add-to-cart">Add to cart</span> 
+                  <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
+              </button> 
+          </div>
         </div>
           </div>
           <% } %>

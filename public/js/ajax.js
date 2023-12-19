@@ -13,6 +13,7 @@ function addToCart(prodID,user){
       success:(response)=>{
         if(response.change){
           totalPrice()
+          addToCartAnimation(prodID)
             if(response.status){
               let count = $('.badge').html()
               count= parseInt(count)+1
@@ -21,6 +22,13 @@ function addToCart(prodID,user){
         }
       },
     })
+  }
+
+  function addToCartAnimation(prodID){
+    $(`.add-cart-button${prodID}`).addClass('clicked')
+    setTimeout(()=>{
+      $(`.add-cart-button${prodID}`).removeClass('clicked')
+    },3000)
   }
 
   function changeQuantity(cartID,prod_id,prodID,count,price){

@@ -157,7 +157,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       if (hmac == req.body.payment.razorpay_signature){
         await orderModel.findByIdAndUpdate(req.body.order.receipt,{
           $set:{
-            status:'Processing'
+            status:'Processing',
+            paymentStatus:'Success'
           }
         })
       }

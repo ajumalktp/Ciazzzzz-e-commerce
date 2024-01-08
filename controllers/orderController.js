@@ -255,6 +255,23 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     res.redirect('back')
   },
 
+  view_products: async(req,res)=>{
+    orderID = req.params.id
+    console.log(orderID);
+    const order = await orderModel.findOne({_id:orderID})  
+    .populate({
+      path: 'products',
+      populate: {
+        path: 'product',
+        populate: {
+          path: 'productSubCategory'
+        }
+      }
+    })
+    console.log(order.products[0].product.productSubCategory);
+    res.render('partials/viewProducts',{order})
+  },
+
 
 };
 

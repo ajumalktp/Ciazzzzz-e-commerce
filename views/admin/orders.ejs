@@ -84,7 +84,7 @@
                         <td>
                             <span style="font-size: 12px;"><%= orders[i]._id %></span>
                         </td>
-                        <td><a href="">View Products</a></td>
+                        <td><a href="/admin/view-products/<%= orders[i]._id %>">View Products</a></td>
                         <td><a class="text-decoration-none" href=""><span class="text-capitalize text-dark"><%= orders[i].user.name %></span></a></td>
                         <td>
                             <% if(orders[i].paymentStatus === 'Success'){ %>

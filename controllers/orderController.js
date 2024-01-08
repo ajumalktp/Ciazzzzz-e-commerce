@@ -203,6 +203,58 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const orders = await orderModel.find().populate("products.product").populate('user').sort('-createdAt').lean().exec()
     res.render("admin/orders",{orders});
   },
+  
+  admin_dispatch: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Dispatched'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_shipping: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Shipped'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_delivered: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Delivered'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_returning: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Returned',
+        paymentStatus:'Refunded'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_cancell: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+    res.redirect('back')
+  },
+
 
 };
 

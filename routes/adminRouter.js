@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {getLogin, getDashboard, login, getUsers, logOut, userBan, userUnBan} = require('../controllers/adminController')
 const {getAdminProducts,getAddProduct,addProduct,getEditProduct,editProduct,Punlist,Plist} = require('../controllers/productController')
-const {getAdminAllOrders} = require('../controllers/orderController')
+const {getAdminAllOrders, admin_dispatch, admin_shipping, admin_delivered, admin_returning, admin_cancell} = require('../controllers/orderController')
 const {getMainCategory,getSubCategory,getAddCategoryM,getAddCategoryS, addCategory,Clist,Cunlist, getEditCategoryM,getEditCategoryS, editCategory} = require('../controllers/categoryController')
 const verifyAdmin = require('../middleware/verifyAdmin')
 const McategoryCount = require('../middleware/McategoryCount')
@@ -38,7 +38,11 @@ router.post('/addCategory',addCategory)
 router.post('/editCategory',editCategory)
 
 
-
+router.get('/dispatch/:id',admin_dispatch)
+router.get('/shipping/:id',admin_shipping)
+router.get('/delivered/:id',admin_delivered)
+router.get('/returning/:id',admin_returning)
+router.get('/cancell/:id',admin_cancell)
 
 
 module.exports = router

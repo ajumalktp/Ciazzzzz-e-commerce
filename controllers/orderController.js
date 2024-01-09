@@ -157,7 +157,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       if (hmac == req.body.payment.razorpay_signature){
         await orderModel.findByIdAndUpdate(req.body.order.receipt,{
           $set:{
-            status:'Processing'
+            status:'Processing',
+            paymentStatus:'Success'
           }
         })
       }
@@ -202,6 +203,76 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const orders = await orderModel.find().populate("products.product").populate('user').sort('-createdAt').lean().exec()
     res.render("admin/orders",{orders});
   },
+  
+  admin_dispatch: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Dispatched'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_shipping: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Shipped'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_delivered: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Delivered',
+        paymentStatus:'Success'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_returning: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Returned',
+        paymentStatus:'Refunded'
+      }
+    })
+    res.redirect('back')
+  },
+
+  admin_cancell: async(req,res)=>{
+    const orderID = req.params.id
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+    res.redirect('back')
+  },
+
+  view_products: async(req,res)=>{
+    orderID = req.params.id
+    console.log(orderID);
+    const order = await orderModel.findOne({_id:orderID})  
+    .populate({
+      path: 'products',
+      populate: {
+        path: 'product',
+        populate: {
+          path: 'productSubCategory'
+        }
+      }
+    })
+    console.log(order.products[0].product.productSubCategory);
+    res.render('partials/viewProducts',{order})
+  },
+
 
 };
 

@@ -63,13 +63,6 @@
             </div>
         </nav>
         <div class="container py-4">
-            <div style="width: 100%;" class="d-flex justify-content-end">
-                <a href="/admin/addProduct" class="btn btn-warning mb-3">Add Products
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
-                        <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                      </svg>
-                </a>
-            </div>
             
             <table class="table table-white text-center">
                 <thead>
@@ -85,6 +78,70 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                    <% for(let i = 0; i < orders.length; i++){ %>
+                    <tr>
+                        <td>
+                            <span style="font-size: 12px;"><%= orders[i]._id %></span>
+                        </td>
+                        <td><a href="/admin/view-products/<%= orders[i]._id %>">View Products</a></td>
+                        <td><a class="text-decoration-none" href=""><span class="text-capitalize text-dark"><%= orders[i].user.name %></span></a></td>
+                        <td>
+                            <% if(orders[i].paymentStatus === 'Success'){ %>
+                                <span class="text-success fw-bold"><%= orders[i].paymentStatus %></span>
+                            <% }else if(orders[i].paymentStatus === 'Refunded'){ %>
+                                <span class="text-success fw-bold"><%= orders[i].paymentStatus %></span>
+                            <% }else { %>
+                                <span class="text-danger fw-bold"><%= orders[i].paymentStatus %></span>
+                            <% } %> %>
+                        </td>
+                        <td><%= orders[i].paymentMethod %></td>
+                        <td><%= orders[i].date %></td>
+                        <td>
+                            <% if(orders[i].status === 'Pending'){ %>
+                                <span class="text-danger fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Processing'){ %>
+                                <span class="text-info fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Dispatched'){ %>
+                                <span class="text-info fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Shipped'){ %>
+                                <span class="text-info fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Delivered'){ %>
+                                <span class="text-success fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Returning'){ %>
+                                <span class="text-warning fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Returned'){ %>
+                                <span class="text-success fw-bold"><%= orders[i].status %></span>
+                            <% }else if(orders[i].status === 'Cancelled'){ %>
+                                <span class="text-danger fw-bold"><%= orders[i].status %></span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <div class="total-amout d-flex">
+                                <span class="me-1">&#8377;</span><span class="mb-0"><%= orders[i].totalAmount %></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-end" style="height: 6vh; width: 25vh;">
+                            <% if(orders[i].status === 'Pending'){ %>
+                                <a href="/admin/cancell/<%= orders[i]._id %>" class="btn btn-danger ms-2">cancell</a>
+                            <% }else if(orders[i].status === 'Processing'){ %>
+                                <a href="/admin/dispatch/<%= orders[i]._id %>" style="    width: 15vh;height: 6vh;" class="btn btn-success ">Dispatched</a>
+                                <a href="/admin/cancell/<%= orders[i]._id %>" class="btn btn-danger ms-2">cancell</a>
+                            <% }else if(orders[i].status === 'Dispatched'){ %>
+                                <a href="/admin/shipping/<%= orders[i]._id %>" style="    width: 15vh;height: 6vh;" class="btn btn-success ">Shipped</a>
+                                <a href="/admin/cancell/<%= orders[i]._id %>" class="btn btn-danger ms-2">cancell</a>
+                            <% }else if(orders[i].status === 'Shipped'){ %>
+                                <a href="/admin/delivered/<%= orders[i]._id %>" style="    width: 15vh;height: 6vh;" class="btn btn-success ">Delivered</a>
+                                <a href="/admin/cancell/<%= orders[i]._id %>" class="btn btn-danger ms-2">cancell</a>
+                            <% }else if(orders[i].status === 'Returning'){ %>
+                                <a href="/admin/returning/<%= orders[i]._id %>" style="    width: 15vh;height: 6vh;" class="btn btn-success ">Returned</a>
+                            <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
             </table>
             <div class="pagination justify-content-end">
                 <button id="prevPage">Previous</button>

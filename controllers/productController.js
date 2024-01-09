@@ -107,7 +107,7 @@ const productController = {
         count = 0
         }
         const _id = req.params.id;
-        const product = await productModel.findOne({ _id }).populate("productSubCategory").exec();
+        const product = await productModel.findOne({ _id }).populate("productSubCategory").populate("productMainCategory").exec();
         res.render("user/productDetails", { product ,count ,user:req.session.user});
     },
 

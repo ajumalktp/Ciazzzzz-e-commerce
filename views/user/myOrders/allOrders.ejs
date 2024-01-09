@@ -37,31 +37,33 @@
                 <p class="text-center mb-0">No orders left</p>
               <% } %>
               <% for(let i = 0; i< orders.length; i++){ %>
-                <% for(let j = 0; j< orders[i].products.length; j++){ %>
               <div class="card shadow-0 border mb-4">
                 <div class="card-body">
                   <div class="d-flex justify-content-end">
-                  <span class="text-muted small ">Order ID :<%= orders[i]._id %></span>
+                  <span class="text-muted small mb-2">Order ID :<%= orders[i]._id %></span>
                   </div>
                   <div class="row">
-                    <div class="col-md-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp"
-                        class="img-fluid" alt="Phone">
-                    </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0"><%= orders[i].products[j].product.productName %></p>
+                      <a href="/admin/view-products/<%= orders[i]._id %>" class="mb-0">View Products</a>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
                       <p class="text-muted mb-0 small">Method: <%= orders[i].paymentMethod %></p>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Size: <%= orders[i].products[j].product.productSize %></p>
+                      <p class="text-muted mb-0 small">Payment:</p>
+                        <% if(orders[i].paymentStatus === 'Success'){ %>
+                          <p class="text-success mb-0 small"><%= orders[i].paymentStatus %></p>
+                        <% }else if(orders[i].paymentStatus === 'Refunded'){ %>
+                          <p class="text-info mb-0 small"><%= orders[i].paymentStatus %></p>
+                        <% }else{ %>
+                          <p class="text-danger mb-0 small"><%= orders[i].paymentStatus %></p>
+                        <% } %>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small">Qty: <span><%= orders[i].products[j].quantity %></span></p>
+                      <p class="text-muted mb-0 small">Items : <span><%= orders[i].products.length %></span></p>
                     </div>
                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                      <p class="text-muted mb-0 small"><span class="me-1">&#8377;</span><span><%= orders[i].products[j].price %></span></p>
+                      <p class="text-muted mb-0 small">Amount <span class="me-1">&#8377;:</span><%= orders[i].totalAmount %><span></span></p>
                     </div>
                   </div>
                   <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
@@ -228,7 +230,6 @@
                 </div>
               </div>
               <% } %>
-            <% } %>
             </div>
           </div>
         </div>

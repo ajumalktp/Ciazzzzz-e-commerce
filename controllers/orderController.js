@@ -228,7 +228,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const orderID = req.params.id
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
-        status:'Delivered'
+        status:'Delivered',
+        paymentStatus:'Success'
       }
     })
     res.redirect('back')

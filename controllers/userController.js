@@ -16,6 +16,10 @@ const userController = {
     const products = await productModel.find().lean()
     let count = 0
     if(req.session.user){
+      const buyNow = await cartModel.findOne({user:req.session.user.id,method:'buyNow'})
+      if(buyNow){
+        await cartModel.deleteOne({ user: req.session.user.id,method:'buyNow' });
+      }
       const user = await cartModel.findOne({user:req.session.user.id})
       if(user){
           count = user.products.length
@@ -67,6 +71,10 @@ const userController = {
         req.session.user = {
           id: user._id,
           name: user.name
+        }
+        const cart = await cartModel.findOne({user:user._id,method:'cart'})
+        if(cart){
+          req.session.user.cartID = cart._id
         }
         res.redirect('/')
         }else{

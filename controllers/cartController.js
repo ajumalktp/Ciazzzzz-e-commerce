@@ -5,27 +5,28 @@ const cartController = {
 
     getCart: async(req,res)=>{
         const userID = req.session.user.id
-        const user = await cartModel.findOne({user:userID}).populate("products.product")
-        res.render('user/cart',{user})
+        const cart = await cartModel.findOne({user:userID}).populate("products.product")
+        res.render('user/cart',{cart})
     },
 
     addToCart:  async(req,res)=>{
         const prodID = req.params.id
         const userID = req.session.user.id
-        
+        const cartID = req.session.user.cartID
+
         const product = await productModel.findById(prodID)
-        const user = await cartModel.findOne({user:userID})
+        const user = await cartModel.findOne({_id:cartID})
         const prodExist = await cartModel.findOne({user:userID,'products.product':prodID},{ "products.$": 1 }).populate('products.product')
         if(user){
             if(prodExist){
                 if(prodExist.products[0].quantity < prodExist.products[0].product.productQuantity){
-                await cartModel.updateOne({ user: userID, 'products.product': prodID }, {
+                await cartModel.updateOne({ _id:cartID, 'products.product': prodID }, {
                     $inc: { 'products.$.quantity': 1,'products.$.price': product.productPrice }
                 });
-                res.json({change:true})
+                res.json({change:true,cartID:cartID})
                 }
             }else{
-                await cartModel.updateOne({user:userID},{
+                await cartModel.updateOne({_id:cartID},{
                     $push:{
                         products:{
                             product:prodID,
@@ -34,7 +35,7 @@ const cartController = {
                         }
                     },
                 })
-                res.json({status:true,change:true})
+                res.json({status:true,change:true,cartID:cartID})
             }
         }else{
             const cart = new cartModel({
@@ -44,9 +45,10 @@ const cartController = {
                     quantity:1,
                     price:product.productPrice
                 }],
+                method:'cart'
             })
             cart.save()
-            res.json({status:true,change:true})
+            res.json({status:true,change:true,cartID:cartID})
         }
     },
 
@@ -122,10 +124,12 @@ const cartController = {
     removeItem: async(req,res)=>{
         const userID = req.session.user.id
         const data = req.body
-        await cartModel.updateOne({user:userID},{
+        console.log(req.body);
+        await cartModel.updateOne({_id:data.cartID},{
             $pull:{products:{_id:data.prod_id}}
         })
-        const user = await cartModel.findOne({user:userID}).populate("products").populate("products.product")
+        const user = await cartModel.findOne({_id:data.cartID}).populate("products").populate("products.product")
+        console.log(user);
         res.json({status:true,items:user.products.length})
     },
 
@@ -142,9 +146,10 @@ const cartController = {
       },
 
       totalPrice: async(req,res)=>{
+        const cartID = req.body.cartID
         let sum = 0
         const userID = req.session.user.id
-        const user = await cartModel.findOne({user:userID}).populate("products")
+        const user = await cartModel.findOne({user:req.session.user.id}).populate("products")
         for(i = 0; i < user.products.length; i++){
             sum = sum + user.products[i].price
         }

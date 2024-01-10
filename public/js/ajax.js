@@ -12,7 +12,7 @@ function addToCart(prodID,user){
       method:'get',
       success:(response)=>{
         if(response.change){
-          totalPrice()
+          totalPrice(response.cartID)
           addToCartAnimation(prodID)
             if(response.status){
               let count = $('.badge').html()
@@ -45,9 +45,9 @@ function addToCart(prodID,user){
         if(response.status){
           $(`#${prodID}`).val(response.quantity)
           changePrice(cartID,prod_id,prodID,response.quantity,price)
-          totalPrice()
+          totalPrice(cartID)
           if(response.quantity<=0){
-            removeItem(prod_id)
+            removeItem(prod_id,cartID)
           }
         }else{
           $(`#${prodID}`).val(response.quantity)
@@ -70,24 +70,25 @@ function addToCart(prodID,user){
       success:(response)=>{
         if(response.status){
           $(`#${prodID}price`).text(response.updatedPrice)
-          totalPrice
+          totalPrice(cartID)
         }
       }
     })
   }
 
-  function removeItem(prod_id){
+  function removeItem(prod_id,cartID){
     $.ajax({
       url:'/removeItem',
       method:'post',
       data:{
-        prod_id:prod_id,
+        prod_id,
+        cartID,
       },
       success:(response)=>{
         if(response.status)
         $(`#${prod_id}`).remove()
         $('.items').text(response.items+' items')
-        totalPrice()
+        totalPrice(cartID)
         if (response.items === 0) {
           loadEmptyCartContent();
         }
@@ -106,10 +107,13 @@ function addToCart(prodID,user){
     });
   }
 
-  function totalPrice(){
+  function totalPrice(cartID){
     $.ajax({
       url:'/get-totalPrice',
       method:'post',
+      data:{
+        cartID
+      },
       success:(response)=>{
         if(response.status){
           $('.totalPrice').text(response.totalPrice)
@@ -134,13 +138,13 @@ function addToCart(prodID,user){
           if(response.status){
             location.href = '/order-success'
           }else{
-            RazorpayPayment(response.order)
+            RazorpayPayment(response.order,response.cartID)
           }
         }
         })
     })
 
-    function RazorpayPayment(order){
+    function RazorpayPayment(order,cartID){
       var options = {
         "key": "rzp_test_8x3pXYP4r0mdbq", // Enter the Key ID generated from the Dashboard
         "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -151,7 +155,7 @@ function addToCart(prodID,user){
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response) {
 
-          verifyPayment(response, order)
+          verifyPayment(response, order,cartID)
         },
         "prefill": {
           "name": "Muhammed Ajumal T",
@@ -169,13 +173,14 @@ function addToCart(prodID,user){
       rzp1.open();
     }
 
-    function verifyPayment(payment,order){
+    function verifyPayment(payment,order,cartID){
       $.ajax({
         url:'/verifyPayment',
         method:'post',
         data:{
           payment,
-          order
+          order,
+          cartID,
         },
         success:(response)=>{
           if(response.status){

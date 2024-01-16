@@ -75,6 +75,13 @@ const userController = {
         const cart = await cartModel.findOne({user:user._id,method:'cart'})
         if(cart){
           req.session.user.cartID = cart._id
+        }else{
+          const cart = new cartModel({
+            user:user._id,
+            method:'cart',
+        })
+        cart.save()
+        req.session.user.cartID = cart._id,''
         }
         res.redirect('/')
         }else{

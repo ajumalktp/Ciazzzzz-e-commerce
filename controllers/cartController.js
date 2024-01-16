@@ -16,7 +16,7 @@ const cartController = {
 
         const product = await productModel.findById(prodID)
         const user = await cartModel.findOne({_id:cartID})
-        const prodExist = await cartModel.findOne({user:userID,'products.product':prodID},{ "products.$": 1 }).populate('products.product')
+        const prodExist = await cartModel.findOne({_id:cartID,'products.product':prodID},{ "products.$": 1 }).populate('products.product')
         if(user){
             if(prodExist){
                 if(prodExist.products[0].quantity < prodExist.products[0].product.productQuantity){
@@ -38,16 +38,15 @@ const cartController = {
                 res.json({status:true,change:true,cartID:cartID})
             }
         }else{
-            const cart = new cartModel({
-                user:userID,
-                products:[{
-                    product:prodID,
-                    quantity:1,
-                    price:product.productPrice
-                }],
-                method:'cart'
+            await cartModel.findByIdAndUpdate(cartID,{
+                $set:{
+                    products:[{
+                        product:prodID,
+                        quantity:1,
+                        price:product.productPrice
+                    }],
+                }
             })
-            cart.save()
             res.json({status:true,change:true,cartID:cartID})
         }
     },
@@ -149,7 +148,10 @@ const cartController = {
         const cartID = req.body.cartID
         let sum = 0
         const userID = req.session.user.id
-        const user = await cartModel.findOne({user:req.session.user.id}).populate("products")
+        const user = await cartModel.findOne({_id:cartID}).populate("products")
+        console.log(cartID);
+        console.log(userID);
+        console.log(user);
         for(i = 0; i < user.products.length; i++){
             sum = sum + user.products[i].price
         }

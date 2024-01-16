@@ -53,8 +53,9 @@ const cartController = {
 
     changeQuantity: async(req,res,next)=>{
         const data = req.body
+        console.log(req.body);
         const cart = await cartModel.findOne({_id:data.cartID,'products._id':data.prod_id}).populate("products.product")
-
+        console.log(cart);
         function counting(cart,prodID){
         for(let i = 0; i < cart.products.length; i++){
             if(cart.products[i].product._id == prodID){
@@ -63,6 +64,7 @@ const cartController = {
         }
         }
         let item = counting(cart,data.prodID)
+        console.log(item);
 
             if(data.count == 1){
                 if(cart.products[item].quantity < cart.products[item].product.productQuantity){
@@ -147,15 +149,11 @@ const cartController = {
       totalPrice: async(req,res)=>{
         const cartID = req.body.cartID
         let sum = 0
-        const userID = req.session.user.id
         const user = await cartModel.findOne({_id:cartID}).populate("products")
-        console.log(cartID);
-        console.log(userID);
-        console.log(user);
         for(i = 0; i < user.products.length; i++){
             sum = sum + user.products[i].price
         }
-        await cartModel.updateOne({user:userID},{
+        await cartModel.updateOne({_id:cartID},{
             $set:{totalPrice:sum}
         })
         res.json({status:true,totalPrice:sum})

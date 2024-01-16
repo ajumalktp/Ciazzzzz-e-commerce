@@ -16,9 +16,9 @@ const userController = {
     const products = await productModel.find().lean()
     let count = 0
     if(req.session.user){
-      const buyNow = await cartModel.findOne({user:req.session.user.id,method:'buyNow'})
+      const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
       if(buyNow){
-        await cartModel.deleteOne({ user: req.session.user.id,method:'buyNow' });
+        await cartModel.deleteMany({ user: req.session.user.id,method:'buyNow' });
       }
       const user = await cartModel.findOne({user:req.session.user.id})
       if(user){

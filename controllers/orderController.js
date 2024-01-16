@@ -277,9 +277,9 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
     const prodID = req.params.id
     const product = await productModel.findOne({_id:prodID})
     const userID = req.session.user.id
-    const cartExist = await cartModel.findOne({user:userID,method:'buyNow'}).populate("products.product")
+    const cartExist = await cartModel.findOne({user:userID,method:'buyNow','products.product':prodID},{ "products.$": 1 }).populate('products.product')
     if(!cartExist){
-      const cart = new cartModel({
+      const cartCreate = new cartModel({
         user:userID,
         products:[{
             product:prodID,
@@ -289,18 +289,14 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         method:'buyNow',
         totalPrice:product.productPrice,
     })
-    cart.save()
+    cartCreate.save()
+    const cart = await cartModel.findOne({_id:cartCreate._id}).populate("products.product")
+    setTimeout(()=>{
+      res.render('user/cart',{cart})
+    },2000)
     }else{
-      const cart = await cartModel.findOne({user:userID,method:'buyNow'}).populate("products.product")
-    console.log(cart);
-    let sum = 0
-          for(i = 0; i < cart.products.length; i++){
-              sum = sum + cart.products[i].price
-          }
-          await cartModel.findByIdAndUpdate(cart._id,{
-              $set:{totalPrice:sum}
-          })
-    res.render('user/cart',{cart})
+      const cart = await cartModel.findOne({_id:cartExist._id}).populate("products.product")
+      res.render('user/cart',{cart})
     }
   },
 

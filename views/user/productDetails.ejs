@@ -49,11 +49,19 @@
     <div class="container">
       <div class="row gx-5">
         <aside class="col-lg-6">
-          <div class="border rounded-4 mb-3 d-flex justify-content-center">
-            <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="/img/24100ML_I_MARTINEZ_2-transformed.png">
-              <img style="max-width: 100%; max-height: 66vh; margin: auto;" class="rounded-4 fit" src="/img/24100ML_I_MARTINEZ_2-transformed.png" />
-            </a>
+          <div class="image">
+          <div  id="first">
+            <img  src="/img/24100ML_I_MARTINEZ_2-transformed.png" />
+            <div id="lens"></div>
+            <!-- <div style="" class="border rounded-4 mb-3 d-flex justify-content-center"> -->
+          <!-- </div> -->
           </div>
+          <div id="second">
+            <!-- <div  style="position: absolute; left: 50%; top: 16.6%; width: 100vh;z-index: 1;" class="border rounded-4 mb-3 d-flex justify-content-center bg-white">
+              <img style="max-width: 100%; max-height: 66vh; margin: auto;" class="rounded-4 fit" src="/img/24100ML_I_MARTINEZ_2-transformed.png" />
+          </div> -->
+          </div>
+        </div>
           <div class="d-flex justify-content-center mb-3">
             <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" class="item-thumb">
               <img width="60" height="60" class="rounded-2" src="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/images/items/detail1/big1.webp" />
@@ -74,7 +82,7 @@
           <!-- thumbs-wrap.// -->
           <!-- gallery-wrap .end// -->
         </aside>
-        <main class="col-lg-6">
+        <main class="col-lg-6" style="position: relative;">
           <div class="ps-lg-3">
             <h1 class="title text-dark">
               <%= product.productName %>
@@ -126,10 +134,53 @@
       </div>
     </div>
   </section>
-  <!-- content -->
+</div>
+<script>
+  var lens = document.getElementById('lens');
+  var first = document.getElementById('first');
+  var second = document.getElementById('second');
 
+  first.addEventListener('mousemove',(e)=>{
+
+    var x = e.clientX - e.target.offsetLeft;
+    var y = e.clientY - e.target.offsetTop;
+
+    lens.style.left = x + 'px';
+    lens.style.top = y + 'px';
+
+  })
+</script>
+  <!-- content -->
   <%- include('../partials/footer.ejs') %>
   <style>
+    .image div{
+      width: 500px;
+      height: 450px;
+      border: 1px solid #000;
+      position: relative;
+      overflow: hidden;
+      background-size: 100% 100%;
+    }
+    #first{
+      top: 50%;
+      left: 10%;
+      border: 1px solid #000;
+    }
+    #second{
+      position:absolute;
+      top: 16.5%;
+      left: 50%;
+      z-index: 1;
+      display: none;
+    }
+    #lens{
+      width: 150px;
+      height: 150px;
+      background: rgba(0, 0,0, 0.4);
+      position:absolute;
+      transform: translate(-50%,-50%);
+      pointer-events:none ;
+    }
     .icon-hover:hover {
   border-color: #3b71ca !important;
   background-color: white !important;

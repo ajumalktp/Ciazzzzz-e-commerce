@@ -2,11 +2,16 @@ const express = require('express')
 const router = express.Router()
 const {getLogin, getDashboard, login, getUsers, logOut, userBan, userUnBan} = require('../controllers/adminController')
 const {getAdminProducts,getAddProduct,addProduct,getEditProduct,editProduct,Punlist,Plist} = require('../controllers/productController')
+
 const {getAdminAllOrders, admin_dispatch, admin_shipping, admin_delivered, admin_returning, admin_cancell, view_products} = require('../controllers/orderController')
 const {getMainCategory,getSubCategory,getAddCategoryM,getAddCategoryS, addCategory,Clist,Cunlist, getEditCategoryM,getEditCategoryS, editCategory} = require('../controllers/categoryController')
 const verifyAdmin = require('../middleware/verifyAdmin')
 const McategoryCount = require('../middleware/McategoryCount')
 const ScategoryCount = require('../middleware/ScategoryCount')
+const {uploadImage,uploadLogo} = require('../middleware/multer')
+
+
+
 
 router.get('/',verifyAdmin,getDashboard)
 router.get('/login',getLogin)
@@ -32,10 +37,10 @@ router.get('/editCategory/sub/:id',getEditCategoryS)
 
 
 router.post('/login',login)
-router.post('/addProduct',addProduct,McategoryCount,ScategoryCount)
-router.post('/editProduct',editProduct)
-router.post('/addCategory',addCategory)
-router.post('/editCategory',editCategory)
+router.post('/addProduct',uploadImage,addProduct,McategoryCount,ScategoryCount)
+router.post('/editProduct',uploadImage,editProduct)
+router.post('/addCategory',uploadLogo,addCategory)
+router.post('/editCategory',uploadLogo,editCategory)
 
 
 router.get('/dispatch/:id',admin_dispatch)

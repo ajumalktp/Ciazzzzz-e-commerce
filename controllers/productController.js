@@ -2,7 +2,6 @@ const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require('../models/cartModel')
 
-
 const productController = {
     getShop: async (req, res) => {
         let count = 0
@@ -59,9 +58,16 @@ const productController = {
     },
 
     addProduct: async (req, res, next) => {
-        const product = new productModel({
+        if(req.file){
+          product = new productModel({
+            image:req.file.filename,
             ...req.body,
         });
+        }else{
+            product = new productModel({
+              ...req.body,
+          });
+        }
         product.save();
         res.redirect("/admin/products");
         next();
@@ -79,12 +85,20 @@ const productController = {
 
     editProduct: async (req, res) => {
         const _id = req.body._id;
-        console.log(_id);
+        if(req.file){
+          await productModel.findByIdAndUpdate(_id, {
+            $set: {
+              image:req.file.filename,
+              ...req.body,
+            },
+        });
+        }else{
         await productModel.findByIdAndUpdate(_id, {
             $set: {
                 ...req.body,
             },
         });
+      }
         res.redirect("/admin/products");
     },
 
@@ -118,4 +132,4 @@ const productController = {
 
 };
 
-module.exports = productController;
+module.exports = productController

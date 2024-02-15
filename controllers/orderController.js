@@ -257,7 +257,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   },
 
   view_products: async(req,res)=>{
-    orderID = req.params.id
+    const orderID = req.params.id
     console.log(orderID);
     const order = await orderModel.findOne({_id:orderID})  
     .populate({
@@ -269,7 +269,6 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         }
       }
     })
-    console.log(order.products[0].product.productSubCategory);
     res.render('partials/viewProducts',{order})
   },
 

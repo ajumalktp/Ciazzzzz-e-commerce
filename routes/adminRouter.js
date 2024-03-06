@@ -9,6 +9,7 @@ const verifyAdmin = require('../middleware/verifyAdmin')
 const McategoryCount = require('../middleware/McategoryCount')
 const ScategoryCount = require('../middleware/ScategoryCount')
 const {uploadImage,uploadLogo} = require('../middleware/multer')
+const { getAdminBanners } = require('../controllers/bannerController')
 
 
 
@@ -50,6 +51,9 @@ router.get('/returning/:id',admin_returning)
 router.get('/cancell/:id',admin_cancell)
 
 router.get('/view-products/:id',view_products)
+
+
+router.get('/banners',getAdminBanners)
 
 
 module.exports = router

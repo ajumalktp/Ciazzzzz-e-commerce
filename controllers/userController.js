@@ -13,7 +13,7 @@ let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
-    const products = await productModel.find().lean()
+    const newProducts = await productModel.find().sort({ createdAt: -1 }).lean()
     let count = 0
     if(req.session.user){
       const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
@@ -27,7 +27,7 @@ const userController = {
     }else{
       count = 0
     }
-    res.render("user/userHome",{products,count,user:req.session.user});
+    res.render("user/userHome",{newProducts,count,user:req.session.user});
   },
 
   getLogin:(req, res) => {

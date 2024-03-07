@@ -9,7 +9,7 @@ const verifyAdmin = require('../middleware/verifyAdmin')
 const McategoryCount = require('../middleware/McategoryCount')
 const ScategoryCount = require('../middleware/ScategoryCount')
 const {uploadImage,uploadLogo} = require('../middleware/multer')
-const { getAdminBanners } = require('../controllers/bannerController')
+const { getAdminBannerSlider, getAdminProductSlider, getBannerSliderAdd, addSlider } = require('../controllers/bannerController')
 
 
 
@@ -53,7 +53,10 @@ router.get('/cancell/:id',admin_cancell)
 router.get('/view-products/:id',view_products)
 
 
-router.get('/banners',getAdminBanners)
+router.get('/bannerSlider',getAdminBannerSlider)
+router.get('/productSlider',getAdminProductSlider)
+router.get('/addSlider',getBannerSliderAdd)
+router.post('/addSlider',addSlider)
 
 
 module.exports = router

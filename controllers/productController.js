@@ -47,7 +47,7 @@ const productController = {
     },
 
     getAdminProducts: async (req, res) => {
-        const products = await productModel.find().populate("productSubCategory").exec();
+        const products = await productModel.find().sort({createdAt: -1 }).populate("productSubCategory").exec();
         res.render("admin/products", { products });
     },
 

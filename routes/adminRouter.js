@@ -56,7 +56,7 @@ router.get('/view-products/:id',view_products)
 router.get('/bannerSlider',getAdminBannerSlider)
 router.get('/productSlider',getAdminProductSlider)
 router.get('/addSlider',getBannerSliderAdd)
-router.post('/addSlider',addSlider)
+router.post('/addSlider',uploadImage,addSlider)
 
 
 module.exports = router

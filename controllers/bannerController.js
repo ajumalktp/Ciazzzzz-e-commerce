@@ -4,7 +4,9 @@ const bannersModel = require('../models/bannersModel')
 const bannerController = {
 
     getAdminBannerSlider: async(req,res)=>{
-        res.render('admin/banners/bannerSlider')
+        const sliders = await bannersModel.find({sliderType:'bannerSlider'}).lean().populate('productID')
+        const activeSlides = await bannersModel.find({sliderType:'bannerSlider',status:'Active'}).lean()
+        res.render('admin/banners/bannerSlider',{sliders,activeSlides})
     },
 
     getAdminProductSlider: async(req,res)=>{
@@ -19,9 +21,16 @@ const bannerController = {
     },
 
     addSlider: async (req,res)=>{
-       banner = new bannersModel({
-            ...req.body,
-        });
+        if(req.file){
+            banner = new bannersModel({
+                image:req.file.filename,
+                ...req.body,
+            });
+        }else{
+            banner = new bannersModel({
+                ...req.body,
+            });
+        }
       banner.save();
       res.redirect(req.body.route);
     },

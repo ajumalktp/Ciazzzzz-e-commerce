@@ -49,18 +49,20 @@
 
       <section class="banner">
         <div class="slider">
+          <% for( i = 0; i < bannerSlider.length; i++){ %>
           <div class="slide">
-            <img src="/img/" alt="">
+            <img src="/img/<%= bannerSlider[i].image %>" alt="">
             <div class="left-info">
               <div class="penetrte-blur">
               </div>
               <div class="content">
-                <h3>productName</h3>
-                <p>productDiscription</p>
-                <a href="/productDetails/" class="btn">More Details</a>
+                <h3><%= bannerSlider[i].productID.productName %></h3>
+                <p><%= bannerSlider[i].productID.productDiscription %></p>
+                <a href="/productDetails/<%= bannerSlider[i].productID._id %>" class="btn">More Details</a>
               </div>
             </div>
           </div>
+          <% } %>
         </div>
         <div class="navigation">
           <span class="prev-btn"><i class="fa-solid fa-chevron-left fa-3x"></i></span>

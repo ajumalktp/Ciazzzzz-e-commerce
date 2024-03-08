@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const productModel = require('../models/productModel')
 const cartModel = require('../models/cartModel')
+const bannersModel = require('../models/bannersModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt');
@@ -14,6 +15,7 @@ let otp = generateOtp()
 const userController = {
   getHome: async(req, res) => {
     const newProducts = await productModel.find().sort({ createdAt: -1 }).lean()
+    const bannerSlider = await bannersModel.find({sliderType:'bannerSlider'}).lean().populate('productID')
     let count = 0
     if(req.session.user){
       const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
@@ -27,7 +29,7 @@ const userController = {
     }else{
       count = 0
     }
-    res.render("user/userHome",{newProducts,count,user:req.session.user});
+    res.render("user/userHome",{newProducts,bannerSlider,count,user:req.session.user});
   },
 
   getLogin:(req, res) => {

@@ -44,8 +44,8 @@
                 </ul>
             </div>
 
-            <% if(user){ %>
-            <% if(user.products[0]){ %>
+            <% if(cart){ %>
+            <% if(cart.products[0]){ %>
             <section id="itemsSection">
                 <div class="container py-5">
                   <div class="row d-flex justify-content-center align-items-center ">
@@ -57,37 +57,37 @@
                               <div class="p-5">
                                 <div class="d-flex justify-content-between align-items-center mb-5">
                                   <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
-                                  <h6 class="items mb-0 text-muted"><%= user.products.length %>  items</h6>
+                                  <h6 class="items mb-0 text-muted"><%= cart.products.length %>  items</h6>
                                 </div>
-                                <% for(let i =0; i< user.products.length; i++ ){ %>
-                                <div class="row mb-4 d-flex justify-content-between align-items-center" id="<%= user.products[i]._id %>">
+                                <% for(let i =0; i< cart.products.length; i++ ){ %>
+                                <div class="row mb-4 d-flex justify-content-between align-items-center" id="<%= cart.products[i]._id %>">
                                   <hr class="my-4">
                                   <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="/img/<%= user.products[i].product.image %>"
+                                    <img src="/img/<%= cart.products[i].product.image %>"
                                       class="img-fluid rounded-3" alt="Cotton T-shirt">
                                   </div>
                                   <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <h6 class="text-black mb-0" style="font-size: 15px;text-transform: uppercase;"><%= user.products[i].product.productName %></h6>
-                                    <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= user.products[i].product.productQuantity %> items</span>
+                                    <h6 class="text-black mb-0" style="font-size: 15px;text-transform: uppercase;"><%= cart.products[i].product.productName %></h6>
+                                    <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= cart.products[i].product.productQuantity %> items</span>
                                     <span class="text-success ms-2">In stock</span>
                                   </div>
                                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn" onclick="changeQuantity('<%= user._id %>','<%= user.products[i]._id %>','<%= user.products[i].product._id %>',-1,'<%= user.products[i].product.productPrice %>')">
+                                    <button class="btn" onclick="changeQuantity('<%= cart._id %>','<%= cart.products[i]._id %>','<%= cart.products[i].product._id %>',-1,'<%= cart.products[i].product.productPrice %>')">
                                       <i class="fas fa-minus"></i>
                                     </button>
               
                                     <input  min="1" name="quantity" type="number" class="form-control form-control-sm text-center" 
-                                    value="<%= user.products[i].quantity %>" style="font-size: 15px;" id="<%= user.products[i].product._id %>">
+                                    value="<%= cart.products[i].quantity %>" style="font-size: 15px;" id="<%= cart.products[i].product._id %>">
 
-                                    <button class="btn" onclick="changeQuantity('<%= user._id %>','<%= user.products[i]._id %>','<%= user.products[i].product._id %>',1,'<%= user.products[i].product.productPrice %>')">
+                                    <button class="btn" onclick="changeQuantity('<%= cart._id %>','<%= cart.products[i]._id %>','<%= cart.products[i].product._id %>',1,'<%= cart.products[i].product.productPrice %>')">
                                       <i class="fas fa-plus"></i>
                                     </button>
                                   </div>
                                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1 d-flex">
-                                    <span class="me-2">&#8377;</span><h6 id="<%= user.products[i].product._id %>price" style="font-size: 12px;" class="mb-0"><%= user.products[i].price %></h6>
+                                    <span class="me-2">&#8377;</span><h6 id="<%= cart.products[i].product._id %>price" style="font-size: 12px;" class="mb-0"><%= cart.products[i].price %></h6>
                                   </div>
                                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <button onclick="removeItem('<%= user.products[i]._id %>')" style="font-size: 15px;    border: none;background: white" class="text-muted"><i class="fas fa-times"></i></button>
+                                    <button onclick="removeItem('<%= cart.products[i]._id %>','<%= cart._id %>')" style="font-size: 15px;    border: none;background: white" class="text-muted"><i class="fas fa-times"></i></button>
                                   </div>
                                 </div>
 
@@ -109,9 +109,9 @@
                                 <hr class="my-4">
               
                                 <div class="d-flex justify-content-between mb-4">
-                                  <h5 class="items text-uppercase"><%= user.products.length %> items</h5>
+                                  <h5 class="items text-uppercase"><%= cart.products.length %> items</h5>
                                   <div class="d-flex">
-                                  <span class="me-2">&#8377;</span><h5 class="totalPrice"><%= user.totalPrice %></h5>
+                                  <span class="me-2">&#8377;</span><h5 class="totalPrice"><%= cart.totalPrice %></h5>
                                   </div>
                                 </div>
 
@@ -125,11 +125,11 @@
                                 <div class="d-flex justify-content-between mb-5">
                                   <h5 class="text-uppercase">Total price</h5>
                                   <div class="d-flex">
-                                    <span class="me-2">&#8377;</span><h5 class="totalPrice"><%= user.totalPrice %></h5>
+                                    <span class="me-2">&#8377;</span><h5 class="totalPrice"><%= cart.totalPrice %></h5>
                                     </div>
                                 </div>
               
-                                <a href="/checkout" class="btn btn-dark btn-block btn-lg"
+                                <a href="/checkout/<%= cart._id %>" class="btn btn-dark btn-block btn-lg"
                                   data-mdb-ripple-color="dark">Check Out</a>
               
                               </div>

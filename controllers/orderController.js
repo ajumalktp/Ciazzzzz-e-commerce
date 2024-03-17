@@ -49,9 +49,10 @@ const orderController = {
   },
 
   getCheckOut: async (req, res) => {
+    const cartID = req.params.id
     const user = await userModel.findById(req.session.user.id);
     const cart = await cartModel
-      .findOne({ user: req.session.user.id })
+      .findOne({ _id: cartID })
       .populate("products.product");
       if(!cart){
         res.redirect('/cart')
@@ -71,9 +72,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       { _id: req.session.user.id, "address._id": req.body.addressId },
       { "address.$": 1 }
     );
-    const cart = await cartModel.findOne({ user: req.session.user.id });
+    const cart = await cartModel.findOne({_id:req.body.cartID});
 
-    console.log(cart.products);
 
     let status = req.body.paymentMethod === "COD" ? "Processing" : "Pending";
 
@@ -99,7 +99,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         };
       });
       await productModel.bulkWrite(bulkOps)
-      await cartModel.deleteOne({ user: req.session.user.id });
+      await cartModel.deleteOne({_id:req.body.cartID});
       res.json({ status: true });
     } else {
       const order = new orderModel({
@@ -121,7 +121,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
           if (err) {
             console.log(err);
           }
-          res.json({status:false, order:order});
+          res.json({status:false, order:order,cartID:req.body.cartID});
         });
       });
     }
@@ -150,7 +150,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   },
 
   verifyPayment: async(req,res)=>{
-    const cart = await cartModel.findOne({user:req.session.user.id})
+    const cart = await cartModel.findOne({_id:req.body.cartID})
   let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
       hmac.update(req.body.payment.razorpay_order_id + '|' + req.body.payment.razorpay_payment_id)
       hmac = hmac.digest('hex')
@@ -173,7 +173,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         };
       });
       await productModel.bulkWrite(bulkOps)
-      await cartModel.deleteOne({ user: req.session.user.id });
+      await cartModel.deleteOne({_id:req.body.cartID});
       res.json({status:true})
   },
 
@@ -257,7 +257,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   },
 
   view_products: async(req,res)=>{
-    orderID = req.params.id
+    const orderID = req.params.id
     console.log(orderID);
     const order = await orderModel.findOne({_id:orderID})  
     .populate({
@@ -269,8 +269,34 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         }
       }
     })
-    console.log(order.products[0].product.productSubCategory);
     res.render('partials/viewProducts',{order})
+  },
+
+  buyNow: async(req,res)=>{
+    const prodID = req.params.id
+    const product = await productModel.findOne({_id:prodID})
+    const userID = req.session.user.id
+    const cartExist = await cartModel.findOne({user:userID,method:'buyNow','products.product':prodID},{ "products.$": 1 }).populate('products.product')
+    if(!cartExist){
+      const cartCreate = new cartModel({
+        user:userID,
+        products:[{
+            product:prodID,
+            quantity:1,
+            price:product.productPrice
+        }],
+        method:'buyNow',
+        totalPrice:product.productPrice,
+    })
+    cartCreate.save()
+    const cart = await cartModel.findOne({_id:cartCreate._id}).populate("products.product")
+    setTimeout(()=>{
+      res.render('user/cart',{cart})
+    },2000)
+    }else{
+      const cart = await cartModel.findOne({_id:cartExist._id}).populate("products.product")
+      res.render('user/cart',{cart})
+    }
   },
 
 

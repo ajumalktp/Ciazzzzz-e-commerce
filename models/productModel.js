@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
-    image:[String],
+    image:{
+      type:String,
+      default:'replace-img.png'
+  },
     productName: String,
     productMRP: Number,
     productPrice: Number,
@@ -23,8 +26,10 @@ const productSchema = new mongoose.Schema({
     sold:{
       type:Number,
       default:0
-    }
-  });
+    },
+  },
+  {timestamps:true}
+  );
   
 const productModel = mongoose.model('products', productSchema);
 

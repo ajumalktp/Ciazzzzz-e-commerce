@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const productModel = require('../models/productModel')
 const cartModel = require('../models/cartModel')
+const bannersModel = require('../models/bannersModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt');
@@ -13,9 +14,15 @@ let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
-    const products = await productModel.find().lean()
+    const newProducts = await productModel.find().sort({ createdAt: -1 }).lean()
+    const bannerSlider = await bannersModel.find({sliderType:'bannerSlider',status:'Active'}).lean().populate('productID')
+    const productSlider = await bannersModel.find({sliderType:'productSlider',status:'Active'}).lean().populate('productID')
     let count = 0
     if(req.session.user){
+      const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
+      if(buyNow){
+        await cartModel.deleteMany({ user: req.session.user.id,method:'buyNow' });
+      }
       const user = await cartModel.findOne({user:req.session.user.id})
       if(user){
           count = user.products.length
@@ -23,7 +30,7 @@ const userController = {
     }else{
       count = 0
     }
-    res.render("user/userHome",{products,count,user:req.session.user});
+    res.render("user/userHome",{newProducts,bannerSlider,productSlider,count,user:req.session.user});
   },
 
   getLogin:(req, res) => {
@@ -67,6 +74,17 @@ const userController = {
         req.session.user = {
           id: user._id,
           name: user.name
+        }
+        const cart = await cartModel.findOne({user:user._id,method:'cart'})
+        if(cart){
+          req.session.user.cartID = cart._id
+        }else{
+          const cart = new cartModel({
+            user:user._id,
+            method:'cart',
+        })
+        cart.save()
+        req.session.user.cartID = cart._id,''
         }
         res.redirect('/')
         }else{

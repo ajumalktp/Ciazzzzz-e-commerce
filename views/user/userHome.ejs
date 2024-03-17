@@ -49,16 +49,16 @@
 
       <section class="banner">
         <div class="slider">
-          <% for(let i = 0; i<products.length; i++){ %>
+          <% for( i = 0; i < bannerSlider.length; i++){ %>
           <div class="slide">
-            <img src="/img/<%= products[i].image %>" alt="">
+            <img src="/img/<%= bannerSlider[i].image %>" alt="">
             <div class="left-info">
               <div class="penetrte-blur">
               </div>
               <div class="content">
-                <h3><%= products[i].productName %></h3>
-                <p><%= products[i].productDiscription %></p>
-                <a href="/productDetails/<%= products[i]._id %>" class="btn">More Details</a>
+                <h3><%= bannerSlider[i].productID.productName %></h3>
+                <p><%= bannerSlider[i].productID.productDiscription %></p>
+                <a href="/productDetails/<%= bannerSlider[i].productID._id %>" class="btn">More Details</a>
               </div>
             </div>
           </div>
@@ -75,22 +75,22 @@
         <div class="container" >
           <div class="d-flex justify-content-evenly">
           <div class="brands">
-            <img src="/img/pngimg.com - nike_PNG9.png" alt="" height="50" width="50" >
+            <img src="/logo/pngimg.com - nike_PNG9.png" alt="" height="50" width="50" >
           </div>
           <div class="brands">
-            <img src="/img/puma-logo-png-21175.png" alt="" height="50" width="50">
+            <img src="/logo/puma-logo-png-21175.png" alt="" height="50" width="50">
           </div>
           <div class="brands">
-            <img src="/img/NicePng_adidas-logo-png-transparent_2749090.png" alt="" height="50" width="50">
+            <img src="/logo/NicePng_adidas-logo-png-transparent_2749090.png" alt="" height="50" width="50">
           </div>
           <div class="brands">
-            <img src="/img/six5six-logo.png" alt="" height="60" width="60">
+            <img src="/logo/six5six-logo.png" alt="" height="60" width="60">
           </div>
           <div class="brands">
-            <img src="/img/joma-logo.png" alt="" height="50" width="50">
+            <img src="/logo/joma-logo.png" alt="" height="50" width="50">
           </div>
           <div class="brands">
-            <img src="/img/new-balance-logo.png" alt="" height="50" width="50">
+            <img src="/logo/new-balance-logo.png" alt="" height="50" width="50">
           </div>
         </div>
         </div>
@@ -107,14 +107,14 @@
         </div>
         <div class="section-3-content">
           <div class="row justify-content-between ">
-            <% for(i= 0; i< 5; i++){ %>
+            <% for(i= 0; i<5; i++){ %>
           <div class="card " style="width: 18rem;">
-            <a href="/productDetails/<%= products[i]._id %>">
-            <img src="/img/24100ML_I_MARTINEZ_2-transformed.png" class="card-img-top" alt="...">
+            <a href="/productDetails/<%= newProducts[i]._id %>">
+            <img src="/img/<%= newProducts[i].image %>" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title"><%= products[i].productName %></h5>
-              <p class="price">Price: &#8377;<%= products[i].productPrice %></p>
-              <p class="mrp">MRP: &#8377;<%= products[i].productMRP %></p>
+              <h5 class="card-title"><%= newProducts[i].productName %></h5>
+              <p class="price">Price: &#8377;<%= newProducts[i].productPrice %></p>
+              <p class="mrp">MRP: &#8377;<%= newProducts[i].productMRP %></p>
               <div class="d-flex flex-row my-3">
                 <div class="text-warning mb-1 me-2">
                   <i class="fa fa-star"></i>
@@ -126,15 +126,15 @@
                     4.5
                   </span>
                 </div>
-                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= products[i].productQuantity %> items</span>
+                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= newProducts[i].productQuantity %> items</span>
                 <span class="text-success ms-2">In stock</span>
               </div>
           </div>
           </a>
           <div class="card-footer d-flex justify-content-between">
-            <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
+            <a href="/productDetails/<%= newProducts[i]._id %>" class="btn btn-buy">Buy</a>
             <div class="buttons"> 
-              <button class="add-cart-button<%= products[i]._id %> cart-button" onclick="addToCart('<%= products[i]._id %>','<%= user %>')"> 
+              <button class="add-cart-button<%= newProducts[i]._id %> cart-button" onclick="addToCart('<%= newProducts[i]._id %>','<%= user %>')"> 
                   <span class="add-to-cart">Add to cart</span> 
                   <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
               </button> 

@@ -191,6 +191,7 @@
                                 <p class="mb-2">
                                   <%= cart.products[i].price %>
                                 </p>
+                                <input style="display: none;" type="text" form="checkout-form" name="cartID" id="cartID" value="<%= cart._id %>" />
                               </div>
                             </div>
                             <% } %>

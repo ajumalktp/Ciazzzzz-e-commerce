@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <!-- edit form column -->
-<form id="formValidation" class="form-horizontal" action="/admin/editProduct" method="post">
+<form id="formValidation" class="form-horizontal" action="/admin/editProduct" method="post" enctype="multipart/form-data">
   <div class="container bootstrap snippets bootdey">
     <h1 class="text-primary">EDIT PRODUCT</h1>
     <hr>
@@ -24,7 +24,7 @@
             <% } %>
           <h6>Upload a different photo...</h6>
           <input type="file"  class="form-control" id="image" name="image" value="<%= product.image %>" accept="image/*"
-            onchange="previewImage(event)" multiple>
+            onchange="previewImage(event)">
         </div>
       </div>
       <div class="col-md-9 personal-info">

@@ -33,9 +33,16 @@ const categoryController = {
             console.log('category already exists')
            return res.render(renderRoute)
         }else{
-            const category = new categoryModel({
-                ...req.body
-            });
+            if(req.file){
+                category = new categoryModel({
+                    ...req.body,
+                    logo:req.file.filename
+                });
+            }else{
+                category = new categoryModel({
+                    ...req.body
+                });
+            }
             category.save()
             res.redirect(route)
         }
@@ -92,9 +99,10 @@ const categoryController = {
         }else{
         count = 0
         }
+        const categories = await categoryModel.find().lean()
         const categoriesM = await categoryModel.find({unlist:false,catType:'main'}).lean()
         const categoriesS = await categoryModel.find({unlist:false,catType:'sub'}).lean()
-        res.render('user/userCategory',{categoriesM,categoriesS,count})
+        res.render('user/userCategory',{categories,categoriesM,categoriesS,count})
     },
 
     getCategoryProducts: async(req,res)=>{

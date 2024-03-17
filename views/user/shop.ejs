@@ -44,52 +44,65 @@
         </ul>
       </div>
 
-
+      <% if(!products.length <= 0){ %>
       <div class="container mt-3">
         <h1>Shop</h1>
       </div>
+      <% } %>
       <div class="container">
         <div class="row ">
-          <% for(let i = 0; i<products.length; i++){ %>
-          <div class="card me-5 mb-5 mt-3" >
-            <a href="/productDetails/<%= products[i]._id %>">
-            <img src="/img/24100ML_I_MARTINEZ_2-transformed.png" class="card-img-top" alt="..." >
-            <div class="card-body">
-              <h5 class="card-title"><%= products[i].productName %></h5>
-              <p class="price">Price: &#8377;<%= products[i].productPrice %></p>
-              <p class="mrp">MRP: &#8377;<%= products[i].productMRP %></p>
-              <div class="d-flex flex-row my-3">
-                <div class="text-warning mb-1 me-2">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <span class="ms-1">
-                    4.5
-                  </span>
-                </div>
-                <% if(products[i].productQuantity > 0){ %>
-                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= products[i].productQuantity %> items</span>
-                <span class="text-success ms-2">In stock</span>
-                <% } %>
+          <% if(products.length <= 0){ %>
+            <section style="height: 90vh; display: flex; align-items: center; justify-content: center;">
+              <div class="empty-badge">
+                <span style="    font-size: 60px;
+                font-family: system-ui;
+                font-weight: 800;
+                opacity: 0.3;
+            " >No Products Added</span>
               </div>
-          </div>
-          </a>
-          <% if(products[i].productQuantity > 0){ %>
-          <div class="card-footer d-flex justify-content-between">
-              <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
-              <div class="buttons"> 
-                <button class="add-cart-button<%= products[i]._id %> cart-button" onclick="addToCart('<%= products[i]._id %>','<%= user %>')"> 
-                    <span class="add-to-cart">Add to cart</span> 
-                    <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
-                </button> 
-            </div>
-          </div>
+            </section>
           <% }else{ %>
-            <span style="font-weight: bold;" class="text-danger ms-2 text-center">Out of stock</span>
-          <% } %>
-          </div>
+            <% for(let i = 0; i<products.length; i++){ %>
+              <div class="card me-5 mb-5 mt-3" >
+                <a href="/productDetails/<%= products[i]._id %>">
+                <img src="/img/<%= products[i].image %>" class="card-img-top" alt="..." >
+                <div class="card-body">
+                  <h5 class="card-title"><%= products[i].productName %></h5>
+                  <p class="price">Price: &#8377;<%= products[i].productPrice %></p>
+                  <p class="mrp">MRP: &#8377;<%= products[i].productMRP %></p>
+                  <div class="d-flex flex-row my-3">
+                    <div class="text-warning mb-1 me-2">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                      <span class="ms-1">
+                        4.5
+                      </span>
+                    </div>
+                    <% if(products[i].productQuantity > 0){ %>
+                    <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= products[i].productQuantity %> items</span>
+                    <span class="text-success ms-2">In stock</span>
+                    <% } %>
+                  </div>
+              </div>
+              </a>
+              <% if(products[i].productQuantity > 0){ %>
+              <div class="card-footer d-flex justify-content-between">
+                  <a href="/productDetails/<%= products[i]._id %>" class="btn btn-buy">Buy</a>
+                  <div class="buttons"> 
+                    <button class="add-cart-button<%= products[i]._id %> cart-button" onclick="addToCart('<%= products[i]._id %>','<%= user %>')"> 
+                        <span class="add-to-cart">Add to cart</span> 
+                        <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
+                    </button> 
+                </div>
+              </div>
+              <% }else{ %>
+                <span style="font-weight: bold;" class="text-danger ms-2 text-center">Out of stock</span>
+              <% } %>
+              </div>
+              <% } %>
           <% } %>
         </div>
       </div>

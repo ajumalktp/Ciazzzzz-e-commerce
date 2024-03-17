@@ -2,11 +2,14 @@ const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require('../models/cartModel')
 
-
 const productController = {
     getShop: async (req, res) => {
         let count = 0
         if(req.session.user){
+            const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
+            if(buyNow){
+            await cartModel.deleteMany({ user: req.session.user.id,method:'buyNow' });
+            }
         const user = await cartModel.findOne({user:req.session.user.id})
         if(user){
             count = user.products.length
@@ -44,7 +47,7 @@ const productController = {
     },
 
     getAdminProducts: async (req, res) => {
-        const products = await productModel.find().populate("productSubCategory").exec();
+        const products = await productModel.find().sort({createdAt: -1 }).populate("productSubCategory").exec();
         res.render("admin/products", { products });
     },
 
@@ -55,9 +58,16 @@ const productController = {
     },
 
     addProduct: async (req, res, next) => {
-        const product = new productModel({
+        if(req.file){
+          product = new productModel({
+            image:req.file.filename,
             ...req.body,
         });
+        }else{
+            product = new productModel({
+              ...req.body,
+          });
+        }
         product.save();
         res.redirect("/admin/products");
         next();
@@ -75,12 +85,20 @@ const productController = {
 
     editProduct: async (req, res) => {
         const _id = req.body._id;
-        console.log(_id);
+        if(req.file){
+          await productModel.findByIdAndUpdate(_id, {
+            $set: {
+              image:req.file.filename,
+              ...req.body,
+            },
+        });
+        }else{
         await productModel.findByIdAndUpdate(_id, {
             $set: {
                 ...req.body,
             },
         });
+      }
         res.redirect("/admin/products");
     },
 
@@ -107,11 +125,11 @@ const productController = {
         count = 0
         }
         const _id = req.params.id;
-        const product = await productModel.findOne({ _id }).populate("productSubCategory").exec();
+        const product = await productModel.findOne({ _id }).populate("productSubCategory").populate("productMainCategory").exec();
         res.render("user/productDetails", { product ,count ,user:req.session.user});
     },
 
 
 };
 
-module.exports = productController;
+module.exports = productController

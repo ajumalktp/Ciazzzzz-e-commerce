@@ -15,7 +15,8 @@ let otp = generateOtp()
 const userController = {
   getHome: async(req, res) => {
     const newProducts = await productModel.find().sort({ createdAt: -1 }).lean()
-    const bannerSlider = await bannersModel.find({sliderType:'bannerSlider'}).lean().populate('productID')
+    const bannerSlider = await bannersModel.find({sliderType:'bannerSlider',status:'Active'}).lean().populate('productID')
+    const productSlider = await bannersModel.find({sliderType:'productSlider',status:'Active'}).lean().populate('productID')
     let count = 0
     if(req.session.user){
       const buyNow = await cartModel.find({user:req.session.user.id,method:'buyNow'})
@@ -29,7 +30,7 @@ const userController = {
     }else{
       count = 0
     }
-    res.render("user/userHome",{newProducts,bannerSlider,count,user:req.session.user});
+    res.render("user/userHome",{newProducts,bannerSlider,productSlider,count,user:req.session.user});
   },
 
   getLogin:(req, res) => {

@@ -17,17 +17,18 @@
         <div class="swiper tranding-slider">
           <div class="swiper-wrapper">
              <!-- for(i = 0; i< 4; i++){ -->
+            <% for(i = 0;i < productSlider.length; i++){ %>
             <!-- Slide-start -->
             
             <div class="swiper-slide tranding-slide">
-                <a href="/productDetails/">
+                <a href="/productDetails/<%= productSlider[i].productID._id %>">
               <div class="tranding-slide-img">
-                <img src="img/" alt="Tranding">
+                <img src="img/<%= productSlider[i].image %>" alt="Tranding">
               </div>
                 </a>
             </div>
             <!-- Slide-end -->
-            
+            <% } %>
           </div>
 
           <div class="tranding-slider-control">

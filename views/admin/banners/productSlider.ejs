@@ -67,6 +67,82 @@
                     <a href="/admin/productSlider" class="btn">Products Slider<div style="margin-left: -13px;" class="vl-2 "></div></a>
                 </div>
             </div>
+            <% if(activeSlides.length < 5){ %>
+                <div style="width: 100%;" class="d-flex justify-content-end">
+                    <a href="/admin/addSlider/productSlider" class="btn btn-warning mb-3">Add Slider
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                            <path d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                          </svg>
+                    </a>
+                </div>
+                <% }else{ %>
+                    <div style="width: 100%;" class="d-flex justify-content-end">
+                        <span class="text-danger mb-3">only five active slides allowed</span>
+                    </div>
+                <% } %>
+                <table class="table table-white text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(i = 0; i < sliders.length; i++){ %>
+                            <tr>
+                                <td>
+                                    <div class="image-fit justify-content-center">
+                                    <img src="/img/<%= sliders[i].image %>" class="avatar img-circle" width="50" height="50" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="/admin/slider/view-product/<%= sliders[i]._id %>">View Product</a>
+                                </td>
+                                <td>
+                                    <%= sliders[i].productID.productName %>
+                                </td>
+                                <% if(sliders[i].status === 'Active'){ %>
+                                    <td class="text-success fw-bold"><%= sliders[i].status %></td>
+                                <% }else{ %>
+                                    <td class="text-danger fw-bold"><%= sliders[i].status %></td>
+                                <% } %>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/admin/editSlider/productSlider/<%= sliders[i]._id %>" class="btn btn-info" style="margin-right: 10px;" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                              </svg>
+                                        </a>
+                                        <% if(sliders[i].status === 'InActive'){ %>
+                                            <% if(activeSlides.length < 5){ %>
+                                            <form action="/admin/slider-active/<%= sliders[i]._id %>" method="post">
+                                            <input type="text" value="/admin/productSlider" style="display: none; height: 0px; visibility:hidden" name="route">
+                                            <button type="submit" style="    width: 13vh;height: 6vh;" class="btn btn-success ">Active</button>
+                                            </form>
+                                            <% }else{ %>
+                                                <button style="    width: 13vh;height: 6vh;" class="btn btn-white "></button>
+                                             <% } %>
+                                        <% }else{ %>
+                                            <form action="/admin/slider-inActive/<%= sliders[i]._id %>" method="post">
+                                                <input type="text" value="/admin/productSlider" style="display: none; height: 0px; visibility:hidden" name="route">
+                                            <button type="submit" style="    width: 13vh;height: 6vh;" class="btn btn-danger ">InActive</button>
+                                            </form>
+                                        <% } %>
+                                    </div>
+                                </td>
+                                </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                <div class="pagination justify-content-end">
+                    <button id="prevPage">Previous</button>
+                    <span id="currentPage">Page 1</span>
+                    <button id="nextPage">Next</button>
+                </div>
         </div>
     </div>
     </div>
@@ -92,6 +168,55 @@
             background-color: #8a2be2;
         }
     </style>
+    <script>
+        const productsTable = document.querySelector('.table tbody');
+const prevButton = document.getElementById('prevPage');
+const nextButton = document.getElementById('nextPage');
+const currentPageElement = document.getElementById('currentPage');
+
+let currentPage = 1;
+const itemsPerPage = 5; // Adjust as needed
+const products = document.querySelectorAll('.table tbody tr');
+
+// Function to show/hide table rows based on the current page
+function showItems() {
+const startIndex = (currentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+
+for (let i = 0; i < products.length; i++) {
+if (i >= startIndex && i < endIndex) {
+    products[i].style.display = 'table-row';
+} else {
+    products[i].style.display = 'none';
+}
+}
+
+currentPageElement.textContent = `Page ${currentPage}`;
+}
+
+// Handle previous button click
+prevButton.addEventListener('click', () => {
+if (currentPage > 1) {
+currentPage--;
+showItems();
+}
+});
+
+// Handle next button click
+nextButton.addEventListener('click', () => {
+const totalPages = Math.ceil(products.length / itemsPerPage);
+if (currentPage < totalPages) {
+currentPage++;
+showItems();
+}
+});
+
+// Initial page load
+showItems();
+
+
+
+</script>
     <%- include('../../partials/script.ejs') %>
 </body>
 

@@ -9,7 +9,7 @@ const verifyAdmin = require('../middleware/verifyAdmin')
 const McategoryCount = require('../middleware/McategoryCount')
 const ScategoryCount = require('../middleware/ScategoryCount')
 const {uploadImage,uploadLogo} = require('../middleware/multer')
-const { getAdminBannerSlider, getAdminProductSlider, getBannerSliderAdd, addSlider } = require('../controllers/bannerController')
+const { getAdminBannerSlider, getAdminProductSlider, getBannerSliderAdd, addSlider, getBannerSliderEdit, editSlider, slider_active, slider_inActive, getSliderViewProduct, getProductSliderAdd, getProductSliderEdit } = require('../controllers/bannerController')
 
 
 
@@ -55,8 +55,16 @@ router.get('/view-products/:id',view_products)
 
 router.get('/bannerSlider',getAdminBannerSlider)
 router.get('/productSlider',getAdminProductSlider)
-router.get('/addSlider',getBannerSliderAdd)
+router.get('/addSlider/bannerSlider',getBannerSliderAdd)
+router.get('/addSlider/productSlider',getProductSliderAdd)
+router.get('/editSlider/bannerSlider/:id',getBannerSliderEdit)
+router.get('/editSlider/productSlider/:id',getProductSliderEdit)
+router.get('/slider/view-product/:id',getSliderViewProduct)
+
 router.post('/addSlider',uploadImage,addSlider)
+router.post('/editSlider',uploadImage,editSlider)
+router.post('/slider-active/:id',slider_active)
+router.post('/slider-inActive/:id',slider_inActive)
 
 
 module.exports = router

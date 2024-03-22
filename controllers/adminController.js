@@ -1,11 +1,21 @@
 const userModel = require('../models/userModel')
+const productModel = require('../models/productModel')
+const orderModel = require('../models/orderModel')
 const adminModel = require('../models/adminModel')
 
 const adminController = {
 
-    getDashboard:(req, res) => {
+    getDashboard:async(req, res) => {
+        const users = await userModel.find().lean()
+        const products = await productModel.find().lean()
+        const orders = await orderModel.find({status:'Delivered'}).lean()
+        let totalRevenue = 0
+        orders.forEach(item =>{
+            totalRevenue += item.totalAmount
+        })
+        const totalSales = orders.length
         if(req.session.admin){
-            res.render('admin/dashboard')
+            res.render('admin/dashboard',{users,products,totalSales,totalRevenue})
         }else{
             res.redirect('/admin/login')
         }

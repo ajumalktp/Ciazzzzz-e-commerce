@@ -1,4 +1,6 @@
 <%- include('../partials/adminHead.ejs') %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 
     <body>
         <div class="section d-flex ">
@@ -75,28 +77,66 @@
                 </nav>
                 <div class="container p-4">
                     <div class="cards">
-                        <div class="row">
-                            <div class="card col-sm">
-
+                        <div class="row g-4">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="chart rounded d-flex align-items-center justify-content-between p-4">
+                                    <i class="fa fa-chart-line fa-3x text-primary"></i>
+                                    <div class="ms-3">
+                                        <p class="mb-2">Total Revenue</p>
+                                        <div class="total-amout d-flex">
+                                            <span class="me-1">&#8377;</span><span class="mb-0">
+                                                <%= totalRevenue %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card col-sm">
-                                
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="chart rounded d-flex align-items-center justify-content-between p-4">
+                                    <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                    <div class="ms-3">
+                                        <p class="mb-2">Total Sale</p>
+                                        <h6 class="mb-0">
+                                            <%= totalSales %>
+                                        </h6>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card col-sm">hello</div>
-                            <div class="card col-sm">hello</div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="chart rounded d-flex align-items-center justify-content-between p-4">
+                                    <i class="fa fa-chart-area fa-3x text-primary"></i>
+                                    <div class="ms-3">
+                                        <p class="mb-2">Users</p>
+                                        <h6 class="mb-0">
+                                            <%= users.length %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="chart rounded d-flex align-items-center justify-content-between p-4">
+                                    <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                                    <div class="ms-3">
+                                        <p class="mb-2">Products</p>
+                                        <h6 class="mb-0">
+                                            <%= products.length %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="charts">
                         <div class="chart-head">
                             <div class="row">
                                 <div class="col">Monthly Revenue</div>
-                                <div class="col">Most Selled Category</div>
+                                <div class="col">Sales</div>
                             </div>
                         </div>
                         <div class="chart-content">
                             <div class="row">
                                 <div class="chart card col" id="mychart"></div>
-                                <div class="chart card col" id="chart" ></div>
+                                <div class="chart card col" id="chart"></div>
                             </div>
                         </div>
                     </div>
@@ -108,88 +148,89 @@
 
         <%- include('../partials/script.ejs') %>
             <script>
-                        var options = {
-          series: [{
-          name: 'Inflation',
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
-        }],
-          chart: {
-          height: 370,
-          type: 'bar',
-          width:520,
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 10,
-            dataLabels: {
-              position: 'top', // top, center, bottom
-            },
-          }
-        },
-        dataLabels: {
-          enabled: true,
-          formatter: function (val) {
-            return val + "%";
-          },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ["#304758"]
-          }
-        },
-        
-        xaxis: {
-          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          position: 'top',
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#D8E3F0',
-                colorTo: '#BED1E6',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              }
-            }
-          },
-          tooltip: {
-            enabled: true,
-          }
-        },
-        yaxis: {
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false,
-          },
-          labels: {
-            show: false,
-            formatter: function (val) {
-              return val + "%";
-            }
-          }
-        
-        },
-        };
+                var options = {
+                    series: [{
+                        name: 'Inflation',
+                        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+                    }],
+                    chart: {
+                        height: 370,
+                        type: 'bar',
+                        width: 520,
+                    },
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 10,
+                            dataLabels: {
+                                position: 'top', // top, center, bottom
+                            },
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val) {
+                            return val + "%";
+                        },
+                        offsetY: -20,
+                        style: {
+                            fontSize: '12px',
+                            colors: ["#304758"]
+                        }
+                    },
 
-        var chart = new ApexCharts(document.querySelector("#mychart"), options);
-        chart.render();
-      
-      
+                    xaxis: {
+                        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                        position: 'top',
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        crosshairs: {
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    colorFrom: '#D8E3F0',
+                                    colorTo: '#BED1E6',
+                                    stops: [0, 100],
+                                    opacityFrom: 0.4,
+                                    opacityTo: 0.5,
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                        }
+                    },
+                    yaxis: {
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false,
+                        },
+                        labels: {
+                            show: false,
+                            formatter: function (val) {
+                                return val + "%";
+                            }
+                        }
+
+                    },
+                };
+
+                var chart = new ApexCharts(document.querySelector("#mychart"), options);
+                chart.render();
+
+
 
                 var options = {
-                    series: [44, 55, 41, 17, 15],
+                    series: [44, 55, 41, 170],
+                    labels: ["Returned","Delivered","Cancelled","Pending"],
                     chart: {
                         type: 'donut',
-                        height:'370'
+                        height: '370'
                     },
                     responsive: [{
                         breakpoint: 480,
@@ -253,7 +294,9 @@
                     background-color: white;
                     margin: 0.5rem;
                 }
-                #SvgjsSvg1001,#apexchartscr8pj4q6{
+
+                #SvgjsSvg1001,
+                #apexchartscr8pj4q6 {
                     width: 100;
                 }
             </style>

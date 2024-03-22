@@ -57,7 +57,7 @@ const orderController = {
       if(!cart){
         res.redirect('/cart')
       }else{
-        req.session.backURL = "/checkout";
+        req.session.backURL = `/checkout/${cartID}`;
         res.render("user/checkout", { user, cart });
       }
   },

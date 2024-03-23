@@ -148,10 +148,27 @@
 
         <%- include('../partials/script.ejs') %>
             <script>
+                let revenueData = '<%= JSON.stringify(monthlyData) %>'
+                let pendingOrders = '<%= JSON.stringify(pendingOrders)%>'
+                let deliveredOrders = '<%= JSON.stringify(deliveredOrders)%>'
+                let cancelledOrders = '<%= JSON.stringify(cancelledOrders)%>'
+                let returnedOrders = '<%= JSON.stringify(returnedOrders)%>'
+
+                let value = JSON.parse(revenueData)
+                let Pending = JSON.parse(pendingOrders)
+                let Delivered = JSON.parse(deliveredOrders)
+                let Cancelled = JSON.parse(cancelledOrders)
+                let Returned = JSON.parse(returnedOrders)
+
+                let total = Pending+Delivered+Cancelled+Returned
+
+
+
+
                 var options = {
                     series: [{
-                        name: 'Inflation',
-                        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+                        name: 'Revenue',
+                        data: value
                     }],
                     chart: {
                         height: 370,
@@ -169,7 +186,7 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function (val) {
-                            return val + "%";
+                            return val;
                         },
                         offsetY: -20,
                         style: {
@@ -213,7 +230,7 @@
                         labels: {
                             show: false,
                             formatter: function (val) {
-                                return val + "%";
+                                return val ;
                             }
                         }
 
@@ -226,7 +243,7 @@
 
 
                 var options = {
-                    series: [44, 55, 41, 170],
+                    series: [Returned, Delivered,Cancelled, Pending],
                     labels: ["Returned","Delivered","Cancelled","Pending"],
                     chart: {
                         type: 'donut',
@@ -265,7 +282,7 @@
                                         showAlways: true, // Always show the total label
                                         label: 'Total', // Text for the total label
                                         formatter: function (w) {
-                                            return '165' // Provide the total value here
+                                            return total // Provide the total value here
                                         }
                                     }
                                 }
@@ -273,11 +290,6 @@
                         }
                     }
                 };
-
-                var piechart = new ApexCharts(document.querySelector("#piechart"), options);
-                piechart.render();
-
-
 
 
                 var piechart = new ApexCharts(document.querySelector("#chart"), options);

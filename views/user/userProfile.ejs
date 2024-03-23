@@ -5,9 +5,14 @@
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                    <span class="font-weight-bold"><%= user.name %></span>
-                    <span class="text-black-50"><%= user.email %></span>
+                    <img class="rounded-circle mt-5" width="150px"
+                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <span class="font-weight-bold">
+                        <%= user.name %>
+                    </span>
+                    <span class="text-black-50">
+                        <%= user.email %>
+                    </span>
                 </div>
             </div>
             <div class="col-md-5 border-right">
@@ -19,29 +24,50 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Name</label>
-                            <h4><%= user.name %></h4>
+                            <h4>
+                                <%= user.name %>
+                            </h4>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Mobile Number</label>
-                            <h4><%= user.phone %></h4>
+                            <h4>
+                                <%= user.phone %>
+                            </h4>
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Email ID</label>
-                            <h4><%= user.email %></h4>
+                            <h4>
+                                <%= user.email %>
+                            </h4>
                         </div>
                         <hr>
                         <div class="col-md-12">
                             <div class="side-bar">
-                            <div class="p-1 pb-0">
-                                <a href="/myOrders/allOrders"><button class="btn mb-3">
-                                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
-                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                                    </svg>
-                                    Orders</button></a>
+                                <div class="p-1 pb-0">
+                                    <a href="/myOrders/allOrders"><button class="btn mb-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                                            </svg>
+                                            Orders</button></a>
+                                </div>
                             </div>
-                        </div>
+                            <div class="card border-dark mb-3" style="max-width: 20rem;">
+                                <div class="card-header p-3">
+                                    <h3>Wallet</h3>
+                                </div>
+                                <div class="card-body text-dark">
+                                  <div class="card-title d-flex">
+                                    <h4 class="me-1">&#8377;</h4><h4 class="mb-0">
+                                        <%= user.wallet %>
+                                    </h4>
+                                  </div>
+                                  <p class="card-text">You can use this wallet money to buy more products from us... <a href="/shop">shop</a></p>
+                                </div>
+                              </div>
                         </div>
                     </div>
                 </div>
@@ -52,71 +78,82 @@
                         <h3 class="text-right">Address's</h3>
                         <% if(user.address.length < 4){ %>
                             <a href="/add-address" class="add-address btn ">Add Address</a>
-                        <% } %>
+                            <% } %>
                     </div>
-                    <% for(i = 0; i <user.address.length;i++){ %>
-                    <div class="col-md-12">
-                        <label class="labels">Address <%= i+1 %></label>
+                    <% for(i=0; i <user.address.length;i++){ %>
+                        <div class="col-md-12">
+                            <label class="labels">Address <%= i+1 %></label>
                             <label for="id" class="card" style="margin-bottom: 1.8rem;">
-                              <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                  <div class="d-flex flex-row align-items-center">
-          
-                                    <div class="ms-3">
-                                      <h6></h6>
-                                      <span class="mb-0">
-                                        <%= user.address[i].name %>
-                                      </span>,
-                                      <span class="mb-0">
-                                        <%= user.address[i].houseName %>
-                                      </span>,
-                                      <span class="mb-0">
-                                        <%= user.address[i].city %>
-                                      </span>,
-                                      <span class="mb-0">
-                                        <%= user.address[i].state %>
-                                      </span>,
-                                      <span class="mb-0">
-                                        <%= user.address[i].country %>
-                                      </span>,
-                                      <span class="mb-0">
-                                        <%= user.address[i].pinCode %>
-                                      </span>
-                                      <p class="mb-2">Contact NO: <%= user.address[i].contactNumber %>
-                                      </p>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row align-items-center">
+
+                                            <div class="ms-3">
+                                                <h6></h6>
+                                                <span class="mb-0">
+                                                    <%= user.address[i].name %>
+                                                </span>,
+                                                <span class="mb-0">
+                                                    <%= user.address[i].houseName %>
+                                                </span>,
+                                                <span class="mb-0">
+                                                    <%= user.address[i].city %>
+                                                </span>,
+                                                <span class="mb-0">
+                                                    <%= user.address[i].state %>
+                                                </span>,
+                                                <span class="mb-0">
+                                                    <%= user.address[i].country %>
+                                                </span>,
+                                                <span class="mb-0">
+                                                    <%= user.address[i].pinCode %>
+                                                </span>
+                                                <p class="mb-2">Contact NO: <%= user.address[i].contactNumber %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div style="width: 50px;">
+                                            </div>
+                                            <div style="width: 80px;">
+                                            </div>
+                                            <span style="color: #cecece;">
+                                                <div class="d-flex">
+                                                    <a class="me-3 text-info"
+                                                        href="/edit-address/<%= user.address[i]._id %>">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                            fill="currentColor" class="bi bi-pencil-square"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                            <path fill-rule="evenodd"
+                                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                        </svg>
+                                                    </a>
+                                                    <a id="delete-address-button" class="text-danger">
+                                                        <form id="myForm"
+                                                            action="/delete-address/<%= user.address[i]._id %>"
+                                                            method="post">
+
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                                height="12" fill="currentColor" class="bi bi-trash"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                                <path
+                                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                                            </svg>
+
+                                                        </form>
+                                                    </a>
+                                                </div>
+                                            </span>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="d-flex flex-row align-items-center">
-                                    <div style="width: 50px;">
-                                    </div>
-                                    <div style="width: 80px;">
-                                    </div>
-                                    <span style="color: #cecece;">
-                                        <div class="d-flex">
-                                        <a class="me-3 text-info" href="/edit-address/<%= user.address[i]._id %>" >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                              </svg>
-                                        </a>
-                                        <a id="delete-address-button" class="text-danger">
-                                        <form id="myForm" action="/delete-address/<%= user.address[i]._id %>" method="post">
-                                            
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                                  </svg>
-                                            
-                                        </form>
-                                    </a>
-                                    </div>
-                                    </span>
-                                  </div>
                                 </div>
-                              </div>
                             </label>
-                    </div>
-                    <% } %>
+                        </div>
+                        <% } %>
                 </div>
             </div>
         </div>
@@ -124,33 +161,36 @@
     </div>
     </div>
     <script>
-            document.getElementById('delete-address-button').addEventListener('click', function() {
+        document.getElementById('delete-address-button').addEventListener('click', function () {
             document.getElementById('myForm').submit();
-    });
+        });
     </script>
     <style>
         body {
             background: rgb(99, 39, 120)
         }
-        .add-address{
+
+        .add-address {
             background: rgb(99, 39, 120);
             color: white;
         }
 
-        .side-bar{
-    width: 40%;
-}
-.side-bar .btn{
-    width: 80%;
-    height: 7vh;
-    border-radius: 1.25rem;
-    background: rgb(99, 39, 120);
-    color: white;
-}
-.side-bar .btn:hover{
-    background-color: rgb(187, 127, 243);
-    color: white;
-}
+        .side-bar {
+            width: 40%;
+        }
+
+        .side-bar .btn {
+            width: 80%;
+            height: 7vh;
+            border-radius: 1.25rem;
+            background: rgb(99, 39, 120);
+            color: white;
+        }
+
+        .side-bar .btn:hover {
+            background-color: rgb(187, 127, 243);
+            color: white;
+        }
 
         .form-control:focus {
             box-shadow: none;

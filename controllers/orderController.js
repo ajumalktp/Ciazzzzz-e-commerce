@@ -191,11 +191,30 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   cancel_order: async(req,res)=>{
     const orderID = req.params.id
     const route = req.body.route
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Cancelled',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Pending'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Cancelled'
       }
     })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+  }
     res.redirect(route)
   },
 
@@ -237,22 +256,63 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
   admin_returning: async(req,res)=>{
     const orderID = req.params.id
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Returned',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'COD'&& order.paymentStatus === 'Success'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Returned',
         paymentStatus:'Refunded'
       }
     })
+    await userModel.findByIdAndUpdate(order.user,{
+      $inc:{'wallet':order.totalAmount}
+    })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Returned'
+      }
+    })
+  }
     res.redirect('back')
   },
 
   admin_cancell: async(req,res)=>{
     const orderID = req.params.id
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Cancelled',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Pending'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Cancelled'
       }
     })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+  }
     res.redirect('back')
   },
 

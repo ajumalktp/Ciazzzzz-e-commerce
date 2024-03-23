@@ -85,7 +85,7 @@
                             <% if(orders[i].paymentStatus === 'Success'){ %>
                                 <span class="text-success fw-bold"><%= orders[i].paymentStatus %></span>
                             <% }else if(orders[i].paymentStatus === 'Refunded'){ %>
-                                <span class="text-success fw-bold"><%= orders[i].paymentStatus %></span>
+                                <span class="text-info fw-bold"><%= orders[i].paymentStatus %></span>
                             <% }else { %>
                                 <span class="text-danger fw-bold"><%= orders[i].paymentStatus %></span>
                             <% } %> %>
@@ -106,7 +106,7 @@
                             <% }else if(orders[i].status === 'Returning'){ %>
                                 <span class="text-warning fw-bold"><%= orders[i].status %></span>
                             <% }else if(orders[i].status === 'Returned'){ %>
-                                <span class="text-success fw-bold"><%= orders[i].status %></span>
+                                <span class="text-info fw-bold"><%= orders[i].status %></span>
                             <% }else if(orders[i].status === 'Cancelled'){ %>
                                 <span class="text-danger fw-bold"><%= orders[i].status %></span>
                             <% } %>

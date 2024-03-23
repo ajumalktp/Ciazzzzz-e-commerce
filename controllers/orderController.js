@@ -57,7 +57,7 @@ const orderController = {
       if(!cart){
         res.redirect('/cart')
       }else{
-        req.session.backURL = "/checkout";
+        req.session.backURL = `/checkout/${cartID}`;
         res.render("user/checkout", { user, cart });
       }
   },
@@ -72,7 +72,127 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       { _id: req.session.user.id, "address._id": req.body.addressId },
       { "address.$": 1 }
     );
-    const cart = await cartModel.findOne({_id:req.body.cartID});
+    const cart = await cartModel.findOne({_id:req.body.cartID}).populate('user')
+    console.log(cart);
+    let amount = 0
+    if(cart.wallet){
+      console.log(cart.wallet);
+      amount = cart.totalPrice-cart.user.wallet
+      console.log(amount);
+      if(amount === 0){
+        const order = new orderModel({
+          user: req.session.user.id,
+          products: cart.products,
+          totalAmount: cart.totalPrice,
+          paymentMethod: req.body.paymentMethod,
+          deliveryAddress: address.address,
+          paymentStatus:'Success',
+          status: 'Processing',
+          date: formattedDateTime,
+        });
+        order.save()
+        const bulkOps = cart.products.map(product => {
+          return {
+            updateOne: {
+              // Set the filter to match the product ID
+              filter: { _id: product.product._id },
+              // Use the $inc operator to decrement the quantity and increment the sold fields
+              update: { $inc: { productQuantity: -1 * product.quantity, sold: 1 * product.quantity } }
+            }
+          };
+        });
+        await productModel.bulkWrite(bulkOps)
+        await cartModel.deleteOne({_id:req.body.cartID});
+        await userModel.findByIdAndUpdate(cart.user._id,{
+          $set:{
+            wallet:amount
+          }
+        })
+        res.json({ status: true });
+        return
+      }else if(amount < 0){
+        const order = new orderModel({
+          user: req.session.user.id,
+          products: cart.products,
+          totalAmount: cart.totalPrice,
+          paymentMethod: req.body.paymentMethod,
+          deliveryAddress: address.address,
+          paymentStatus:'Success',
+          status: 'Processing',
+          date: formattedDateTime,
+        });
+        order.save()
+        const bulkOps = cart.products.map(product => {
+          return {
+            updateOne: {
+              // Set the filter to match the product ID
+              filter: { _id: product.product._id },
+              // Use the $inc operator to decrement the quantity and increment the sold fields
+              update: { $inc: { productQuantity: -1 * product.quantity, sold: 1 * product.quantity } }
+            }
+          };
+        });
+        await productModel.bulkWrite(bulkOps)
+        await cartModel.deleteOne({_id:req.body.cartID});
+        await userModel.findByIdAndUpdate(cart.user._id,{
+          $set:{
+            wallet:Math.abs(amount)
+          }
+        })
+        res.json({ status: true });
+        return
+      }else if(amount > 0){
+    if (req.body.paymentMethod === "COD") {
+      const order = new orderModel({
+        user: req.session.user.id,
+        products: cart.products,
+        totalAmount: amount,
+        paymentMethod: req.body.paymentMethod,
+        deliveryAddress: address.address,
+        status: 'Processing',
+        date: formattedDateTime,
+      });
+      order.save()
+      const bulkOps = cart.products.map(product => {
+        return {
+          updateOne: {
+            // Set the filter to match the product ID
+            filter: { _id: product.product._id },
+            // Use the $inc operator to decrement the quantity and increment the sold fields
+            update: { $inc: { productQuantity: -1 * product.quantity, sold: 1 * product.quantity } }
+          }
+        };
+      });
+      await productModel.bulkWrite(bulkOps)
+      await cartModel.deleteOne({_id:req.body.cartID});
+      res.json({ status: true });
+      return
+    } else {
+      const order = new orderModel({
+        user: req.session.user.id,
+        products: cart.products,
+        totalAmount: amount,
+        paymentMethod: req.body.paymentMethod,
+        deliveryAddress: address.address,
+        status: 'Pending',
+        date: formattedDateTime,
+      });
+      order.save().then((order) => {
+        var options = {
+          amount: amount * 100, // amount in the smallest currency unit
+          currency: "INR",
+          receipt: ""+order._id,
+        };
+        instance.orders.create(options, function (err, order) {
+          if (err) {
+            console.log(err);
+          }
+          res.json({status:false, order:order,cartID:req.body.cartID});
+        });
+      });
+    }
+      }
+    }
 
 
     let status = req.body.paymentMethod === "COD" ? "Processing" : "Pending";
@@ -191,11 +311,30 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   cancel_order: async(req,res)=>{
     const orderID = req.params.id
     const route = req.body.route
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Cancelled',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Pending'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Cancelled'
       }
     })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+  }
     res.redirect(route)
   },
 
@@ -237,22 +376,63 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
   admin_returning: async(req,res)=>{
     const orderID = req.params.id
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Returned',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'COD'&& order.paymentStatus === 'Success'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Returned',
         paymentStatus:'Refunded'
       }
     })
+    await userModel.findByIdAndUpdate(order.user,{
+      $inc:{'wallet':order.totalAmount}
+    })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Returned'
+      }
+    })
+  }
     res.redirect('back')
   },
 
   admin_cancell: async(req,res)=>{
     const orderID = req.params.id
+    const order = await orderModel.findOne({_id:orderID})
+    if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Success'){
+      await orderModel.findByIdAndUpdate(orderID,{
+        $set:{
+          status:'Cancelled',
+          paymentStatus:'Refunded'
+        }
+      })
+      await userModel.findByIdAndUpdate(order.user,{
+        $inc:{'wallet':order.totalAmount}
+      })
+    }else if(order.paymentMethod === 'ONLINE'&& order.paymentStatus === 'Pending'){
     await orderModel.findByIdAndUpdate(orderID,{
       $set:{
         status:'Cancelled'
       }
     })
+  }else{
+    await orderModel.findByIdAndUpdate(orderID,{
+      $set:{
+        status:'Cancelled'
+      }
+    })
+  }
     res.redirect('back')
   },
 

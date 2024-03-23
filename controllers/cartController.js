@@ -12,7 +12,17 @@ const cartController = {
     addToCart:  async(req,res)=>{
         const prodID = req.params.id
         const userID = req.session.user.id
-        const cartID = req.session.user.cartID
+        let cartID = req.session.user.cartID
+        const cart = await cartModel.findOne({user:userID})
+        if(!cart){
+            const newCart = new cartModel({
+                user:userID,
+                method:'cart',
+            })
+            newCart.save()
+            cartID = newCart._id,''
+            req.session.user.cartID = newCart._id,''
+        }
 
         const product = await productModel.findById(prodID)
         const user = await cartModel.findOne({_id:cartID})

@@ -19,6 +19,10 @@ const cartSchema = new mongoose.Schema({
     }],
     method:String,
     totalPrice:Number,
+    wallet:{
+        type:Boolean,
+        default:false
+    }
 })
 
 const cartModel = mongoose.model('carts',cartSchema)

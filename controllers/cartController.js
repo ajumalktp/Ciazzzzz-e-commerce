@@ -21,6 +21,7 @@ const cartController = {
             })
             newCart.save()
             cartID = newCart._id,''
+            req.session.user.cartID = newCart._id,''
         }
 
         const product = await productModel.findById(prodID)

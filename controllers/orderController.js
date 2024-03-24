@@ -73,12 +73,9 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       { "address.$": 1 }
     );
     const cart = await cartModel.findOne({_id:req.body.cartID}).populate('user')
-    console.log(cart);
     let amount = 0
     if(cart.wallet){
-      console.log(cart.wallet);
       amount = cart.totalPrice-cart.user.wallet
-      console.log(amount);
       if(amount === 0){
         const order = new orderModel({
           user: req.session.user.id,
@@ -86,6 +83,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
           totalAmount: cart.totalPrice,
           paymentMethod: req.body.paymentMethod,
           deliveryAddress: address.address,
+          wallet:true,
+          walletAmount:amount,
           paymentStatus:'Success',
           status: 'Processing',
           date: formattedDateTime,
@@ -117,6 +116,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
           totalAmount: cart.totalPrice,
           paymentMethod: req.body.paymentMethod,
           deliveryAddress: address.address,
+          wallet:true,
+          walletAmount:amount,
           paymentStatus:'Success',
           status: 'Processing',
           date: formattedDateTime,
@@ -142,6 +143,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         res.json({ status: true });
         return
       }else if(amount > 0){
+        let usedAmount = cart.totalPrice - amount
     if (req.body.paymentMethod === "COD") {
       const order = new orderModel({
         user: req.session.user.id,
@@ -149,6 +151,8 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         totalAmount: amount,
         paymentMethod: req.body.paymentMethod,
         deliveryAddress: address.address,
+        wallet:true,
+        walletAmount:usedAmount,
         status: 'Processing',
         date: formattedDateTime,
       });
@@ -165,6 +169,11 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
       });
       await productModel.bulkWrite(bulkOps)
       await cartModel.deleteOne({_id:req.body.cartID});
+      await userModel.findByIdAndUpdate(cart.user._id,{
+        $set:{
+          wallet:0
+        }
+      })
       res.json({ status: true });
       return
     } else {
@@ -174,9 +183,16 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         totalAmount: amount,
         paymentMethod: req.body.paymentMethod,
         deliveryAddress: address.address,
+        wallet:true,
+        walletAmount:usedAmount,
         status: 'Pending',
         date: formattedDateTime,
       });
+      await userModel.findByIdAndUpdate(cart.user._id,{
+        $set:{
+          wallet:0
+        }
+      })
       order.save().then((order) => {
         var options = {
           amount: amount * 100, // amount in the smallest currency unit
@@ -231,9 +247,10 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         status: status,
         date: formattedDateTime,
       });
-      order.save().then((order) => {
+      order.save()
+      .then((order) => {
         var options = {
-          amount: cart.totalPrice * 100, // amount in the smallest currency unit
+          amount: order.totalAmount * 100, // amount in the smallest currency unit
           currency: "INR",
           receipt: ""+order._id,
         };
@@ -270,8 +287,9 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
   },
 
   verifyPayment: async(req,res)=>{
+    const order = await orderModel.findOne({_id:req.body.order.receipt})
     const cart = await cartModel.findOne({_id:req.body.cartID})
-  let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
+    let hmac = crypto.createHmac('sha256', '50r84znkd0fD3ulVj10Uyona')
       hmac.update(req.body.payment.razorpay_order_id + '|' + req.body.payment.razorpay_payment_id)
       hmac = hmac.digest('hex')
       if (hmac == req.body.payment.razorpay_signature){
@@ -282,7 +300,7 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
           }
         })
       }
-      const bulkOps = cart.products.map(product => {
+      const bulkOps = order.products.map(product => {
         return {
           updateOne: {
             // Set the filter to match the product ID
@@ -293,7 +311,9 @@ const formattedDateTime = `${formattedDate} ${formattedTime}`;
         };
       });
       await productModel.bulkWrite(bulkOps)
-      await cartModel.deleteOne({_id:req.body.cartID});
+      if(cart){
+        await cartModel.deleteOne({_id:req.body.cartID})
+      }
       res.json({status:true})
   },
 

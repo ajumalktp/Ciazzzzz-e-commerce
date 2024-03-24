@@ -166,6 +166,13 @@
                       <% if(orders[i].status === 'Pending'){ %>
                         <div class="status-bar d-flex justify-content-between align-items-center">
                           <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
+                          <% if(orders[i].wallet){ %>
+                            <% if(orders[i].walletAmount <= 0){ %>
+                              <span style="font-size: 10px;" class="text-success">Full payment paid from wallet</span>
+                            <% }else{ %>
+                              <span style="font-size: 10px;"><span class="text-success"><span class="me-1">&#8377;</span><%= orders[i].walletAmount %> Paid from wallet </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span><%= orders[i].totalAmount %></span></span>
+                            <% } %>
+                          <% } %>
                           <span class="d-flex align-items-center">
                             <span style="font-size: 10px;" class="text-danger me-1">Complete the order by making the payment</span>
                           <button style="    width: 15vh; 
@@ -175,6 +182,13 @@
                       <% }else if(orders[i].status === 'Processing'){ %>
                         <div class="status-bar d-flex justify-content-between align-items-center">
                           <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
+                          <% if(orders[i].wallet){ %>
+                            <% if(orders[i].walletAmount <= 0){ %>
+                              <span style="font-size: 10px;" class="text-success">Full payment paid from wallet</span>
+                            <% }else{ %>
+                              <span style="font-size: 10px;"><span class="text-success"><span class="me-1">&#8377;</span><%= orders[i].walletAmount %> Paid from wallet </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span><%= orders[i].totalAmount %></span></span>
+                            <% } %>
+                          <% } %>
                           <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
                             <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
                           <button type="submit" style="    width: 15vh;
@@ -184,6 +198,13 @@
                       <% }else if(orders[i].status === 'Dispatched'){ %>
                         <div class="status-bar d-flex justify-content-between align-items-center">
                           <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
+                          <% if(orders[i].wallet){ %>
+                            <% if(orders[i].walletAmount <= 0){ %>
+                              <span style="font-size: 10px;" class="text-success">Full payment paid from wallet</span>
+                            <% }else{ %>
+                              <span style="font-size: 10px;"><span class="text-success"><span class="me-1">&#8377;</span><%= orders[i].walletAmount %> Paid from wallet </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span><%= orders[i].totalAmount %></span></span>
+                            <% } %>
+                          <% } %>
                           <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
                             <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
                           <button type="submit" style="    width: 15vh;
@@ -193,6 +214,13 @@
                       <% }else if(orders[i].status === 'Shipped'){ %>
                         <div class="status-bar d-flex justify-content-between align-items-center">
                           <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
+                          <% if(orders[i].wallet){ %>
+                            <% if(orders[i].walletAmount <= 0){ %>
+                              <span style="font-size: 10px;" class="text-success">Full payment paid from wallet</span>
+                            <% }else{ %>
+                              <span style="font-size: 10px;"><span class="text-success"><span class="me-1">&#8377;</span><%= orders[i].walletAmount %> Paid from wallet </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span><%= orders[i].totalAmount %></span></span>
+                            <% } %>
+                          <% } %>
                           <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
                             <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
                           <button type="submit" style="    width: 15vh;

@@ -54,11 +54,22 @@ const orderController = {
     const cart = await cartModel
       .findOne({ _id: cartID })
       .populate("products.product");
+      let totalAmount = 0
       if(!cart){
         res.redirect('/cart')
       }else{
-        req.session.backURL = `/checkout/${cartID}`;
-        res.render("user/checkout", { user, cart });
+        if(cart.wallet){
+          totalAmount = cart.totalPrice - user.wallet
+          if(totalAmount <= 0){
+            totalAmount = 0
+          }
+          req.session.backURL = `/checkout/${cartID}`;
+          res.render("user/checkout", { user, cart , totalAmount });
+        }else{
+          totalAmount = cart.totalPrice
+          req.session.backURL = `/checkout/${cartID}`;
+          res.render("user/checkout", { user, cart , totalAmount });
+        }
       }
   },
 

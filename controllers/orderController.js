@@ -54,6 +54,13 @@ const orderController = {
     const cart = await cartModel
       .findOne({ _id: cartID })
       .populate("products.product");
+    if(user.wallet <= 0 ){
+      await cartModel.findByIdAndUpdate(cartID,{
+        $set:{
+          wallet:false
+        }
+      })
+    }
     let totalAmount = 0
     if (!cart) {
       res.redirect('/cart')
@@ -71,6 +78,26 @@ const orderController = {
         res.render("user/checkout", { user, cart, totalAmount });
       }
     }
+  },
+
+  wallet_deny: async (req,res)=>{
+    const _id = req.params.id
+    await cartModel.findByIdAndUpdate(_id,{
+      $set:{
+        wallet:false
+      }
+    })
+    res.redirect(req.session.backURL)
+  },
+
+  wallet_apply: async (req,res)=>{
+    const _id = req.params.id
+    await cartModel.findByIdAndUpdate(_id,{
+      $set:{
+        wallet:true
+      }
+    })
+    res.redirect(req.session.backURL)
   },
 
   place_order: async (req, res) => {
@@ -550,7 +577,7 @@ const orderController = {
       const cart = await cartModel.findOne({ _id: cartCreate._id }).populate("products.product")
       setTimeout(() => {
         res.render('user/cart', { cart })
-      }, 2000)
+      }, 4000)
     } else {
       const cart = await cartModel.findOne({ _id: cartExist._id }).populate("products.product")
       res.render('user/cart', { cart })

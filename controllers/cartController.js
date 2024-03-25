@@ -1,11 +1,20 @@
 const cartModel = require('../models/cartModel')
 const productModel = require('../models/productModel')
+const userModel = require('../models/userModel')
 
 const cartController = {
 
     getCart: async(req,res)=>{
         const userID = req.session.user.id
+        const user = await userModel.findOne({_id:userID})
         const cart = await cartModel.findOne({user:userID}).populate("products.product")
+        if(user.wallet <= 0 ){
+            await cartModel.findByIdAndUpdate(cart._id,{
+              $set:{
+                wallet:false
+              }
+            })
+          }
         res.render('user/cart',{cart})
     },
 

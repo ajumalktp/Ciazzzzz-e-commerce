@@ -5,7 +5,7 @@ const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
 const { addToCart,getCart,changeQuantity,changePrice,removeItem,emptyCart,totalPrice } = require('../controllers/cartController')
-const { getCheckOut, place_order , allOrders, delivered, cancelled, ONLINE, returned, COD, order_success,verifyPayment, returning_order, cancel_order, repayment, buyNow} = require('../controllers/orderController')
+const { getCheckOut, place_order , allOrders, delivered, cancelled, ONLINE, returned, COD, order_success,verifyPayment, returning_order, cancel_order, repayment, buyNow, wallet_deny, wallet_apply} = require('../controllers/orderController')
 
 
 router.get('/',getHome)
@@ -62,6 +62,8 @@ router.post('/removeItem',removeItem)
 router.post('/get-totalPrice',totalPrice)
 
 router.get('/checkout/:id',verifyUser,getCheckOut)
+router.get('/wallet/deny/:id',wallet_deny)
+router.get('/wallet/apply/:id',wallet_apply)
 
 
 router.post('/return-order/:id',returning_order)

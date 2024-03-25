@@ -189,7 +189,11 @@
                             <% if(user.wallet <= 0){ %>
                               <p>No Money</p>
                             <% }else{ %>
-                              <a href="" class="btn btn-success">Apply</a>
+                              <% if(cart.wallet){ %>
+                                <a href="/wallet/deny/<%= cart._id %>" class="btn btn-danger">deny</a>
+                              <% }else{ %>
+                                <a href="/wallet/apply/<%= cart._id %>" class="btn btn-success">Apply</a>
+                              <% } %>
                             <% } %>
                           </div>
                         </div>
@@ -229,6 +233,7 @@
                           <p class="mb-2">Shipping</p>
                           <p class="mb-2">Free</p>
                         </div>
+                        <% if(cart.wallet){ %>
                         <div class="d-flex justify-content-between">
                           <p class="mb-2">Wallet Amount</p>
                           <div class="d-flex">
@@ -242,6 +247,7 @@
                             </p>
                           </div>
                         </div>
+                        <% } %>
                         <div class="d-flex justify-content-between mb-4">
                           <p class="mb-2">Total(Incl. taxes)</p>
                           <div class="d-flex">

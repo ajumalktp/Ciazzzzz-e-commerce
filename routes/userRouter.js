@@ -14,24 +14,24 @@ router.get('/signUp',getUserRegister)
 router.get('/submitOtp',submitOtp)
 router.get('/resendOtp',resendOtp)
 router.get('/profile',verifyUser,getProfile)
-router.get('/productDetails/:id',verifyUser,getProductDetails)
+router.get('/productDetails/:id',getProductDetails)
 router.get('/category',getCategory)
 router.get('/categoryProducts/:id',getCategoryProducts)
 router.get('/forgotPass/verifyEmail',getEmailVerifyFP)
 
 router.get('/add-address',verifyUser,getAddAddress)
-router.post('/add-address',submitAddress)
-router.get('/edit-address/:id',getEditAddress)
-router.post('/edit-address/:id',editAddress)
-router.post('/delete-address/:id',deleteAddress)
+router.post('/add-address',verifyUser,submitAddress)
+router.get('/edit-address/:id',verifyUser,getEditAddress)
+router.post('/edit-address/:id',verifyUser,editAddress)
+router.post('/delete-address/:id',verifyUser,deleteAddress)
 
-router.get('/edit-info',getEditInfo)
-router.post('/edit-info',editInfo)
+router.get('/edit-info',verifyUser,getEditInfo)
+router.post('/edit-info',verifyUser,editInfo)
 
-router.post('/place_order',place_order)
-router.get('/order-success',order_success)
-router.post('/verifyPayment',verifyPayment)
-router.post('/repayment',repayment)
+router.post('/place_order',verifyUser,place_order)
+router.get('/order-success',verifyUser,order_success)
+router.post('/verifyPayment',verifyUser,verifyPayment)
+router.post('/repayment',verifyUser,repayment)
 
 router.post('/signUp',userRegister)
 router.post('/login',userLogin)
@@ -42,33 +42,33 @@ router.post('/changePassFP',changePassFP)
 
 
 router.get('/shop',getShop)
-router.get('/myOrders/allOrders',allOrders)
-router.get('/myOrders/delivered',delivered)
-router.get('/myOrders/cancelled',cancelled)
-router.get('/myOrders/returned',returned)
-router.get('/myOrders/COD',COD)
-router.get('/myOrders/ONLINE',ONLINE)
+router.get('/myOrders/allOrders',verifyUser,allOrders)
+router.get('/myOrders/delivered',verifyUser,delivered)
+router.get('/myOrders/cancelled',verifyUser,cancelled)
+router.get('/myOrders/returned',verifyUser,returned)
+router.get('/myOrders/COD',verifyUser,COD)
+router.get('/myOrders/ONLINE',verifyUser,ONLINE)
 
 
 router.get('/cart',verifyUser,getCart)
 
-router.get('/add-to-cart/:id',addToCart)
-router.get('/emptyCart',emptyCart)
+router.get('/add-to-cart/:id',verifyUser,addToCart)
+router.get('/emptyCart',verifyUser,emptyCart)
 
 
-router.post('/changeQuantity',changeQuantity)
-router.post('/changePrice',changePrice)
-router.post('/removeItem',removeItem)
-router.post('/get-totalPrice',totalPrice)
+router.post('/changeQuantity',verifyUser,changeQuantity)
+router.post('/changePrice',verifyUser,changePrice)
+router.post('/removeItem',verifyUser,removeItem)
+router.post('/get-totalPrice',verifyUser,totalPrice)
 
 router.get('/checkout/:id',verifyUser,getCheckOut)
-router.get('/wallet/deny/:id',wallet_deny)
-router.get('/wallet/apply/:id',wallet_apply)
+router.get('/wallet/deny/:id',verifyUser,wallet_deny)
+router.get('/wallet/apply/:id',verifyUser,wallet_apply)
 
 
-router.post('/return-order/:id',returning_order)
-router.post('/cancel-order/:id',cancel_order)
+router.post('/return-order/:id',verifyUser,returning_order)
+router.post('/cancel-order/:id',verifyUser,cancel_order)
 
-router.get('/buyNow/:id',buyNow)
+router.get('/buyNow/:id',verifyUser,buyNow)
 
 module.exports = router

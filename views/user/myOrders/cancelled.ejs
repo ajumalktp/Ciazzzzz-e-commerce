@@ -1,117 +1,94 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <section>
-    <div class="container py-5">
-      <a style="color: black;" href="/"><i style="font-size: 20px;" class="fas fa-long-arrow-alt-left "></i>Back Home</a>
-        <div class="sticky-header">
-        <div class="d-flex justify-content-between align-items-center mb-4 bg-white">
-            <div  class="btn-links text-center">
-                <a href="/myOrders/allOrders">All Orders</a>
-            </div>
-            <div class="btn-links text-center">
-                <a href="/myOrders/delivered">Delivered</a>
-            </div>
-            <div id="primary-btn" class="btn-links text-center">
-                <a href="/myOrders/cancelled">Cancelled</a>
-            </div>
-            <div class="btn-links text-center">
-                <a href="/myOrders/returned">Returned</a>
-            </div>
-            <div class="btn-links text-center">
-                <a href="/myOrders/ONLINE">Online</a>
-            </div>
-            <div class="btn-links text-center">
-                <a href="/myOrders/COD">Cash on Delivery</a>
-            </div>
+  <div class="container py-5">
+    <a style="color: black;" href="/"><i style="font-size: 20px;" class="fas fa-long-arrow-alt-left "></i>Back Home</a>
+    <div class="sticky-header">
+      <div class="d-flex justify-content-between align-items-center mb-4 bg-white">
+        <div class="btn-links text-center">
+          <a href="/myOrders/allOrders">All Orders</a>
         </div>
+        <div class="btn-links text-center">
+          <a href="/myOrders/delivered">Delivered</a>
+        </div>
+        <div id="primary-btn" class="btn-links text-center">
+          <a href="/myOrders/cancelled">Cancelled</a>
+        </div>
+        <div class="btn-links text-center">
+          <a href="/myOrders/returned">Returned</a>
+        </div>
+        <div class="btn-links text-center">
+          <a href="/myOrders/ONLINE">Online</a>
+        </div>
+        <div class="btn-links text-center">
+          <a href="/myOrders/COD">Cash on Delivery</a>
+        </div>
+      </div>
     </div>
-      <div class="row d-flex justify-content-center ">
-        <div class="col-lg-10 col-xl-8">
-          <div class="card" style="border-radius: 10px;">
-            <div class="card-body p-4">
-              <% if(orders.length === 0){ %>
-                <p class="text-center mb-0">No orders left</p>
+    <div class="row d-flex justify-content-center ">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-body p-4">
+            <% if(orders.length===0){ %>
+              <p class="text-center mb-0">No orders left</p>
               <% } %>
-              <% for(let i = 0; i< orders.length; i++){ %>
-                <div class="card shadow-0 border mb-4">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-end">
-                    <span class="text-muted small mb-2">Order ID :<%= orders[i]._id %></span>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <a href="/admin/view-products/<%= orders[i]._id %>" class="mb-0">View Products</a>
+                <% for(let i=0; i< orders.length; i++){ %>
+                  <div class="card shadow-0 border mb-4">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-end">
+                        <span class="text-muted small mb-2">Order ID :<%= orders[i]._id %></span>
                       </div>
-                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">Method: <%= orders[i].paymentMethod %></p>
+                      <div class="row">
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <a href="/admin/view-products/<%= orders[i]._id %>" class="mb-0">View Products</a>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">Method: <%= orders[i].paymentMethod %>
+                          </p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">Payment:</p>
+                          <% if(orders[i].paymentStatus==='Success' ){ %>
+                            <p class="text-success mb-0 small">
+                              <%= orders[i].paymentStatus %>
+                            </p>
+                            <% }else if(orders[i].paymentStatus==='Refunded' ){ %>
+                              <p class="text-info mb-0 small">
+                                <%= orders[i].paymentStatus %>
+                              </p>
+                              <% }else{ %>
+                                <p class="text-danger mb-0 small">
+                                  <%= orders[i].paymentStatus %>
+                                </p>
+                                <% } %>
+
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">Items : <span>
+                              <%= orders[i].products.length %>
+                            </span></p>
+                        </div>
+                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                          <p class="text-muted mb-0 small">Amount <span class="me-1">&#8377;:</span>
+                            <%= orders[i].totalAmount %><span></span>
+                          </p>
+                        </div>
                       </div>
-                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">Payment:</p>
-                          <% if(orders[i].paymentStatus === 'Success'){ %>
-                            <p class="text-success mb-0 small"><%= orders[i].paymentStatus %></p>
-                          <% }else if(orders[i].paymentStatus === 'Refunded'){ %>
-                            <p class="text-info mb-0 small"><%= orders[i].paymentStatus %></p>
-                          <% }else{ %>
-                            <p class="text-danger mb-0 small"><%= orders[i].paymentStatus %></p>
-                          <% } %>
-                      </div>
-                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">Items : <span><%= orders[i].products.length %></span></p>
-                      </div>
-                      <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p class="text-muted mb-0 small">Amount <span class="me-1">&#8377;:</span><%= orders[i].totalAmount %><span></span></p>
-                      </div>
-                    </div>
-                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
-                    <div class="row d-flex align-items-center">
-                      <!-- <div class="col-md-2">
+                      <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                      <div class="row d-flex align-items-center">
+                        <!-- <div class="col-md-2">
                         <p class="text-muted mb-0 small">Track Order</p>
                       </div> -->
-                      <div class="col-md-10">
-                        <div class="mb-1">
-                          <!-- <p class="text-muted mt-1 mb-0 small ms-xl-5"></p> -->
-                          <% if(orders[i].status === 'Pending'){ %>
-                            <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
-                              <div class="progress-bar" role="progressbar"
-                                style="width: 13%; border-radius: 16px; background-color: #bd0606;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex justify-content-around mb-1">
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
-                              <% if(orders[i].status === 'Delivered'){ %>
-                                <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered</p>
-                              <% }else{ %>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                              <% } %>
-                            </div>
-                          <% }else if(orders[i].status === 'Processing'){ %>
-                            <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
-                              <div class="progress-bar" role="progressbar"
-                                style="width: 33%; border-radius: 16px; background-color: #078937;" aria-valuenow="25"
-                                aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="d-flex justify-content-around mb-1">
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
-                              <% if(orders[i].status === 'Delivered'){ %>
-                                <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered</p>
-                              <% }else{ %>
-                              <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                              <% } %>
-                            </div>
-                          <% }else if(orders[i].status === 'Dispatched'){ %>
+                        <div class="col-md-10">
+                          <div class="mb-1">
+                            <!-- <p class="text-muted mt-1 mb-0 small ms-xl-5"></p> -->
+                            <% if(orders[i].status==='Pending' ){ %>
                               <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
                                 <div class="progress-bar" role="progressbar"
-                                  style="width: 54%; border-radius: 16px; background-color: #078937;" aria-valuenow="25"
+                                  style="width: 13%; border-radius: 16px; background-color: #bd0606;" aria-valuenow="25"
                                   aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                               <div class="d-flex justify-content-around mb-1">
@@ -119,161 +96,367 @@
                                 <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
                                 <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
                                 <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
-                                <% if(orders[i].status === 'Delivered'){ %>
-                                  <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered</p>
-                                <% }else{ %>
-                                <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                <% } %>
+                                <% if(orders[i].status==='Delivered' ){ %>
+                                  <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered
+                                  </p>
+                                  <% }else{ %>
+                                    <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                    <% } %>
                               </div>
-                          <% }else if(orders[i].status === 'Shipped'){ %>
+                              <% }else if(orders[i].status==='Processing' ){ %>
                                 <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
                                   <div class="progress-bar" role="progressbar"
-                                    style="width: 75%; border-radius: 16px; background-color: #078937;" aria-valuenow="25"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                    style="width: 33%; border-radius: 16px; background-color: #078937;"
+                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <div class="d-flex justify-content-around mb-1">
                                   <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
                                   <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
                                   <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
                                   <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
-                                  <% if(orders[i].status === 'Delivered'){ %>
-                                    <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered</p>
-                                  <% }else{ %>
-                                  <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                  <% } %>
+                                  <% if(orders[i].status==='Delivered' ){ %>
+                                    <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">
+                                      Delivered</p>
+                                    <% }else{ %>
+                                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                      <% } %>
                                 </div>
-                          <% }else if(orders[i].status === 'Delivered'){ %>
+                                <% }else if(orders[i].status==='Dispatched' ){ %>
                                   <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
                                     <div class="progress-bar" role="progressbar"
-                                      style="width: 100%; border-radius: 16px; background-color: #078937;" aria-valuenow="25"
-                                      aria-valuemin="0" aria-valuemax="100"></div>
+                                      style="width: 54%; border-radius: 16px; background-color: #078937;"
+                                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                   </div>
                                   <div class="d-flex justify-content-around mb-1">
                                     <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
                                     <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
                                     <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
                                     <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
-                                    <% if(orders[i].status === 'Delivered'){ %>
-                                      <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">Delivered</p>
-                                    <% }else{ %>
-                                    <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
-                                    <% } %>
+                                    <% if(orders[i].status==='Delivered' ){ %>
+                                      <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">
+                                        Delivered</p>
+                                      <% }else{ %>
+                                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                        <% } %>
                                   </div>
-                          <% } %>
+                                  <% }else if(orders[i].status==='Shipped' ){ %>
+                                    <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
+                                      <div class="progress-bar" role="progressbar"
+                                        style="width: 75%; border-radius: 16px; background-color: #078937;"
+                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-around mb-1">
+                                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
+                                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
+                                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
+                                      <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
+                                      <% if(orders[i].status==='Delivered' ){ %>
+                                        <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">
+                                          Delivered</p>
+                                        <% }else{ %>
+                                          <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                          <% } %>
+                                    </div>
+                                    <% }else if(orders[i].status==='Delivered' ){ %>
+                                      <div class="progress" style="height: 6px; border-radius: 16px; width: 100%;">
+                                        <div class="progress-bar" role="progressbar"
+                                          style="width: 100%; border-radius: 16px; background-color: #078937;"
+                                          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                      </div>
+                                      <div class="d-flex justify-content-around mb-1">
+                                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Pending</p>
+                                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Processing</p>
+                                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Dispatched</p>
+                                        <p class="text-muted mt-1 mb-0 small ms-xl-5">Shipped</p>
+                                        <% if(orders[i].status==='Delivered' ){ %>
+                                          <p class=" mt-1 mb-0 small ms-xl-5" style="font-weight: 900;color: #078937;">
+                                            Delivered</p>
+                                          <% }else{ %>
+                                            <p class="text-muted mt-1 mb-0 small ms-xl-5">Delivered</p>
+                                            <% } %>
+                                      </div>
+                                      <% } %>
+                          </div>
                         </div>
-                      </div>
-                      <% if(orders[i].status === 'Pending'){ %>
-                        <div class="status-bar d-flex justify-content-between align-items-center">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <span class="d-flex align-items-center">
-                            <span style="font-size: 10px;" class="text-danger me-1">Complete the order by making the payment</span>
-                          <button style="    width: 15vh; 
-                          height: 5vh;font-size: 13px;" onclick="repayment('<%= orders[i]._id %>')" class="btn btn-warning">Pay</button>
-                          </span>
-                        </div>
-                      <% }else if(orders[i].status === 'Processing'){ %>
-                        <div class="status-bar d-flex justify-content-between align-items-center">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
-                            <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
-                          <button type="submit" style="    width: 15vh;
+                        <% if(orders[i].status==='Pending' ){ %>
+                          <div class="status-bar d-flex justify-content-between align-items-center">
+                            <p class="text-muted  mb-0 small ">
+                              <%= orders[i].date %>
+                            </p>
+                            <% if(orders[i].paymentStatus==='Pending' ){ %>
+                              <% if(orders[i].wallet){ %>
+                                <% if(orders[i].walletAmount <=0){ %>
+                                  <span style="font-size: 10px;" class="text-success">Full payment paid from
+                                    wallet</span>
+                                  <% }else{ %>
+                                    <span style="font-size: 10px;"><span class="text-success"><span
+                                          class="me-1">&#8377;</span>
+                                        <%= orders[i].walletAmount %> Paid from wallet
+                                      </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span>
+                                        <%= orders[i].totalAmount %>
+                                      </span></span>
+                                    <% } %>
+                                      <% } %>
+                                        <% }else{ %>
+                                          <% if(orders[i].wallet){ %>
+                                            <span style="font-size: 10px;" class="text-success"><span
+                                                class="me-1">&#8377;</span>
+                                              <%= orders[i].walletAmount %> paid from wallet
+                                            </span>
+                                            <% } %>
+                                              <% } %>
+                                                <span class="d-flex align-items-center">
+                                                  <span style="font-size: 10px;" class="text-danger me-1">Complete the
+                                                    order by making the payment</span>
+                                                  <button style="    width: 15vh; 
+                          height: 5vh;font-size: 13px;" onclick="repayment('<%= orders[i]._id %>')"
+                                                    class="btn btn-warning">Pay</button>
+                                                  <form class="m-0 ms-1" action="/cancel-order/<%= orders[i]._id %>"
+                                                    method="post">
+                                                    <input type="text" value="/myOrders/cancelled"
+                                                      style="display: none; height: 0px; visibility:hidden"
+                                                      name="route">
+                                                    <button type="submit" style="    width: 15vh;
                           height: 5vh;font-size: 13px;" class="btn btn-danger">Cancel</button>
-                          </form>
-                        </div>
-                      <% }else if(orders[i].status === 'Dispatched'){ %>
-                        <div class="status-bar d-flex justify-content-between align-items-center">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
-                            <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
-                          <button type="submit" style="    width: 15vh;
+                                                  </form>
+                                                </span>
+                          </div>
+                          <% }else if(orders[i].status==='Processing' ){ %>
+                            <div class="status-bar d-flex justify-content-between align-items-center">
+                              <p class="text-muted  mb-0 small ">
+                                <%= orders[i].date %>
+                              </p>
+                              <% if(orders[i].paymentStatus==='Pending' ){ %>
+                                <% if(orders[i].wallet){ %>
+                                  <% if(orders[i].walletAmount <=0){ %>
+                                    <span style="font-size: 10px;" class="text-success">Full payment paid from
+                                      wallet</span>
+                                    <% }else{ %>
+                                      <span style="font-size: 10px;"><span class="text-success"><span
+                                            class="me-1">&#8377;</span>
+                                          <%= orders[i].walletAmount %> Paid from wallet
+                                        </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span>
+                                          <%= orders[i].totalAmount %>
+                                        </span></span>
+                                      <% } %>
+                                        <% } %>
+                                          <% }else{ %>
+                                            <% if(orders[i].wallet){ %>
+                                              <span style="font-size: 10px;" class="text-success"><span
+                                                  class="me-1">&#8377;</span>
+                                                <%= orders[i].walletAmount %> paid from wallet
+                                              </span>
+                                              <% } %>
+                                                <% } %>
+                                                  <form class="m-0" action="/cancel-order/<%= orders[i]._id %>"
+                                                    method="post">
+                                                    <input type="text" value="/myOrders/cancelled"
+                                                      style="display: none; height: 0px; visibility:hidden"
+                                                      name="route">
+                                                    <button type="submit" style="    width: 15vh;
                           height: 5vh;font-size: 13px;" class="btn btn-danger">Cancel</button>
-                          </form>
-                        </div>
-                      <% }else if(orders[i].status === 'Shipped'){ %>
-                        <div class="status-bar d-flex justify-content-between align-items-center">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <form class="m-0" action="/cancel-order/<%= orders[i]._id %>" method="post">
-                            <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
-                          <button type="submit" style="    width: 15vh;
+                                                  </form>
+                            </div>
+                            <% }else if(orders[i].status==='Dispatched' ){ %>
+                              <div class="status-bar d-flex justify-content-between align-items-center">
+                                <p class="text-muted  mb-0 small ">
+                                  <%= orders[i].date %>
+                                </p>
+                                <% if(orders[i].paymentStatus==='Pending' ){ %>
+                                  <% if(orders[i].wallet){ %>
+                                    <% if(orders[i].walletAmount <=0){ %>
+                                      <span style="font-size: 10px;" class="text-success">Full payment paid from
+                                        wallet</span>
+                                      <% }else{ %>
+                                        <span style="font-size: 10px;"><span class="text-success"><span
+                                              class="me-1">&#8377;</span>
+                                            <%= orders[i].walletAmount %> Paid from wallet
+                                          </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span>
+                                            <%= orders[i].totalAmount %>
+                                          </span></span>
+                                        <% } %>
+                                          <% } %>
+                                            <% }else{ %>
+                                              <% if(orders[i].wallet){ %>
+                                                <span style="font-size: 10px;" class="text-success"><span
+                                                    class="me-1">&#8377;</span>
+                                                  <%= orders[i].walletAmount %> paid from wallet
+                                                </span>
+                                                <% } %>
+                                                  <% } %>
+                                                    <form class="m-0" action="/cancel-order/<%= orders[i]._id %>"
+                                                      method="post">
+                                                      <input type="text" value="/myOrders/cancelled"
+                                                        style="display: none; height: 0px; visibility:hidden"
+                                                        name="route">
+                                                      <button type="submit" style="    width: 15vh;
                           height: 5vh;font-size: 13px;" class="btn btn-danger">Cancel</button>
-                          </form>
-                        </div>
-                      <% }else if(orders[i].status === 'Delivered'){ %>
-                        <div class="status-bar d-flex justify-content-between align-items-center">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <span class="d-flex align-items-center">
-                          <span style="font-size: 10px;" class="text-danger me-1">Returns can be made within <span style="font-weight: 900;">5</span> days only!!</span>
-                          <form class="m-0" action="/return-order/<%= orders[i]._id %>" method="post">
-                            <input type="text" value="/myOrders/allOrders" style="display: none; height: 0px; visibility:hidden" name="route">
-                          <button type="submit" style="    width: 15vh;
+                                                    </form>
+                              </div>
+                              <% }else if(orders[i].status==='Shipped' ){ %>
+                                <div class="status-bar d-flex justify-content-between align-items-center">
+                                  <p class="text-muted  mb-0 small ">
+                                    <%= orders[i].date %>
+                                  </p>
+                                  <% if(orders[i].paymentStatus==='Pending' ){ %>
+                                    <% if(orders[i].wallet){ %>
+                                      <% if(orders[i].walletAmount <=0){ %>
+                                        <span style="font-size: 10px;" class="text-success">Full payment paid from
+                                          wallet</span>
+                                        <% }else{ %>
+                                          <span style="font-size: 10px;"><span class="text-success"><span
+                                                class="me-1">&#8377;</span>
+                                              <%= orders[i].walletAmount %> Paid from wallet
+                                            </span><span class="text-danger">Balance: <span class="me-1">&#8377;</span>
+                                              <%= orders[i].totalAmount %>
+                                            </span></span>
+                                          <% } %>
+                                            <% } %>
+                                              <% }else{ %>
+                                                <% if(orders[i].wallet){ %>
+                                                  <span style="font-size: 10px;" class="text-success"><span
+                                                      class="me-1">&#8377;</span>
+                                                    <%= orders[i].walletAmount %> paid from wallet
+                                                  </span>
+                                                  <% } %>
+                                                    <% } %>
+                                                      <form class="m-0" action="/cancel-order/<%= orders[i]._id %>"
+                                                        method="post">
+                                                        <input type="text" value="/myOrders/cancelled"
+                                                          style="display: none; height: 0px; visibility:hidden"
+                                                          name="route">
+                                                        <button type="submit" style="    width: 15vh;
+                          height: 5vh;font-size: 13px;" class="btn btn-danger">Cancel</button>
+                                                      </form>
+                                </div>
+                                <% }else if(orders[i].status==='Delivered' ){ %>
+                                  <div class="status-bar d-flex justify-content-between align-items-center">
+                                    <p class="text-muted  mb-0 small ">
+                                      <%= orders[i].date %>
+                                    </p>
+                                    <% if(orders[i].paymentStatus==='Pending' ){ %>
+                                      <% if(orders[i].wallet){ %>
+                                        <% if(orders[i].walletAmount <=0){ %>
+                                          <span style="font-size: 10px;" class="text-success">Full payment paid from
+                                            wallet</span>
+                                          <% }else{ %>
+                                            <span style="font-size: 10px;"><span class="text-success"><span
+                                                  class="me-1">&#8377;</span>
+                                                <%= orders[i].walletAmount %> Paid from wallet
+                                              </span><span class="text-danger">Balance: <span
+                                                  class="me-1">&#8377;</span>
+                                                <%= orders[i].totalAmount %>
+                                              </span></span>
+                                            <% } %>
+                                              <% } %>
+                                                <% }else{ %>
+                                                  <% if(orders[i].wallet){ %>
+                                                    <span style="font-size: 10px;" class="text-success"><span
+                                                        class="me-1">&#8377;</span>
+                                                      <%= orders[i].walletAmount %> paid from wallet
+                                                    </span>
+                                                    <% } %>
+                                                      <% } %>
+                                                        <span class="d-flex align-items-center">
+                                                          <span style="font-size: 10px;"
+                                                            class="text-danger me-1">Returns can be made within <span
+                                                              style="font-weight: 900;">5</span> days only!!</span>
+                                                          <form class="m-0" action="/return-order/<%= orders[i]._id %>"
+                                                            method="post">
+                                                            <input type="text" value="/myOrders/cancelled"
+                                                              style="display: none; height: 0px; visibility:hidden"
+                                                              name="route">
+                                                            <button type="submit" style="    width: 15vh;
                           height: 5vh;font-size: 13px;" class="btn btn-info">Return</button>
-                          </form>
-                          </span>
-                        </div>
-                      <% }else if(orders[i].status === 'Returning'){ %>
-                        <div class="status-bar d-flex justify-content-between">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <p style="color: rgb(165, 165, 5);font-weight: 600;" class="mb-0 small ">Returning</p>
-                        </div>
-                      <% }else if(orders[i].status === 'Cancelled'){ %>
-                        <div class="status-bar d-flex justify-content-between">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <p style="font-weight: 600;" class="mb-0 small text-danger">Cancelled</p>
-                        </div>
-                      <% }else if(orders[i].status === 'Returned'){ %>
-                        <div class="status-bar d-flex justify-content-between">
-                          <p class="text-muted  mb-0 small "><%= orders[i].date %></p>
-                          <p style="font-weight: 600;" class="mb-0 small text-info">Returned</p>
-                        </div>
-                      <% } %>
+                                                          </form>
+                                                        </span>
+                                  </div>
+                                  <% }else if(orders[i].status==='Returning' ){ %>
+                                    <div class="status-bar d-flex justify-content-between">
+                                      <p class="text-muted  mb-0 small ">
+                                        <%= orders[i].date %>
+                                      </p>
+                                      <p style="color: rgb(165, 165, 5);font-weight: 600;" class="mb-0 small ">Returning
+                                      </p>
+                                    </div>
+                                    <% }else if(orders[i].status==='Cancelled' ){ %>
+                                      <div class="status-bar d-flex justify-content-between">
+                                        <p class="text-muted  mb-0 small ">
+                                          <%= orders[i].date %>
+                                        </p>
+                                        <% if(orders[i].paymentStatus==='Refunded' ){ %>
+                                          <span style="font-size: 10px;" class="text-danger">Refund will be added to
+                                            Wallet</span>
+                                          <% } %>
+                                            <p style="font-weight: 600;" class="mb-0 small text-danger">Cancelled</p>
+                                      </div>
+                                      <% }else if(orders[i].status==='Returned' ){ %>
+                                        <div class="status-bar d-flex justify-content-between">
+                                          <p class="text-muted  mb-0 small ">
+                                            <%= orders[i].date %>
+                                          </p>
+                                          <% if(orders[i].paymentStatus==='Refunded' ){ %>
+                                            <span style="font-size: 10px;" class="text-danger">Refund will be added to
+                                              Wallet</span>
+                                            <% } %>
+                                              <p style="font-weight: 600;" class="mb-0 small text-info">Returned</p>
+                                        </div>
+                                        <% } %>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <% } %>
-            </div>
+                  <% } %>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <style>
-    body {
-/* fallback for old browsers */
-background: #cd9cf2;
+<style>
+  body {
+    /* fallback for old browsers */
+    background: #cd9cf2;
 
-/* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
 
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
-}
-.btn-links{
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
+  }
+
+  .btn-links {
     width: 60vh;
-}
-.btn-links a{
+  }
+
+  .btn-links a {
     text-decoration: none;
     color: black;
     font-weight: bold;
-}
-.btn-links a:hover{
+  }
+
+  .btn-links a:hover {
     color: blue;
-}
-.btn-links:hover{
+  }
+
+  .btn-links:hover {
     background-color: #e5d0f6;
-}
-#primary-btn{
+  }
+
+  #primary-btn {
     background-color: #cd9cf2;
-}
-.sticky-header {
-      position: sticky;
-      top: 0;
-      background-color: white;
-      z-index: 1000; /* Adjust z-index as needed */
-    }
-  </style>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  }
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    /* Adjust z-index as needed */
+  }
+</style>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <%- include('../../partials/script.ejs') %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>

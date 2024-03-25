@@ -27,6 +27,14 @@ const orderSchema = new mongoose.Schema(
     totalAmount: Number,
     deliveryAddress: Object,
     paymentMethod: String,
+    wallet:{
+      type:Boolean,
+      default:false
+    },
+    walletAmount:{
+      type:Number,
+      default:0,
+    },
     status: {
       type: String,
       default: "Pending",

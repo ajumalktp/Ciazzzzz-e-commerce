@@ -5,7 +5,7 @@ const path = require("path");
 const morgan = require('morgan')
 const userRouter = require("./routes/userRouter");
 const adminRouter = require("./routes/adminRouter");
-const dbConnect = require("./dbConnect");
+const dbConnect = require('./config/dbConnect')
 const PORT = 3000 || process.env.PORT;
 
 const dotenv = require("dotenv");

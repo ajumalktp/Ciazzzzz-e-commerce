@@ -175,6 +175,28 @@
                         </div>
 
                         <hr class="my-2">
+                        <div style="border-width:1px;
+                        border-style:solid;
+                        border-color:white;" class="d-flex justify-content-between p-2">
+                          <h5 class="mb-2">Wallet</h5>
+                          <div class="d-flex">
+                            <span class="me-1">&#8377;</span>
+                            <p class="mb-2">
+                              <%= user.wallet %>
+                            </p>
+                          </div>
+                          <div class="action">
+                            <% if(user.wallet <= 0){ %>
+                              <p>No Money</p>
+                            <% }else{ %>
+                              <% if(cart.wallet){ %>
+                                <a href="/wallet/deny/<%= cart._id %>" class="btn btn-danger">deny</a>
+                              <% }else{ %>
+                                <a href="/wallet/apply/<%= cart._id %>" class="btn btn-success">Apply</a>
+                              <% } %>
+                            <% } %>
+                          </div>
+                        </div>
                         <h5>Products</h5>
                         <div class="p-2" style="border-width:1px;
                         border-style:solid;
@@ -211,24 +233,27 @@
                           <p class="mb-2">Shipping</p>
                           <p class="mb-2">Free</p>
                         </div>
-                        <!-- <div class="d-flex justify-content-between">
-                          <p class="mb-2 text-success ">Wallet</p>
-                          <p class="mb-2 text-success">walletAmount</p>
-                        </div>
+                        <% if(cart.wallet){ %>
                         <div class="d-flex justify-content-between">
-                          <p class="mb-2 text-success">Coupon applied</p>
-                          <p class="mb-2 text-success">discount</p>
-                        </div> -->
-                        <!-- <div class="d-flex justify-content-between mb-4">
-                          <p class="mb-2">Total(Incl. taxes)</p>
-                          <p class="mb-2">totalAfterDiscount</p>
-                        </div> -->
+                          <p class="mb-2">Wallet Amount</p>
+                          <div class="d-flex">
+                            <span class="me-1">&#8377;</span>
+                            <p class="mb-2">
+                              <% if(user.wallet > cart.totalPrice){ %>
+                              - <%= cart.totalPrice %>
+                              <% }else{ %>
+                                - <%= user.wallet %>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+                        <% } %>
                         <div class="d-flex justify-content-between mb-4">
                           <p class="mb-2">Total(Incl. taxes)</p>
                           <div class="d-flex">
                             <span class="me-1">&#8377;</span>
                             <p class="mb-2">
-                              <%= cart.totalPrice %>
+                              <%= totalAmount %>
                             </p>
                           </div>
                         </div>

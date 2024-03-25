@@ -1,11 +1,20 @@
 const cartModel = require('../models/cartModel')
 const productModel = require('../models/productModel')
+const userModel = require('../models/userModel')
 
 const cartController = {
 
     getCart: async(req,res)=>{
         const userID = req.session.user.id
+        const user = await userModel.findOne({_id:userID})
         const cart = await cartModel.findOne({user:userID}).populate("products.product")
+        if(user.wallet <= 0 ){
+            await cartModel.findByIdAndUpdate(cart._id,{
+              $set:{
+                wallet:false
+              }
+            })
+          }
         res.render('user/cart',{cart})
     },
 
@@ -63,9 +72,7 @@ const cartController = {
 
     changeQuantity: async(req,res,next)=>{
         const data = req.body
-        console.log(req.body);
         const cart = await cartModel.findOne({_id:data.cartID,'products._id':data.prod_id}).populate("products.product")
-        console.log(cart);
         function counting(cart,prodID){
         for(let i = 0; i < cart.products.length; i++){
             if(cart.products[i].product._id == prodID){
@@ -74,7 +81,6 @@ const cartController = {
         }
         }
         let item = counting(cart,data.prodID)
-        console.log(item);
 
             if(data.count == 1){
                 if(cart.products[item].quantity < cart.products[item].product.productQuantity){
@@ -135,7 +141,6 @@ const cartController = {
     removeItem: async(req,res)=>{
         const userID = req.session.user.id
         const data = req.body
-        console.log(req.body);
         await cartModel.updateOne({_id:data.cartID},{
             $pull:{products:{_id:data.prod_id}}
         })

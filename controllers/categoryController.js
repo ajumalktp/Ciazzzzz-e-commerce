@@ -2,6 +2,7 @@ const productModel = require('../models/productModel')
 const categoryModel = require('../models/categoryModel')
 const cartModel = require('../models/cartModel')
 const mongoose = require('mongoose')
+const cloudinary = require('../config/cloudinary')
 
 const categoryController = {
 
@@ -34,9 +35,10 @@ const categoryController = {
            return res.render(renderRoute)
         }else{
             if(req.file){
+                let logo=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
                 category = new categoryModel({
                     ...req.body,
-                    logo:req.file.filename
+                    logo:logo
                 });
             }else{
                 category = new categoryModel({
@@ -76,16 +78,31 @@ const categoryController = {
 
     editCategory: async(req,res)=>{
         const {_id,catName,route} = req.body
-        const catExists = await categoryModel.findOne({catName})
+        const catExists = await categoryModel.findOne({catName:catName,_id: { $ne: _id }})
+        console.log('hii');
         if(catExists){
             console.log('category already exitsts');
             return res.redirect(route)
-        }
-        await categoryModel.findByIdAndUpdate(_id,{
-            $set:{
-                ...req.body
+        }else{
+            console.log('hello');
+            console.log(req.file);
+            if(req.file){
+                let logo=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
+                console.log(logo);
+                await categoryModel.findByIdAndUpdate(_id,{
+                    $set:{
+                        ...req.body,
+                        logo:logo
+                    }
+                })
+            }else{
+                await categoryModel.findByIdAndUpdate(_id,{
+                    $set:{
+                        ...req.body
+                    }
+                })
             }
-        })
+        }
         res.redirect(route)
     },
 

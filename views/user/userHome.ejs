@@ -51,7 +51,7 @@
         <div class="slider">
           <% for( i = 0; i < bannerSlider.length; i++){ %>
           <div class="slide">
-            <img src="/img/<%= bannerSlider[i].image %>" alt="">
+            <img src="<%= bannerSlider[i].image.url %>" alt="">
             <div class="left-info">
               <div class="penetrte-blur">
               </div>
@@ -110,7 +110,7 @@
             <% for(i= 0; i<5; i++){ %>
           <div class="card " style="width: 18rem;">
             <a href="/productDetails/<%= newProducts[i]._id %>">
-            <img src="/img/<%= newProducts[i].image %>" class="card-img-top" alt="...">
+            <img src="<%= newProducts[i].image.url %>" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><%= newProducts[i].productName %></h5>
               <p class="price">Price: &#8377;<%= newProducts[i].productPrice %></p>

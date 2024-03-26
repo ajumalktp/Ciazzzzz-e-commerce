@@ -9,8 +9,8 @@ const categorySchema = new mongoose.Schema({
     catType:String,
     items:Number,
     logo:{
-        type:String,
-        default:'replace-img.png'
+        type:Object,
+        default:{url:'http://res.cloudinary.com/djx03jjof/image/upload/v1711483992/Ciazzzzz/qlso76f8vxknn93v6e75.png'}
     }
 })
 

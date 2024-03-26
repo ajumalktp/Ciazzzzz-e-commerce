@@ -65,7 +65,7 @@
             <% for(let i = 0; i<products.length; i++){ %>
               <div class="card me-5 mb-5 mt-3" >
                 <a href="/productDetails/<%= products[i]._id %>">
-                <img src="/img/<%= products[i].image %>" class="card-img-top" alt="..." >
+                <img src="<%= products[i].image.url %>" class="card-img-top" alt="..." >
                 <div class="card-body">
                   <h5 class="card-title"><%= products[i].productName %></h5>
                   <p class="price">Price: &#8377;<%= products[i].productPrice %></p>

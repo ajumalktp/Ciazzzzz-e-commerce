@@ -16,7 +16,7 @@
       <div class="col-md-3">
         <div class="text-center">
             <% if(product.image){ %>
-          <img id="imagePreview" src="/img/<%= product.image %>" alt=""
+          <img id="imagePreview" src="<%= product.image.url %>" alt=""
             class="avatar img-circle img-thumbnail" alt="avatar">
             <% }else{ %>
               <img id="imagePreview" src="https://www.odoo.com/web/image/res.users/1709393/image_1024?unique=5186ca3" 

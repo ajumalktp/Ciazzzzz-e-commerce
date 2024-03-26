@@ -1,5 +1,6 @@
 const productModel = require('../models/productModel')
 const bannersModel = require('../models/bannersModel')
+const cloudinary = require('../config/cloudinary')
 
 const bannerController = {
 
@@ -18,8 +19,9 @@ const bannerController = {
 
     addSlider: async (req,res)=>{
         if(req.file){
+            let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
             banner = new bannersModel({
-                image:req.file.filename,
+                image:image,
                 ...req.body,
             });
         }else{
@@ -43,9 +45,10 @@ const bannerController = {
     editSlider: async (req,res)=>{
         const _id = req.body._id
         if(req.file){
+            let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
             await bannersModel.findByIdAndUpdate(_id,{
                 $set:{
-                    image:req.file.filename,
+                    image:image,
                     ...req.body
                 }
             })

@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
     image:{
-      type:String,
-      default:'replace-img.png'
+      type:Object,
+      default:{url:'https://res.cloudinary.com/djx03jjof/image/upload/v1711482721/Ciazzzzz/pwo4ulfbuoegxawrmaxy.png'},
   },
     productName: String,
     productMRP: Number,

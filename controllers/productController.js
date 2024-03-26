@@ -1,6 +1,7 @@
 const productModel = require("../models/productModel");
 const categoryModel = require("../models/categoryModel");
 const cartModel = require('../models/cartModel')
+const cloudinary = require('../config/cloudinary')
 
 const productController = {
     getShop: async (req, res) => {
@@ -59,8 +60,9 @@ const productController = {
 
     addProduct: async (req, res, next) => {
         if(req.file){
+          let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
           product = new productModel({
-            image:req.file.filename,
+            image:image,
             ...req.body,
         });
         }else{
@@ -86,9 +88,10 @@ const productController = {
     editProduct: async (req, res) => {
         const _id = req.body._id;
         if(req.file){
+          let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
           await productModel.findByIdAndUpdate(_id, {
             $set: {
-              image:req.file.filename,
+              image:image,
               ...req.body,
             },
         });

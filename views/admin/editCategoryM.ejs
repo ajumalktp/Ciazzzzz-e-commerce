@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <!-- edit form column -->
-<form id="formValidation" class="form-horizontal" action="/admin/editCategory" method="post">
+<form id="formValidation" class="form-horizontal" action="/admin/editCategory" method="post" enctype="multipart/form-data">
   <div class="container bootstrap snippets bootdey">
     <h1 class="text-primary">Edit Category</h1>
     <hr>
@@ -15,11 +15,11 @@
       <!--  left column  -->
     <div class="col-md-3">
         <div class="text-center">
-          <img id="imagePreview" src="https://www.odoo.com/web/image/res.users/1709393/image_1024?unique=5186ca3"
+          <img id="imagePreview" src="<%= category.logo.url %>"
             class="avatar img-circle img-thumbnail" alt="avatar">
           <h6>Upload a different photo...</h6>
 
-          <input type="file"  class="form-control" id="image" name="image" accept="image/*"
+          <input type="file"  class="form-control" id="image" name="logo" accept="image/*"
             onchange="previewImage(event)" multiple>
         </div>
       </div>

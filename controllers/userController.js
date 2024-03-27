@@ -14,7 +14,7 @@ let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
-    const newProducts = await productModel.find().sort({ createdAt: -1 }).lean()
+    const newProducts = await productModel.find().sort({ createdAt: -1 }).limit(5).lean()
     const bannerSlider = await bannersModel.find({sliderType:'bannerSlider',status:'Active'}).lean().populate('productID')
     const productSlider = await bannersModel.find({sliderType:'productSlider',status:'Active'}).lean().populate('productID')
     let count = 0

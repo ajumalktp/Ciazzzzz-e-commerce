@@ -71,27 +71,23 @@ textarea{
     }
   }
 
-  //form validation
-  $(document).ready(function () {
+    //form validation
+    $(document).ready(function () {
     $.validator.addMethod("noSpace", function (value, element) {
-    return this.optional(element) || /[a-zA-Z0-9]/.test(value);
+  return this.optional(element) || /[a-zA-Z0-9]/.test(value);
 }, "Please enter at least one letter or number");
+
 
     $("#formValidation").validate({
       rules: {
-        catName: {
+        productID: {
           required: true,
-          minlength: 2,
-          noSpace: true
         },
       },
       messages: {
-        catName: {
-          required: "Please enter Category Name",
-          minlength: "Name atleast 2 charcters",
-          noSpace: "Name contain number or characters"
+        productID: {
+          required: "Please Select a option",
         },
-
       },
     });
   });

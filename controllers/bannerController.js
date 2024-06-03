@@ -18,19 +18,23 @@ const bannerController = {
     },
 
     addSlider: async (req,res)=>{
-        if(req.file){
-            let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
-            banner = new bannersModel({
-                image:image,
-                ...req.body,
-            });
-        }else{
-            banner = new bannersModel({
-                ...req.body,
-            });
+        try{
+            if(req.file){
+                let image=await cloudinary.uploader.upload(req.file.path,{folder:'Ciazzzzz'})
+                banner = new bannersModel({
+                    image:image,
+                    ...req.body,
+                });
+            }else{
+                banner = new bannersModel({
+                    ...req.body,
+                });
+            }
+          banner.save();
+          res.redirect(req.body.route);
+        }catch(e){
+            console.log(e);
         }
-      banner.save();
-      res.redirect(req.body.route);
     },
 
     getBannerSliderEdit: async(req,res)=>{

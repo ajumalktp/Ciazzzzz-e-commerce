@@ -50,7 +50,7 @@ router.get('/delivered/:id',verifyAdmin,admin_delivered)
 router.get('/returning/:id',verifyAdmin,admin_returning)
 router.get('/cancell/:id',verifyAdmin,admin_cancell)
 
-router.get('/view-products/:id',verifyAdmin,view_products)
+router.get('/admin/view-products/:id',verifyAdmin,view_products)
 
 
 router.get('/bannerSlider',verifyAdmin,getAdminBannerSlider)

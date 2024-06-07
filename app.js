@@ -22,8 +22,9 @@ session({
     secret:process.env.SESSION_KEY,
     saveUninitialized: true,
     resave: false,
-    cookie:{
-      maxAge:86400000
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // Cookie expiration time in milliseconds (1 day in this example)
+      secure: false // Set to true if using HTTPS
     }
 })
 );

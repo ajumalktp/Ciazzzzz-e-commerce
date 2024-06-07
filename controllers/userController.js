@@ -279,6 +279,10 @@ const userController = {
       res.render('user/changePassword',{error})
     }
   },
+  logOut: async(req,res)=>{
+    req.session.user = null
+    res.redirect('/login')
+  },
 
 };
 module.exports = userController;

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile,getEmailVerifyFP,emailVerifyFP,verifyOtpFP,changePassFP,getAddAddress,submitAddress, getEditAddress, editAddress, deleteAddress, getEditInfo, editInfo, getChangePassword, changePassword} = require('../controllers/userController')
+const {getHome,getLogin,getUserRegister,userRegister,userLogin,submitOtp,verifyOtp,resendOtp,getProfile,getEmailVerifyFP,emailVerifyFP,verifyOtpFP,changePassFP,getAddAddress,submitAddress, getEditAddress, editAddress, deleteAddress, getEditInfo, editInfo, getChangePassword, changePassword, logOut} = require('../controllers/userController')
 const {getShop,getProductDetails} = require('../controllers/productController')
 const verifyUser = require('../middleware/verifyUser')
 const { getCategory, getCategoryProducts } = require('../controllers/categoryController')
@@ -10,6 +10,7 @@ const { getCheckOut, place_order , allOrders, delivered, cancelled, ONLINE, retu
 
 router.get('/',getHome)
 router.get('/login',getLogin)
+router.get('/logOut',verifyUser,logOut)
 router.get('/signUp',getUserRegister)
 router.get('/submitOtp',submitOtp)
 router.get('/resendOtp',resendOtp)

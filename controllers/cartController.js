@@ -145,7 +145,6 @@ const cartController = {
             $pull:{products:{_id:data.prod_id}}
         })
         const user = await cartModel.findOne({_id:data.cartID}).populate("products").populate("products.product")
-        console.log(user);
         res.json({status:true,items:user.products.length})
     },
 

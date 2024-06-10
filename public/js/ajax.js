@@ -46,8 +46,10 @@ function addToCart(prodID,user){
           $(`#${prodID}`).val(response.quantity)
           changePrice(cartID,prod_id,prodID,response.quantity,price)
           totalPrice(cartID)
-          if(response.quantity<=0){
-            removeItem(prod_id,cartID)
+          if(response.quantity<=1){
+            $('#minus-button').css('display', 'none')
+          }else{
+            $('#minus-button').css('display', 'block')
           }
         }else{
           $(`#${prodID}`).val(response.quantity)

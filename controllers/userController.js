@@ -5,6 +5,8 @@ const bannersModel = require('../models/bannersModel')
 const otpGen = require('otp-generator')
 const sendOtp = require('../services/OtpMail')
 const bycrypt = require('bcrypt');
+const { hash } = require("crypto");
+const { error } = require("console");
 
 function generateOtp(){
   return otpGen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false , specialChars: false });
@@ -14,7 +16,7 @@ let otp = generateOtp()
 
 const userController = {
   getHome: async(req, res) => {
-    const newProducts = await productModel.find().sort({ createdAt: -1 }).limit(5).lean()
+    const newProducts = await productModel.find().sort({ createdAt: -1 }).limit(6).lean()
     const bannerSlider = await bannersModel.find({sliderType:'bannerSlider',status:'Active'}).lean().populate('productID')
     const productSlider = await bannersModel.find({sliderType:'productSlider',status:'Active'}).lean().populate('productID')
     let count = 0
@@ -92,11 +94,11 @@ const userController = {
           res.render('user/userLogin',{error,failedAuth:failedAuthData})
         }
       }else{
-        error = 'invalid email or password'
+        const error = 'invalid email or password'
         res.render('user/userLogin',{error,failedAuth:failedAuthData})
       }
     }else{
-      error = 'user NOT FOUND'
+       const error = 'user NOT FOUND'
       res.render('user/userLogin',{error,failedAuth:failedAuthData})
     }
   },
@@ -257,6 +259,29 @@ const userController = {
     })
     console.log(req.body);
     res.redirect(req.session.backURL)
+  },
+  getChangePassword: async(req,res)=>{
+    res.render('user/changePassword')
+  },
+  changePassword: async(req,res)=>{
+    const userID = req.session.user.id
+    const user = await userModel.findOne({_id:userID})
+    if(await bycrypt.compare(req.body.currentPassword, user.password)){
+      const hashPass = await bycrypt.hash(req.body.newPassword,10)
+      await userModel.findByIdAndUpdate(userID,{
+        $set:{
+          password:hashPass
+        }
+      })
+      res.redirect('/profile')
+    }else{
+      const error = 'Incorrect current password'
+      res.render('user/changePassword',{error})
+    }
+  },
+  logOut: async(req,res)=>{
+    req.session.user = null
+    res.redirect('/login')
   },
 
 };

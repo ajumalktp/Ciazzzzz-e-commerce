@@ -34,35 +34,41 @@
               </svg>
             </a>
             <a class="nav-link text-white" href="/cart">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-cart-fill" viewBox="0 0 16 16">
-                <path
-                  d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-              </svg>
-              <span class="badge rounded-pill badge-notification bg-danger"><%= count %></span>
+              <div class="icon-cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-cart-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                <span class="badge rounded-pill badge-notification bg-danger">
+                  <%= count %>
+                </span>
+              </div>
             </a>
           </li>
         </ul>
       </div>
     </header>
-    <div class="section bg-dark"  >
+    <div class="section bg-dark">
 
       <section class="banner">
         <div class="slider">
-          <% for( i = 0; i < bannerSlider.length; i++){ %>
-          <div class="slide">
-            <img src="<%= bannerSlider[i].image.url %>" alt="">
-            <div class="left-info">
-              <div class="penetrte-blur">
-              </div>
-              <div class="content">
-                <h3><%= bannerSlider[i].productID.productName %></h3>
-                <p><%= bannerSlider[i].productID.productDiscription %></p>
-                <a href="/productDetails/<%= bannerSlider[i].productID._id %>" class="btn">More Details</a>
+          <% for( i=0; i < bannerSlider.length; i++){ %>
+            <div class="slide">
+              <img src="<%= bannerSlider[i].image.url %>" alt="">
+              <div class="left-info">
+                <div class="content">
+                  <h3>
+                    <%= bannerSlider[i].productID.productName %>
+                  </h3>
+                  <p>
+                    <%= bannerSlider[i].productID.productDiscription %>
+                  </p>
+                  <a href="/productDetails/<%= bannerSlider[i].productID._id %>" class="btn">More Details</a>
+                </div>
               </div>
             </div>
-          </div>
-          <% } %>
+            <% } %>
         </div>
         <div class="navigation">
           <span class="prev-btn"><i class="fa-solid fa-chevron-left fa-3x"></i></span>
@@ -70,12 +76,11 @@
         </div>
       </section>
     </div>
-    <div class="section-2">
-      <div class="brand d-flex align-items-center " style="height: 15vh;">
-        <div class="container" >
-          <div class="d-flex justify-content-evenly">
+    <div class="brand d-flex align-items-center " style="height: 15vh;">
+      <div class="container-fluid">
+        <div class="d-flex justify-content-evenly">
           <div class="brands">
-            <img src="/logo/pngimg.com - nike_PNG9.png" alt="" height="50" width="50" >
+            <img src="/logo/pngimg.com - nike_PNG9.png" alt="" height="50" width="50">
           </div>
           <div class="brands">
             <img src="/logo/puma-logo-png-21175.png" alt="" height="50" width="50">
@@ -93,245 +98,240 @@
             <img src="/logo/new-balance-logo.png" alt="" height="50" width="50">
           </div>
         </div>
-        </div>
       </div>
-      <div class="container">
-        <%- include('../partials/trendingSlider.ejs') %>
-      </div>
+    </div>
+    <div class="section-2">
+      <%- include('../partials/trendingSlider.ejs') %>
     </div>
     <div class="section-3">
       <div class="container">
-        <div class="section-3-head d-flex justify-content-between align-items-center" style="margin-bottom: 8rem;" >
-          <span style="font-size: 30px">New Collections</span>
-          <div class="link-allC"><a href="/shop" style="font-size: 15px;" class="btn btn-info">All Collections</a></div>
+        <div class="section-3-head d-flex justify-content-between align-items-center">
+          <span >New Collections</span>
+          <div class="link-allC"><a href="/shop"  class="btn btn-info">All Collections</a></div>
         </div>
-        <div class="section-3-content">
-          <div class="row justify-content-between ">
-            <% for(i= 0; i< newProducts.length; i++){ %>
-          <div class="card " style="width: 18rem;">
-            <a href="/productDetails/<%= newProducts[i]._id %>">
-            <img src="<%= newProducts[i].image.url %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"><%= newProducts[i].productName %></h5>
-              <p class="price">Price: &#8377;<%= newProducts[i].productPrice %></p>
-              <p class="mrp">MRP: &#8377;<%= newProducts[i].productMRP %></p>
-              <div class="d-flex flex-row my-3">
-                <div class="text-warning mb-1 me-2">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                  <span class="ms-1">
-                    4.5
-                  </span>
-                </div>
-                <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><%= newProducts[i].productQuantity %> items</span>
-                <span class="text-success ms-2">In stock</span>
-              </div>
+        <div class="section-3-content container">
+          <div class="row justify-content-between">
+            <%- include('../partials/productSlider.ejs') %>
           </div>
-          </a>
-          <div class="card-footer d-flex justify-content-between">
-            <a href="/productDetails/<%= newProducts[i]._id %>" class="btn btn-buy">Buy</a>
-            <div class="buttons"> 
-              <button class="add-cart-button<%= newProducts[i]._id %> cart-button" onclick="addToCart('<%= newProducts[i]._id %>','<%= user %>')"> 
-                  <span class="add-to-cart">Add to cart</span> 
-                  <span class="added">added</span> <i class="fa fa-shopping-cart"></i> <i class="fa fa-square"></i> 
-              </button> 
-          </div>
-        </div>
-          </div>
-          <% } %>
-        </div>
         </div>
       </div>
     </div>
     <div class="section-4">
-      <div class="container">
-        <div class="section-4-content d-flex">
-          <div class="FAQ w-50">
+      <div class="container row">
+        <div class="section-4-content d-flex col justify-content-center align-items-center">
+          <div class="FAQ ">
             <div class="faq_area section_padding_130 text-white" id="faq">
               <div class="container">
-                  <div class="row justify-content-center">
-                      <div class="col-12 col-sm-8 col-lg-6">
-                          <!-- Section Heading-->
-                          <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                              <h3><span>Frequently </span> Asked Questions</h3>
-                              <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p>
-                              <div class="line"></div>
-                          </div>
-                      </div>
+                <div class="row justify-content-center">
+                  <div class="col-12 col-sm-8 col-lg-6">
+                    <!-- Section Heading-->
+                    <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
+                      style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                      <h3><span>Frequently </span> Asked Questions</h3>
+                      <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.
+                      </p>
+                      <div class="line"></div>
+                    </div>
                   </div>
-                  <div class="row justify-content-center">
-                      <!-- FAQ Area-->
-                      <div class="col-12 col-sm-10 col-lg-8">
-                          <div class="accordion faq-accordian" id="faqAccordion">
-                              <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
-                                  <div class="card-header" id="headingOne">
-                                      <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">How can I install this app?<span class="lni-chevron-up"></span></h6>
-                                  </div>
-                                  <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#faqAccordion">
-                                      <div class="card-body">
-                                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere deserunt sint animi sapiente vitae suscipit.</p>
-                                          <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-                                  <div class="card-header" id="headingTwo">
-                                      <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">The apps isn't installing?<span class="lni-chevron-up"></span></h6>
-                                  </div>
-                                  <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#faqAccordion">
-                                      <div class="card-body">
-                                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere deserunt sint animi sapiente vitae suscipit.</p>
-                                          <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
-                                  <div class="card-header" id="headingThree">
-                                      <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Contact form isn't working?<span class="lni-chevron-up"></span></h6>
-                                  </div>
-                                  <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#faqAccordion">
-                                      <div class="card-body">
-                                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere deserunt sint animi sapiente vitae suscipit.</p>
-                                          <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing page.</p>
-                                      </div>
-                                  </div>
-                              </div>
+                </div>
+                <div class="row justify-content-center">
+                  <!-- FAQ Area-->
+                  <div class="col-12 col-sm-10 col-lg-8">
+                    <div class="accordion faq-accordian" id="faqAccordion">
+                      <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.2s"
+                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingOne">
+                          <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">How can I install this app?<span
+                              class="lni-chevron-up"></span></h6>
+                        </div>
+                        <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                          <div class="card-body">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere
+                              deserunt sint animi sapiente vitae suscipit.</p>
+                            <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing
+                              page.</p>
                           </div>
-                          <!-- Support Button-->
-                          <div class="support-button text-center d-flex align-items-center justify-content-center mt-4 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-                              <i class="lni-emoji-sad"></i>
-                              <p class="mb-0 px-2">Can't find your answers?</p>
-                              <a href="#"> Contact us</a>
-                          </div>
+                        </div>
                       </div>
+                      <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.3s"
+                        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingTwo">
+                          <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">The apps isn't installing?<span
+                              class="lni-chevron-up"></span></h6>
+                        </div>
+                        <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                          <div class="card-body">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere
+                              deserunt sint animi sapiente vitae suscipit.</p>
+                            <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing
+                              page.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card border-0 wow fadeInUp bg-dark" data-wow-delay="0.4s"
+                        style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                        <div class="card-header" id="headingThree">
+                          <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree"
+                            aria-expanded="true" aria-controls="collapseThree">Contact form isn't working?<span
+                              class="lni-chevron-up"></span></h6>
+                        </div>
+                        <div class="collapse" id="collapseThree" aria-labelledby="headingThree"
+                          data-parent="#faqAccordion">
+                          <div class="card-body">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto quidem facere
+                              deserunt sint animi sapiente vitae suscipit.</p>
+                            <p>Appland is completely creative, lightweight, clean &amp; super responsive app landing
+                              page.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Support Button-->
+                    <div
+                      class="support-button text-center d-flex align-items-center justify-content-center mt-4 wow fadeInUp"
+                      data-wow-delay="0.5s"
+                      style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                      <i class="lni-emoji-sad"></i>
+                      <p class="mb-0 px-2">Can't find your answers?</p>
+                      <a href="#"> Contact us</a>
+                    </div>
                   </div>
+                </div>
               </div>
-          </div>
-          </div>
-          <div class="section-4-image w-50 d-flex justify-content-center align-items-center">
-            <div class="image-content">
-              <img src="" alt="" height="50px" width="50px">
             </div>
           </div>
         </div>
+        <div class="section-4-image d-flex justify-content-center align-items-center col">
+          <div class="image-content">
+            <img src="/img/istockphoto-182790712-1024x1024.jpg" alt="">
+          </div>
         </div>
       </div>
     </div>
+    </div>
     <%- include('../partials/footer.ejs') %>
-    <style>
-      body{
-        background-color: rgba(238, 234, 234, 1);
-      }
-      .brands img{
-        object-fit: contain;
-      }
-      .section-3{
-        height: 80vh;
-      }
-      .section-3,.section-4 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .section-4{
-        height: 80vh;
-        background-color:black;
-      }
-      .footer{
-        height: 40vh;
-      }
-        .card {
-            border-radius: 8px;
-            width: 20rem;
-            margin-left: 34px;
-            box-shadow: 0px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            transition: transform 0.3s ease;
+      <style>
+        body {
+          background-color: rgba(238, 234, 234, 1);
         }
+
+        .brands img {
+          object-fit: contain;
+        }
+
+        .section-3,
+        .section-4 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .section-4 {
+          background-color: black;
+        }
+
+        .footer {
+          height: 40vh;
+        }
+
+        .card {
+          border-radius: 8px;
+          width: 20rem;
+          margin-left: 34px;
+          box-shadow: 0px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          transition: transform 0.3s ease;
+        }
+
         .card:hover {
           transform: scale(1.1);
         }
-        .card a{
+
+        .card a {
           text-decoration: none;
           color: black;
         }
-        .card-footer a{
+
+        .card-footer a {
           color: white;
         }
-         img {
-            max-width: 100%;
-            height: 15vh;
+
+        img {
+          max-width: 100%;
+          height: 15vh;
           object-fit: scale-down;
         }
-        
-         .card-title {
-            font-size: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-         .price {
-            font-size: 12px;
-            font-weight: bold;
-            color: #007bff;
-        }
-         .mrp {
-            text-decoration: line-through;
-            color: #777;
-            margin-right: 10px;
-        }
-         .btn-buy {
-            background-color: #007bff;
-            color: #fff;
-        }
-       .btn-cart {
-            background-color: #28a745;
-            color: #fff;
-        }
-    </style>
 
-    <script>
-      const nxtBtn = document.querySelector(".next-btn");
-      const prvBtn = document.querySelector(".prev-btn");
-      const slides = document.querySelectorAll(".slide");
-      const numberOfSlides = slides.length;
-      let slideNumber = 0;
-      slides[slideNumber].classList.add('active')
-
-      // slider next button
-      nxtBtn.onclick = () => {
-        slides.forEach((slide) => {
-          slide.classList.remove('active');
-        });
-
-        slideNumber++;
-
-        if (slideNumber > (numberOfSlides - 1)) {
-          slideNumber = 0;
+        .card-title {
+          font-size: 15px;
+          font-weight: bold;
+          text-transform: uppercase;
         }
 
-        slides[slideNumber].classList.add('active');
-      }
-
-
-      // slider Prev button
-      prvBtn.onclick = () => {
-        slides.forEach((slide) => {
-          slide.classList.remove('active');
-        });
-
-        slideNumber--;
-
-        if (slideNumber < 0) {
-          slideNumber = numberOfSlides - 1;
+        .price {
+          font-size: 12px;
+          font-weight: bold;
+          color: #007bff;
         }
 
-        slides[slideNumber].classList.add('active');
-      }
+        .mrp {
+          text-decoration: line-through;
+          color: #777;
+          margin-right: 10px;
+        }
 
-    </script>
-    <%- include('../partials/script.ejs') %>
+        .btn-buy {
+          background-color: #007bff;
+          color: #fff;
+        }
+
+        .btn-cart {
+          background-color: #28a745;
+          color: #fff;
+        }
+      </style>
+
+      <script>
+        const nxtBtn = document.querySelector(".next-btn");
+        const prvBtn = document.querySelector(".prev-btn");
+        const slides = document.querySelectorAll(".slide");
+        const numberOfSlides = slides.length;
+        let slideNumber = 0;
+        slides[slideNumber].classList.add('active')
+
+        // slider next button
+        nxtBtn.onclick = () => {
+          slides.forEach((slide) => {
+            slide.classList.remove('active');
+          });
+
+          slideNumber++;
+
+          if (slideNumber > (numberOfSlides - 1)) {
+            slideNumber = 0;
+          }
+
+          slides[slideNumber].classList.add('active');
+        }
+
+
+        // slider Prev button
+        prvBtn.onclick = () => {
+          slides.forEach((slide) => {
+            slide.classList.remove('active');
+          });
+
+          slideNumber--;
+
+          if (slideNumber < 0) {
+            slideNumber = numberOfSlides - 1;
+          }
+
+          slides[slideNumber].classList.add('active');
+        }
+
+      </script>
+      <%- include('../partials/script.ejs') %>
   </body>
 
   </html>
